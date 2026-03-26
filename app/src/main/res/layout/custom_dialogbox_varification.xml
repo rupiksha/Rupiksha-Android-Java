@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/_4sdp"
+            app:cardBackgroundColor="@color/blue_app"
+        android:elevation="@dimen/_3sdp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:fillViewport="true">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="@dimen/textsize_18sp">
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/txt_self_declaration"
+                    android:fontFamily="@font/dmsans_medium"
+                    android:textColor="@color/black"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/textsize_18sp"
+                    android:textSize="@dimen/textsize_17sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <TextView
+                    android:id="@+id/llDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/txt_self_declaration_detail"
+                    android:fontFamily="@font/dmsans_regular"
+                    android:textColor="@color/black"
+                    android:paddingTop="@dimen/_8sdp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:textSize="@dimen/textsize_14sp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+                <LinearLayout
+                    android:id="@+id/llSelfDeclaration"
+                    android:layout_width="@dimen/heightsize_0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/heightsize_12dp"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    app:layout_constraintTop_toBottomOf="@+id/llDetail"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/imgCheckBoxSelfProperty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_checked_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/txtInvestmentDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/dmsans_medium"
+                        android:paddingStart="@dimen/heightsize_8dp"
+                        android:text="@string/txt_agree"
+                        android:textColor="@color/app_1E1E1E"
+                        android:textSize="@dimen/textsize_14sp"
+                        android:layout_gravity="center_vertical"
+                        android:includeFontPadding="false"
+                        app:layout_constraintStart_toEndOf="@+id/imgSelfProperty"
+                        app:layout_constraintTop_toTopOf="@+id/imgSelfProperty" />
+
+
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/tvNote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/txt_send_otp"
+                    android:fontFamily="@font/dmsans_medium"
+                    android:textColor="@color/black"
+                    android:gravity="start"
+                    android:visibility="gone"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/textsize_10sp"
+                    android:textSize="@dimen/textsize_12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/llSelfDeclaration" />
+
+                <com.app.rupiksha.otpview.OtpView
+                    android:id="@+id/otp_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:layout_marginTop="36sp"
+                    android:fontFamily="@font/dmsans_medium"
+                    android:inputType="number"
+                    android:focusable="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginHorizontal="16sp"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:visibility="gone"
+                    android:itemBackground="@color/white"
+                    app:OtpCursorColor="@color/app_1E1E1E_40"
+                    app:OtpItemCount="4"
+                    app:OtpItemHeight="50dp"
+                    app:OtpItemSpacing="8dp"
+                    app:OtpLineColor="@color/app_1E1E1E"
+                    app:OtpLineWidth="1.5dp"
+                    app:OtpItemRadius="@dimen/_6sdp"
+                    app:OtpState_filled="false"
+                    app:OtpViewType="rectangle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNote"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilVerificationCode"
+                    style="@style/TextInputLayoutStyle"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                    android:layout_marginTop="@dimen/heightsize_12dp"
+                    android:backgroundTint="@color/app_35383F"
+                    app:hintEnabled="false"
+                    android:elevation="@dimen/_2sdp"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvNote">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etVerificationCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/heightsize_55dp"
+                        android:background="@drawable/edittext_layout_background"
+                        android:fontFamily="@font/dmsans_regular"
+                        android:hint="@string/placeholder_verification_code"
+                        android:imeOptions="actionNext"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:inputType="textCapSentences"
+                        android:textColor="@color/app_1E1E1E"
+                        android:textColorHint="@color/app_1E1E1E_40" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnVerification"
+                    style="@style/ThemeAppButton"
+                    android:layout_marginTop="@dimen/heightsize_20dp"
+                    android:backgroundTint="@color/color_F72F20"
+                    android:text="@string/txt_btn_verify"
+                    android:layout_marginBottom="@dimen/_24sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otp_view" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

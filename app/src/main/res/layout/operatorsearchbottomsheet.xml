@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:paddingTop="@dimen/heightsize_12dp"
+        android:paddingBottom="@dimen/heightsize_12dp"
+        android:paddingHorizontal="@dimen/heightsize_16dp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilname"
+            style="@style/TextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/lbl_search"
+            android:visibility="visible"
+            app:layout_constraintTop_toTopOf="parent"
+            app:placeholderText="@string/placeholder_text_search">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etname"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/heightsize_50dp"
+                android:fontFamily="@font/dmsans_regular"
+                android:imeOptions="actionNext"
+                android:textCursorDrawable="@drawable/cursor"
+                android:inputType="textCapSentences"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/opteratorrecycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:overScrollMode="never"
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/tilname"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="4"
+
+            tools:listitem="@layout/operator_recycleview_list"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

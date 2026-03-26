@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="#08001A23"/>
+            <padding
+                android:bottom="1dp"
+                android:right="1dp"
+                android:left="1dp"
+                android:top="1dp"
+                />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#08001A23"/>
+            <padding
+                android:bottom="1dp"
+                android:right="1dp"
+                android:left="1dp"
+                android:top="1dp"
+                />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#08001A23"/>
+            <padding
+                android:bottom="1dp"
+                android:right="1dp"
+                android:left="1dp"
+                />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#08001A23"/>
+            <padding
+                android:bottom="1dp"
+                android:right="1dp"
+                android:left="1dp"
+                />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#08001A23"/>
+            <padding
+                android:bottom="1dp"
+                />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <solid android:color="#03001A23"/>
+            <padding
+                android:bottom="1dp"
+                />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient android:startColor="#0182ff"
+                android:endColor="#9cffe6"
+                android:angle="270"/>
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+
+    <item android:top="4dp" android:bottom="4dp" android:right="4dp" android:left="4dp">
+        <shape>
+            <solid android:color="#e2eff7" />
+            <corners android:radius="100dp"/>
+        </shape>
+    </item>
+</layer-list>
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home"
+        android:title="@string/text_home"
+        android:icon="@drawable/drawable_home_nav"/>
+    <item
+        android:id="@+id/report"
+        android:title="@string/text_report"
+        android:icon="@drawable/drawable_report_nav"/>
+<!--    <item-->
+<!--        android:id="@+id/placeholder"-->
+<!--        android:title="" />-->
+    <item
+        android:id="@+id/wallet"
+        android:title="@string/text_wallet"
+        android:icon="@drawable/drawable_wallet_nav"/>
+
+    <item
+        android:id="@+id/support"
+        android:title="@string/text_support"
+        android:icon="@drawable/drawable_support_nav"/>
+</menu>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+        android:id="@+id/rootview"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/transparent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/rectangle_solid_graytop"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="@dimen/heightsize_60dp"
+                    android:layout_gravity="center"
+                    android:background="@color/white_60"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="3dp">
+
+                </View>
+
+
+
+
+            </LinearLayout>
+
+
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/svLogin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/includeLayout">
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:paddingTop="@dimen/heightsize_12dp"
+                    android:paddingBottom="@dimen/heightsize_12dp"
+                    android:layout_height="match_parent">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/heightsize_150dp"
+                        android:src="@drawable/logo"
+                        android:id="@+id/logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_height="@dimen/heightsize_40dp">
+
+                    </ImageView>
+
+
+
+                    <TextView
+                        android:id="@+id/tvtvtitle"
+                        style="@style/TitleStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/heightsize_10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        app:layout_constraintTop_toBottomOf="@+id/logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/text_account_List"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible" />
+
+
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/transationlayout"
+                        android:visibility="visible"
+                        android:layout_marginBottom="@dimen/heightsize_15dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvtvtitle"
+                        android:layout_height="wrap_content">
+
+
+
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+
+                            android:layout_height="match_parent">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/fetchbillrecycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:clipToPadding="false"
+                            android:paddingBottom="@dimen/heightsize_16dp"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:listitem="@layout/qt_account_layout" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConfirm"
+                        style="@style/ThemeAppButton"
+                        android:layout_marginBottom="@dimen/heightsize_26dp"
+                        app:layout_constraintTop_toBottomOf="@+id/transationlayout"
+                        android:backgroundTint="@color/color_F72F20"
+                        android:layout_marginTop="@dimen/heightsize_20dp"
+                         android:layout_width="@dimen/heightsize_120dp"
+                        android:layout_height="@dimen/heightsize_50dp"
+                        android:text="@string/btn_close"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textAllCaps="false" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </androidx.core.widget.NestedScrollView>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</layout>

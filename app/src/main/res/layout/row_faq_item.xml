@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="14sp"
+            android:paddingTop="13sp">
+
+            <TextView
+                android:id="@+id/header1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="2dp"
+                android:text="TRANSATION"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+
+            <TextView
+                android:id="@+id/header2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12sp"
+                android:paddingTop="2dp"
+                android:text="AMOUNT"
+                android:gravity="end"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="14sp"
+            android:paddingVertical="13sp">
+
+
+
+            <TextView
+                android:id="@+id/from"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:paddingTop="2dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/dash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12sp"
+                android:paddingTop="2dp"
+                android:text="-"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/to"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12sp"
+                android:paddingTop="2dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12sp"
+                android:paddingTop="2dp"
+                android:text=""
+                android:gravity="end"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>
+
+
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/tvQuestion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:fontFamily="@font/dmsans_medium"
+            android:textColor="@color/color_395162"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ivDropdownArrow"
+            app:layout_constraintEnd_toStartOf="@+id/ivDropdownArrow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ivDropdownArrow" />
+
+        <ImageView
+            android:id="@+id/ivDropdownArrow"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:paddingVertical="@dimen/_8sdp"
+            android:paddingHorizontal="@dimen/_8sdp"
+            android:src="@drawable/ic_round_keyboard_arrow_down_24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/tvAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/dmsans_regular"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. \n\nUt enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            android:textColor="@color/color_696969"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/tvQuestion" />
+
+        <View
+            android:id="@+id/viewSeparator"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:alpha="0.27"
+            android:background="@color/color_042C5C"
+            app:layout_constraintTop_toBottomOf="@+id/tvAnswer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>-->

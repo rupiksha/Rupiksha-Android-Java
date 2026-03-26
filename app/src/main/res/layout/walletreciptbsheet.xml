@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+        android:id="@+id/rootview"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@color/transparent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@drawable/rectangle_solid_white_top_rounded_16"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="@dimen/heightsize_60dp"
+                    android:layout_gravity="center"
+                    android:background="@color/white_60"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="3dp">
+
+                </View>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:paddingTop="@dimen/heightsize_12dp"
+                    android:paddingBottom="@dimen/heightsize_12dp"
+                    android:paddingHorizontal="@dimen/heightsize_16dp"
+                    android:layout_height="match_parent">
+
+
+                    <ImageView
+                        android:layout_width="@dimen/heightsize_100dp"
+                        android:id="@+id/logo"
+                        android:src="@drawable/logo"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_height="40sp"/>
+
+                    <TextView
+                        android:id="@+id/tvtvtitle"
+                        style="@style/TitleStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/heightsize_10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        app:layout_constraintTop_toBottomOf="@+id/logo"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:text="@string/text_payment_details"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="visible" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/line1"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/tvtvtitle"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/lbl_id"
+                            style="@style/cardlabelStyle"
+                            android:minWidth="130sp"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/lbl_tx_id"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txn_id"
+                            style="@style/cardtextStyle"
+                            android:minWidth="100sp"
+                            android:layout_width="0dp"
+                            android:gravity="end"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text=""
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/lbl_id"
+                            />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="7sp"
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/txn_id"
+                            android:background="@color/color_C7BFBF"
+                            android:layout_height="0.5dp">
+
+                        </View>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/line5"
+                        android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/line1"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/lbl_date"
+                            style="@style/cardlabelStyle"
+                            android:minWidth="130sp"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/lbl_date"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/date"
+                            style="@style/cardtextStyle"
+                            android:minWidth="100sp"
+                            android:layout_width="0dp"
+                            android:gravity="end"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text=""
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/lbl_date"
+                            />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="7sp"
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/date"
+                            android:background="@color/color_C7BFBF"
+                            android:layout_height="0.5dp">
+
+                        </View>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/line4"
+                        android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/line5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/lbl_amount"
+                            style="@style/cardlabelStyle"
+                            android:minWidth="130sp"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/lbl_amount"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/amount"
+                            style="@style/cardtextStyle"
+                            android:minWidth="100sp"
+                            android:layout_width="0dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text=""
+                            android:gravity="end"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/lbl_amount"
+                            />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="7sp"
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/amount"
+                            android:background="@color/color_C7BFBF"
+                            android:layout_height="0.5dp">
+                        </View>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/line6"
+                        android:visibility="gone"
+                        android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/line4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/lbl_status"
+                            style="@style/cardlabelStyle"
+                            android:minWidth="130sp"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/lbl_status"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/status"
+                            style="@style/cardtextStyle"
+                            android:minWidth="100sp"
+                            android:layout_width="0dp"
+                            android:gravity="end"
+                            android:textColor="@color/color_259A2A"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text=""
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/lbl_status"
+                            />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="7sp"
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/status"
+                            android:background="@color/color_C7BFBF"
+                            android:layout_height="0.5dp">
+
+                        </View>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/line18"
+                        android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                        app:layout_constraintTop_toBottomOf="@+id/line6"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:id="@+id/lbl_type"
+                            style="@style/cardlabelStyle"
+                            android:minWidth="130sp"
+                            android:layout_width="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/lbl_type"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/type"
+                            style="@style/cardtextStyle"
+                            android:minWidth="100sp"
+                            android:layout_width="0dp"
+                            android:gravity="end"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text=""
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/lbl_type"
+                            />
+
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="7sp"
+                            android:visibility="invisible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/type"
+                            android:background="@color/color_C7BFBF"
+                            android:layout_height="0.5dp">
+
+                        </View>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/viewmorelayout"
+                        android:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/line18"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_height="wrap_content">
+
+
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:id="@+id/line3"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/lbl_txid"
+                                style="@style/cardlabelStyle"
+                                android:minWidth="130sp"
+                                android:layout_width="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="@string/lbl_sender_name"
+
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/tx_sndname"
+                                style="@style/cardtextStyle"
+                                android:minWidth="100sp"
+                                android:layout_width="0dp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text=""
+                                android:gravity="end"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/lbl_txid"
+                                />
+
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="7sp"
+                                android:visibility="invisible"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/tx_sndname"
+                                android:background="@color/color_C7BFBF"
+                                android:layout_height="0.5dp">
+
+                            </View>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:id="@+id/line2"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/line3"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/lbl_aadhar"
+                                style="@style/cardlabelStyle"
+                                android:minWidth="130sp"
+                                android:layout_width="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="@string/lbl_sender_mobile"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/sndmob"
+                                style="@style/cardtextStyle"
+                                android:minWidth="100sp"
+                                android:layout_width="0dp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text=""
+                                android:gravity="end"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/lbl_aadhar"
+                                />
+
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="7sp"
+                                android:visibility="invisible"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/sndmob"
+                                android:background="@color/color_C7BFBF"
+                                android:layout_height="0.5dp">
+
+                            </View>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:id="@+id/line7"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/line2"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/lbl_bank"
+                                style="@style/cardlabelStyle"
+                                android:minWidth="130sp"
+                                android:layout_width="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="@string/lbl_reciver_name"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/rcname"
+                                style="@style/cardtextStyle"
+                                android:minWidth="100sp"
+                                android:layout_width="0dp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text=""
+                                android:gravity="end"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/lbl_bank"
+                                />
+
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="7sp"
+                                android:visibility="invisible"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rcname"
+                                android:background="@color/color_C7BFBF"
+                                android:layout_height="0.5dp">
+
+                            </View>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:id="@+id/line12"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/line7"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_height="wrap_content">
+
+
+                            <TextView
+                                android:id="@+id/lbl_msg"
+                                style="@style/cardlabelStyle"
+                                android:minWidth="130sp"
+                                android:layout_width="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text="@string/lbl_reciver_mobile"
+                                app:layout_constraintStart_toStartOf="parent"
+                                />
+
+                            <TextView
+                                android:id="@+id/rcmob"
+                                style="@style/cardtextStyle"
+                                android:minWidth="100sp"
+                                android:layout_width="0dp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                android:text=""
+                                android:gravity="end"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@+id/lbl_msg"
+                                />
+
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="7sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/rcmob"
+                                android:background="@color/color_C7BFBF"
+                                android:layout_height="0.5dp">
+
+                            </View>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnConfirm"
+                        style="@style/ThemeAppButton"
+                        android:layout_marginBottom="@dimen/heightsize_26dp"
+                        app:layout_constraintTop_toBottomOf="@+id/viewmorelayout"
+                        android:backgroundTint="@color/color_F72F20"
+                        android:layout_marginTop="@dimen/heightsize_20dp"
+                         android:layout_width="@dimen/heightsize_120dp"
+                        android:layout_height="@dimen/heightsize_50dp"
+                        android:text="@string/btn_ok"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        android:textAllCaps="false" />
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</layout>

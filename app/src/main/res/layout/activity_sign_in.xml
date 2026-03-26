@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F5EBEB">
+
+        <include
+            android:id="@+id/includeLayout"
+            layout="@layout/toolbar_metarial_design">
+
+        </include>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/svLogin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includeLayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llRootLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="230dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/dmsans_bold"
+                    android:paddingStart="16sp"
+                    android:src="@drawable/logo"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/heightsize_16dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    app:cardElevation="@dimen/heightsize_6dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingTop="@dimen/_16sdp"
+                        android:paddingBottom="@dimen/heightsize_32dp">
+
+
+                        <TextView
+                            android:id="@+id/tvDetail"
+                            style="@style/labelStyle"
+                            android:layout_marginHorizontal="@dimen/_16sdp"
+                            android:layout_marginTop="@dimen/textsize_10sp"
+                            android:gravity="center"
+                            android:text="@string/text_sign_in_title"
+                            android:textSize="@dimen/_12sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                        <View
+                            android:id="@+id/viewLineOne"
+                            android:layout_width="@dimen/heightsize_150dp"
+                            android:layout_height="0.3dp"
+                            android:layout_marginHorizontal="@dimen/heightsize_32dp"
+                            android:layout_marginTop="@dimen/heightsize_10dp"
+                            android:layout_marginBottom="@dimen/heightsize_16dp"
+                            android:background="@color/blue_app"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tvDetail" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilmobilenumber"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_32dp"
+                            android:hint="@string/lbl_user_name"
+                            app:layout_constraintTop_toBottomOf="@+id/viewLineOne"
+                            app:placeholderText="@string/placeholder_text_mobile_no">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etmobilenumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+                                android:inputType="number"
+                                android:textCursorDrawable="@drawable/cursor" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilpassword"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_15dp"
+                            android:hint="@string/lbl_password"
+                            app:layout_constraintTop_toBottomOf="@+id/tilmobilenumber"
+                            app:passwordToggleEnabled="true"
+                            app:placeholderText="@string/placeholder_text_password">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etpassword"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+
+                                android:inputType="textPassword"
+                                android:textCursorDrawable="@drawable/cursor" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <RadioGroup
+                            android:id="@+id/toggle"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/heightsize_56dp"
+                            android:layout_marginStart="16sp"
+                            android:layout_marginTop="@dimen/heightsize_15dp"
+                            android:layout_marginEnd="16sp"
+                            android:visibility="gone"
+                            android:background="@drawable/drawable_border_primary"
+                            android:checkedButton="@+id/offer"
+                            android:minHeight="@dimen/heightsize_56dp"
+                            android:orientation="horizontal"
+                            android:padding="@dimen/heightsize_4dp"
+
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tilpassword">
+
+                            <RadioButton
+                                android:id="@+id/radiopin"
+                                android:layout_width="0sp"
+                                android:layout_height="@dimen/heightsize_48dp"
+                                android:layout_marginEnd="1dp"
+                                android:layout_weight="1"
+                                android:checked="true"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:text="@string/txt_pin"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+
+                            <RadioButton
+                                android:id="@+id/radiootp"
+                                android:layout_width="0sp"
+                                android:layout_height="@dimen/heightsize_48dp"
+                                android:layout_marginStart="1dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/dmsans_medium"
+                                android:text="@string/txt_otp"
+                                android:textColor="@color/black"
+                                android:textSize="15sp" />
+                        </RadioGroup>
+
+
+                        <TextView
+                            android:id="@+id/etforgetpassword"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/textsize_16sp"
+                            android:fontFamily="@font/dmsans_regular"
+                            android:gravity="center"
+                            android:text="@string/text_forget_password"
+                            android:textColor="@color/blue_app"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/toggle" />
+
+                        <View
+                            android:id="@+id/viewfg"
+                            android:layout_width="@dimen/heightsize_120dp"
+                            android:layout_height="0.3dp"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginBottom="@dimen/heightsize_36dp"
+                            android:background="@color/blue_app"
+                            android:visibility="visible"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/etforgetpassword" />
+
+
+                        <TextView
+                            android:id="@+id/etforgetpin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/textsize_16sp"
+                            android:fontFamily="@font/dmsans_regular"
+                            android:gravity="center"
+                            android:text="@string/text_forget_pin"
+                            android:textColor="@color/blue_app"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/toggle" />
+
+                        <View
+                            android:id="@+id/viewpn"
+                            android:layout_width="80dp"
+                            android:layout_height="0.3dp"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginBottom="@dimen/heightsize_36dp"
+                            android:background="@color/blue_app"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/etforgetpassword" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogin"
+                    style="@style/ThemeAppButton"
+                    android:layout_marginTop="30sp"
+                    android:layout_marginBottom="@dimen/heightsize_16dp"
+                    android:backgroundTint="@color/color_F72F20"
+                    android:text="@string/btn_text_login"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/materialcard" />
+
+                <TextView
+                    android:id="@+id/etsignin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                    android:layout_marginTop="@dimen/textsize_16sp"
+                    android:fontFamily="@font/dmsans_medium"
+                    android:gravity="center"
+                    android:text="@string/text_create_account"
+                    android:textColor="@color/blue_app"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/btnLogin"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvcontact"
+                    style="@style/TitleStyle"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/textsize_10sp"
+                    android:gravity="center"
+                    android:text="@string/text_contact"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etsignin" />
+
+                <TextView
+                    android:id="@+id/tvmail"
+                    style="@style/TitleStyle"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/textsize_10sp"
+                    android:gravity="center"
+                    android:text="@string/text_mail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvcontact" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+

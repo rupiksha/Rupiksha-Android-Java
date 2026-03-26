@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#030376</color>
+    <color name="purple_500">#030376</color>
+    <color name="purple_700">#030376</color>
+    <color name="teal_200">#030376</color>
+    <color name="teal_700">#030376</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+
+    <color name="blue_app">#030376</color>
+    <color name="color_F5EBEB">#FFFFFFFF</color>
+    <color name="color_F72F20">#030376</color>
+
+    <color name="color_red">#fe0000</color>
+    <color name="color_green">#259A2A</color>
+    <color name="color_blue">#0C2197</color>
+
+    <color name="white_60">#9E9E9E</color>
+    <color name="color_hint">#AF2C22</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="color_151747">#151747</color>
+    <color name="color_464646">#464646</color>
+    <color name="color_C7BFBF">#C7BFBF</color>
+
+    <color name="color_1517">#11133A</color>
+    <color name="color_259A2A">#259A2A</color>
+    <color name="color696969">#696969</color>
+    <color name="colorD7D7D7">#D7D7D7</color>
+    <color name="colorPrimary">#151747</color>
+    <color name="color_C5C5C5">#C5C5C5</color>
+    <color name="color69">#A6A5A5</color>
+    <color name="color1F1F1F">#1F1F1F</color>
+    <color name="colorE6E6E6">#E6E6E6</color>
+    <color name="colorA53B3B">#A53B3B</color>
+    <color name="color182645">#182645</color>
+
+    <color name="color_yellow">#F1B502</color>
+    <color name="color_black_50">#80000000</color>
+    <color name="color_393939">#80393939</color>
+
+    <color name="color_app">#81D4FA</color>
+
+    <color name="color_90CAF9">#4DFFF59D</color>
+    <color name="color_E6EE9C">#4D90CAF9</color>
+    <color name="color_81D4FA">#4DFF8A65</color>
+    <color name="color_9fd5ff">#9fd5ff</color>
+<!--    <color name="color_icon_bg">#FFFFFF</color>-->
+    <color name="color_icon_bg">#030376</color>
+    <color name="color_inner_icon_bg">#030376</color>
+
+
+
+    <color name="white_70">#B3FFFFFF</color>
+    <color name="app_35383F">#35383F</color>
+    <color name="app_1E1E1E">#1E1E1E</color>
+    <color name="app_1E1E1E_40">#661E1E1E</color>
+    <color name="app_1E1E1E_70">#B31E1E1E</color>
+    <color name="app_D8D8D8">#D8D8D8</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_ff3366">#ff3366</color>
+    <color name="color_E3F2FD">#E3F2FD</color>
+
+
+
+
+</resources>
+
+
+   <!--
+   100% — FF
+    99% — FC
+    98% — FA
+    97% — F7
+    96% — F5
+    95% — F2
+    94% — F0
+    93% — ED
+    92% — EB
+    91% — E8
+
+    90% — E6
+    89% — E3
+    88% — E0
+    87% — DE
+    86% — DB
+    85% — D9
+    85% — D9
+    84% — D6
+    83% — D4
+    82% — D1
+    81% — CF
+
+    80% — CC
+    79% — C9
+    78% — C7
+    77% — C4
+    76% — C2
+    75% — BF
+    74% — BD
+    73% — BA
+    72% — B8
+    71% — B5
+
+    70% — B3
+    69% — B0
+    68% — AD
+    67% — AB
+    66% — A8
+    65% — A6
+    64% — A3
+    63% — A1
+    62% — 9E
+    61% — 9C
+
+    60% — 99
+    59% — 96
+    58% — 94
+    57% — 91
+    56% — 8F
+    55% — 8C
+    54% — 8A
+    53% — 87
+    52% — 85
+    51% — 82
+
+    50% — 80
+    49% — 7D
+    48% — 7A
+    47% — 78
+    46% — 75
+    45% — 73
+    44% — 70
+    43% — 6E
+    42% — 6B
+    41% — 69
+
+    40% — 66
+    39% — 63
+    38% — 61
+    37% — 5E
+    36% — 5C
+    35% — 59
+    34% — 57
+    33% — 54
+    32% — 52
+    31% — 4F
+
+    30% — 4D
+    29% — 4A
+    28% — 47
+    27% — 45
+    26% — 42
+    25% — 40
+    24% — 3D
+    23% — 3B
+    22% — 38
+    21% — 36
+    -->
+

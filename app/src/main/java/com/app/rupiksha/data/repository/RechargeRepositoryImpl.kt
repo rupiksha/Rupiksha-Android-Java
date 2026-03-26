@@ -1,0 +1,38 @@
+package com.app.rupiksha.data.repository
+
+import com.app.rupiksha.apis.ApiInterface
+import com.app.rupiksha.domain.repository.RechargeRepository
+import com.app.rupiksha.domain.util.Resource
+import com.app.rupiksha.models.BaseResponse
+import okhttp3.RequestBody
+import javax.inject.Inject
+
+class RechargeRepositoryImpl @Inject constructor(
+    private val api: ApiInterface
+) : RechargeRepository {
+
+    override suspend fun getOperators(headers: Map<String, String>): Resource<BaseResponse> {
+        return safeApiCall { api.getOperator(headers).execute() }
+    }
+
+    override suspend fun fetchOperator(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
+        return safeApiCall { api.fetchoperator(headers, requestBody).execute() }
+    }
+
+    override suspend fun doRecharge(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
+        return safeApiCall { api.doRecharge(headers, requestBody).execute() }
+    }
+
+    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+        return try {
+            val response = call()
+            if (response.isSuccessful && response.body() != null) {
+                Resource.Success(response.body()!!)
+            } else {
+                Resource.Error(response.message() ?: "Unknown error")
+            }
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "An error occurred")
+        }
+    }
+}

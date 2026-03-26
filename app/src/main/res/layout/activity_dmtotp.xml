@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activities.DMTOtpActivity">
+
+        <include
+            android:id="@+id/includeLayout"
+            layout="@layout/toolbar_metarial_design">
+
+        </include>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clScroll"
+            android:layout_width="match_parent"
+            android:background="@color/color_F5EBEB"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includeLayout"
+            android:layout_height="0dp">
+
+            <ImageView
+                android:layout_width="230dp"
+                android:id="@+id/image"
+                android:layout_height="@dimen/heightsize_100dp"
+                android:layout_gravity="center"
+                android:fontFamily="@font/dmsans_bold"
+                android:src="@drawable/logo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:paddingStart="16sp" />
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                app:cardCornerRadius="16sp"
+                app:cardElevation="6dp"
+
+                app:layout_constraintTop_toBottomOf="@+id/image"
+                android:layout_height="wrap_content">
+
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/text_otp_title"
+                        android:textColor="@color/blue_app"
+                        android:textSize="15sp"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="16sp"
+                        android:layout_marginTop="30sp"
+                        android:fontFamily="@font/dmsans_regular"/>
+
+
+
+
+                    <com.app.rupiksha.otpview.OtpView
+                        android:id="@+id/otp_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:focusableInTouchMode="true"
+                        android:layout_marginTop="54sp"
+                        android:fontFamily="@font/dmsans_medium"
+                        android:inputType="number"
+                        android:focusable="true"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginHorizontal="20dp"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        app:OtpCursorColor="@color/black"
+                        app:OtpItemCount="6"
+                        app:OtpItemHeight="62dp"
+                        app:OtpItemSpacing="5dp"
+                        app:OtpLineColor="@color/blue_app"
+                        app:OtpLineWidth="1.5dp"
+                        app:OtpItemRadius="@dimen/_8sdp"
+                        app:OtpState_filled="false"
+                        app:OtpViewType="rectangle" />
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnVerifyPin"
+                        app:backgroundTint="@null"
+                        style="@style/ThemeAppButton"
+                        android:layout_marginTop="35sp"
+                        android:layout_marginBottom="10sp"
+                        android:backgroundTint="@color/blue_app"
+                        android:text="@string/btn_verfiy_otp"
+                        />
+
+
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:padding="8sp"
+                        android:visibility="gone"
+                        android:layout_marginBottom="8dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/dmsans_regular"
+                            android:gravity="center"
+                            android:text="@string/expire_otp"
+                            android:textColor="@color/blue_app"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/tvOptTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/dmsans_regular"
+                            android:gravity="center"
+                            android:text="(30 sec)"
+                            android:textColor="@color/blue_app"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:id="@+id/btnResendOtp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/dmsans_medium"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            android:text="@string/resend_otp"
+                            android:textColor="@color/blue_app"
+                            android:textSize="13sp"  />
+
+                    </LinearLayout>
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--  </ScrollView>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

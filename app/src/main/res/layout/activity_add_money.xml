@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F5EBEB">
+
+        <include
+            android:id="@+id/includeLayout"
+            layout="@layout/toolbar_metarial_design">
+
+        </include>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/svLogin"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/includeLayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/llRootLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/_20sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:focusableInTouchMode="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="230dp"
+                    android:id="@+id/image"
+                    android:layout_height="@dimen/heightsize_100dp"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/dmsans_bold"
+                    android:src="@drawable/logo"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    android:paddingStart="16sp" />
+
+
+
+
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:id="@+id/materialcard"
+                    app:cardElevation="@dimen/heightsize_6dp"
+                    app:layout_constraintTop_toBottomOf="@+id/image"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="@dimen/heightsize_16dp"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:paddingTop="@dimen/_10sdp"
+                        android:paddingBottom="@dimen/heightsize_16dp"
+                        android:layout_height="match_parent">
+
+
+                        <TextView
+                            android:id="@+id/tvtitle"
+                            style="@style/TitleStyle"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:text="@string/txt_add_money"
+                            android:layout_marginHorizontal="@dimen/_16sdp"
+                            android:gravity="center"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                        <View
+                            android:id="@+id/viewLineOne"
+                            android:layout_width="@dimen/heightsize_150dp"
+                            android:layout_height="0.3dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tvtitle"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_32dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="@dimen/heightsize_10dp"
+                            android:layout_marginBottom="@dimen/heightsize_16dp"
+                            android:background="@color/blue_app"
+                            android:visibility="visible"/>
+
+
+
+
+
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/timinduration"
+                            style="@style/dropdown"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_15dp"
+                            android:layout_weight="1" app:hintEnabled="false"
+                            app:layout_constraintTop_toBottomOf="@+id/viewLineOne">
+
+                            <AutoCompleteTextView
+                                android:id="@+id/etbank"
+                                android:layout_width="match_parent"
+                                android:layout_height="56dp"
+                                android:background="@drawable/drawable_edit_text_bg"
+                                android:baselineAligned="false"
+                                android:drawableRight="@drawable/drop"
+                                android:hint="@string/lbl_select_bank"
+                                android:paddingHorizontal="@dimen/heightsize_11dp"
+                                android:imeOptions="actionNext"
+                                android:inputType="none"
+                                android:textColor="@color/black"
+                                android:textColorHint="@color/white_60"
+                                android:textCursorDrawable="@drawable/cursor"/>
+
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilaccountnumber"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_16dp"
+                            android:hint="@string/lbl_account_number"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/timinduration"
+                            app:placeholderText="@string/placeholder_account_number">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etaccountnumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:inputType="number"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilifsc"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_10dp"
+                            android:hint="@string/lbl_ifsc_code"
+                            android:visibility="gone"
+                            app:layout_constraintTop_toBottomOf="@+id/tilaccountnumber"
+                            app:placeholderText="@string/placeholder_ifsc_code">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etifsc"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:inputType="text"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilamount"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_10dp"
+                            android:hint="@string/lbl_enter_amount"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toBottomOf="@+id/tilifsc"
+                            app:placeholderText="@string/placeholder_amount">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etamount"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+                                android:drawableLeft="@drawable/rupees"
+                                android:drawablePadding="@dimen/heightsize_5dp"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:inputType="number"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tilutr"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_10dp"
+                            android:hint="@string/lbl_utr_no"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toBottomOf="@+id/tilamount"
+                            app:placeholderText="@string/placeholder_utr_num">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etutr"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:inputType="number"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:id="@+id/tildate"
+                            style="@style/TextInputLayoutStyle"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            android:layout_marginTop="@dimen/heightsize_10dp"
+                            android:hint="@string/lbl_enter_date"
+                            android:visibility="visible"
+                            app:layout_constraintTop_toBottomOf="@+id/tilutr"
+                            app:placeholderText="@string/placeholder_date">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/heightsize_60dp"
+                                android:fontFamily="@font/dmsans_regular"
+                                android:imeOptions="actionNext"
+                                android:cursorVisible="false"
+                                android:focusable="false"
+                                android:textCursorDrawable="@drawable/cursor"
+                                android:inputType="number"
+                                />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:orientation="horizontal"
+                            android:id="@+id/panlayout"
+                            android:paddingVertical="@dimen/heightsize_16dp"
+                            android:layout_height="@dimen/_120sdp"
+                            android:layout_marginHorizontal="@dimen/heightsize_16dp"
+                            app:layout_constraintTop_toBottomOf="@+id/tildate">
+
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:src="@drawable/uploadscreenshot"
+                                android:layout_weight="1"
+                                android:id="@+id/uploaddoc"
+                                android:layout_margin="@dimen/heightsize_5dp"
+                                android:layout_height="wrap_content">
+                            </ImageView>
+
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/cvUserDetail"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="@dimen/heightsize_5dp"
+
+                                android:layout_weight="1"
+                                app:cardBackgroundColor="@color/white"
+                                app:cardCornerRadius="@dimen/heightsize_8dp"
+                                app:cardElevation="4dp"
+                                app:layout_constraintTop_toTopOf="parent">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+
+                                    <ImageView
+                                        android:layout_width="match_parent"
+                                        android:scaleType="centerCrop"
+                                        android:id="@+id/screenshot"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        android:layout_height="wrap_content">
+
+                                    </ImageView>
+
+
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <ImageView
+                                android:layout_width="@dimen/heightsize_24dp"
+                                android:src="@drawable/cross"
+                                android:id="@+id/cross1"
+                                android:visibility="gone"
+                                app:layout_constraintTop_toTopOf="@+id/panimg"
+                                app:layout_constraintEnd_toEndOf="@+id/panimg"
+                                app:layout_constraintBottom_toTopOf="@+id/panimg"
+                                android:layout_height="@dimen/heightsize_24dp">
+
+                            </ImageView>
+
+                        </LinearLayout>
+
+
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnsubmit"
+                    style="@style/ThemeAppButton"
+                    android:backgroundTint="@color/color_F72F20"
+                    android:layout_marginTop="@dimen/heightsize_16dp"
+                    app:layout_constraintTop_toBottomOf="@+id/materialcard"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/btn_text_submit" />
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
+

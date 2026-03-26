@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/profile_1"
+        android:title="@string/text_profile"/>
+    <item
+        android:id="@+id/change_password"
+        android:icon="@drawable/change_password"
+        android:title="@string/text_change_password"/>
+    <item
+        android:id="@+id/tech_support"
+        android:icon="@drawable/support"
+        android:title="@string/title_change_pin"/>
+    <item
+        android:id="@+id/commissionplan"
+        android:icon="@drawable/support"
+        android:title="@string/title_commission_plan"/>
+
+  <!--  <item
+        android:id="@+id/updateAepsKyc"
+        android:icon="@drawable/aeps_pending_kyc"
+        android:title="@string/label_update_kyc"/>-->
+    <item
+        android:id="@+id/r_c"
+        android:icon="@drawable/raise_complaint"
+        android:title="@string/label_raised_ticket"/>
+    <item
+        android:id="@+id/privacy_policy"
+        android:icon="@drawable/privacy_policy"
+        android:title="@string/text_privacy_policy"/>
+    <item
+        android:id="@+id/t_c"
+        android:icon="@drawable/tandc"
+        android:title="@string/text_terms_conditions"/>
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/logout"
+        android:title="@string/text_logout"/>
+</menu>

@@ -1,0 +1,688 @@
+<resources>
+    <string name="app_name">Rupiksha</string>
+    <string name="nav_open">Open</string>
+    <string name="nav_close">Close</string>
+
+    <!-- login page-->
+    <!--    <string name="text_login_title">Start Your Fintech Services With Our Application</string>-->
+    <string name="text_login_title">Welcome to Rupiksha</string>
+    <string name="btn_text_login">Login</string>
+    <string name="btn_text_sign_in">Sign UP</string>
+    <string name="text_contact">Contact Us- +91 7004128310</string>
+    <string name="text_mail">Email id- support@rupiksha.com</string>
+
+    <!-- sign up/in page-->
+    <string name="lbl_user_name">Mobile Number</string>
+    <string name="placeholder_text_mobile_no">Enter Mobile Number</string>
+    <string name="lbl_password">Password</string>
+    <string name="placeholder_text_password">Enter Password</string>
+    <string name="lbl_name">Name</string>
+    <string name="placeholder_text_name">Enter User Name</string>
+    <string name="lbl_fathername">Father Name</string>
+    <string name="placeholder_text_fathername">Enter Father Name</string>
+    <string name="lbl_firstname">Enter First Name</string>
+    <string name="lbl_bank_holder_name">Enter Bank Holder Name</string>
+    <string name="placeholder_text_firstname">Enter User First Name</string>
+    <string name="placeholder_name">Enter Name</string>
+    <string name="lbl_lastname">Enter Last Name</string>
+    <string name="placeholder_text_lastname">Enter User Last Name</string>
+    <string name="lbl_dob">DOB</string>
+    <string name="lbl_otp">OTP</string>
+    <string name="placeholder_text_dob">Enter DOB</string>
+    <string name="placeholder_text_otp">Enter OTP</string>
+    <string name="lbl_email">Email</string>
+    <string name="placeholder_text_email">Enter Email</string>
+    <string name="text_sign_in_title">Login and Start Journey With Us</string>
+    <string name="text_forget_password">Forget Password ?</string>
+    <string name="text_forget_pin">Forget Pin ?</string>
+    <string name="text_create_account">Create New Account ? Sign Up</string>
+    <string name="text_signup">Sign Up</string>
+    <string name="text_account">Already Have Account ? Login</string>
+    <string name="text_login">Login</string>
+    <string name="text_next">Next</string>
+    <string name="text_skip">Skip</string>
+    <string name="text_sign_up_title">Register Yourself to Our Network</string>
+    <string name="text_select_role">Select Role</string>
+    <string name="text_add_member">Add Member</string>
+    <string name="txt_add_money">Add Money</string>
+    <string name="text_accept_qr">Accept QR Code</string>
+
+    <string name="text_dmt_register">DMT Register</string>
+    <string name="text_dmt_login">DMT Login</string>
+    <string name="txt_finish">Finish</string>
+
+
+    <!-- intro page-->
+    <string name="text_intro_1">Unlock secure financial transactions with our  application, enabling AEPS services for seamless banking and transactions.</string>
+    <string name="text_intro_2">Simplify bill payments for millions with our  application, empowering users to effortlessly settle bills through the secure BBPS.</string>
+    <string name="text_intro_3">Stay connected  with our application, offering seamless Traveling api services for Bus and Flights.</string>
+
+
+    <!-- otp page-->
+    <string name="text_verify_otp">Verify OTP</string>
+    <string name="text_verify_pin">Verify PIN</string>
+    <string name="text_otp_title">Verify Otp Number</string>
+    <string name="text_pin_title">Verify Pin Number</string>
+    <string name="text_pinuper_title">Two-Way Verification</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="expire_otp">The OTP will expire </string>
+
+    <!--two factor authentication page-->
+    <string name="text_two_factor_authentication_title">Two Factor Authentication</string>
+
+    <!--apes kyc verify-->
+    <string name="text_apes_kyc_verify">Aeps Kyc Verify</string>
+    <string name="btn_verfiy_otp">Verify</string>
+
+    <!-- home side bar page-->
+    <string name="text_home">Home</string>
+    <string name="text_report">My Reports</string>
+    <string name="text_wallet">Wallet</string>
+    <string name="text_support">Support</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_change_password">Change Password</string>
+    <string name="text_privacy_policy">Privacy Policy</string>
+    <string name="text_terms_conditions">Terms &amp; Conditions</string>
+    <string name="text_logout">Logout</string>
+    <string name="btn_text_submit">Submit</string>
+    <string name="btn_text_edit">Edit Profile</string>
+    <string name="title_edit_profile">EditProfile</string>
+    <string name="title_my_profile">My Profile</string>
+    <string name="btn_verify_account">Verify Account</string>
+    <string name="btn_add_account">Add Account</string>
+    <string name="btn_shareQurcode">Share QRCode</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- my profile-->
+    <string name="label_name">Name :</string>
+    <string name="label_mobile_number">Mob. Number :</string>
+    <string name="label_rrn">RRN :</string>
+    <string name="lbl_quicktransfer">Quick Transfer : </string>
+    <string name="lbl_qt_charge">Q Transfer Charge : </string>
+    <string name="lbl_payout">Payout : </string>
+    <string name="lbl_payout_charge">Payout Charge : </string>
+    <string name="lbl_dmt">DMT : </string>
+    <string name="lbl_dmt_charge">DMT Charge : </string>
+    <string name="lbl_Total">Total : </string>
+    <string name="label_email">Email-ID :</string>
+    <string name="label_aadhaar">Aadhar Number :</string>
+    <string name="label_pan">Pan Number :</string>
+    <string name="label_address">Address :</string>
+    <string name="label_contact">Contact Us</string>
+
+    <string name="lbl_bank">Bank :</string>
+    <string name="lbl_bname">Name :</string>
+
+    <string name="label_qty">Quantity:</string>
+    <!-- home page-->
+    <string name="label_my_balance">My Balance</string>
+    <string name="label_add_money">Add Money</string>
+    <string name="rupees">₹</string>
+    <string name="label_aeps_service">Banking Services</string>
+    <string name="label_bbps_service">Bharat Connect Services</string>
+    <string name="label_utility_service">Financial Services</string>
+    <string name="label_other_service">Travel Services</string>
+    <string name="label_view_all">View All</string>
+    <string name="label_report">Transaction Reports</string>
+
+    <!-- aeps service page-->
+    <string name="title_aeps_service">ICICI AEPS</string>
+    <string name="title_aeps_twofa">2FA Authentication</string>
+    <string name="title_aeps_ap_twofa">AP2FA Authentication</string>
+    <string name="text_balance_enquiry_title">Balance Enquiry</string>
+    <string name="text_cms_title">CMS Services</string>
+    <string name="text_payout">Payout</string>
+    <string name="text_withdrawal_title">Withdrawal</string>
+    <string name="text_mini_statement_title">Mini Statement</string>
+    <string name="text_aadhar_pay_title">Aadhar Pay</string>
+    <string name="lbl_aadhar_card">Aadhar Card Number</string>
+    <string name="placeholder_aadhar_card">Enter Aadhar Card Number</string>
+    <string name="lbl_select_bank">Select Bank</string>
+    <string name="lbl_select_account">Select Account</string>
+    <string name="lbl_select_device">Select Device</string>
+    <string name="lbl_enter_amount">Amount</string>
+    <string name="lbl_enter_sender_name">Sender Name</string>
+    <string name="placeholder_amount">Enter Amount</string>
+    <string name="btn_check_balance">Check Balance</string>
+    <string name="btn_check_statement">Check Statement</string>
+
+    <!-- aeps service page-->
+    <string name="lbl_select_board">Select Option</string>
+    <string name="lbl_K_number">K Number</string>
+    <string name="placeholder_k_number">K Number</string>
+    <string name="lbl_enter_date">Date</string>
+    <string name="placeholder_date">Enter Date</string>
+    <string name="btn_text_fetch_bill">Fetch Bill</string>
+
+    <string name="lbl_K_id">K Number :</string>
+    <string name="lbl_customer_name">Customer Name :</string>
+
+    <string name="lbl_tx_id">Txn. ID :</string>
+    <string name="lbl_amount">Amount :</string>
+    <string name="lbl_remaining_amount">Remaining Amount :</string>
+    <string name="lbl_txn_amount">Transaction Amount :</string>
+    <string name="lbl_message">Message :</string>
+    <string name="lbl_date">Date :</string>
+    <string name="lbl_rrn">RRN :</string>
+    <string name="lbl_status">Status :</string>
+    <string name="lbl_txntype">Txn.Type :</string>
+    <string name="label_amount">Amount</string>
+
+    <string name="lbl_sender_name">Sender Name:</string>
+    <string name="lbl_sender_mobile">Sender Mobile :</string>
+    <string name="lbl_reciver_name">Reciever Name:</string>
+    <string name="lbl_reciver_mobile">Reciever Mobile :</string>
+
+    <string name="lbl_transation_title">Recent Transition History</string>
+    <string name="lbl_bill_title">Bill Details</string>
+
+    <string name="lbl_board">Electricity Board :</string>
+    <string name="lbl_due_date">Due Date :</string>
+    <string name="lbl_bill_date">Bill Date :</string>
+
+    <string name="btn_paynow">Pay Now</string>
+
+    <string name="txt_view_more">View More</string>
+    <string name="txt_view_less">View Less</string>
+
+    <string name="lbl_service_name">Service Name :</string>
+    <string name="lbl_operator_name">Operator Name :</string>
+    <string name="lbl_type">Type :</string>
+    <string name="lbl_mode">Mode :</string>
+    <string name="lbl_opening_balance">Opening Balance : </string>
+    <string name="lbl_closing_balance">Closing Balance : </string>
+    <string name="txt_cb">Check Balance</string>
+    <string name="txt_view_history">View History</string>
+    <string name="txt_dwn_reciept">Download Reciept</string>
+    <string name="tbl_raised_complained">Raised Complained</string>
+    <string name="txt_share_reciept">Share Receipt</string>
+
+    <string name="txt_wallet_history">Wallet History</string>
+    <string name="txt_wallet_to_wallet">Wallet To Wallet</string>
+
+    <string name="lbl_txn_type">Txn Type </string>
+    <string name="lbl_txn_date">Date</string>
+    <string name="lbl_txn_am">Amount</string>
+    <string name="lbl_Narration">Narration</string>
+
+
+    <string name="txt_pin">PIN</string>
+    <string name="txt_otp">OTP</string>
+
+    <string name="label_bbps_report">Reports</string>
+    <string name="label_commission_plan">Commission Plan</string>
+
+    <string name="lbl_account_number">Account Number</string>
+    <string name="lbl_bank_name">Bank Name</string>
+    <string name="placeholder_account_number">Enter Account Number</string>
+    <string name="lbl_ifsc_code">IFSC Code</string>
+    <string name="lbl_ifsc_code_dash">IFSC Code:</string>
+    <string name="placeholder_ifsc_code">Enter IFSC Code</string>
+    <string name="lbl_confirm_amount">Confirm Amount</string>
+    <string name="placeholder_Confirm_Amount">Enter Confirm Amount</string>
+
+    <string name="lbl_account_no">Account Number :</string>
+    <string name="lbl_utr">UTR :</string>
+
+    <string name="txt_imps">IMPS</string>
+
+    <string name="txt_select">Select</string>
+    <string name="txt_neft">NEFT</string>
+    <string name="txt_rtgs">RTGS</string>
+    <string name="btn_send_otp">Send OTP</string>
+
+    <string name="lbl_stat">Status</string>
+    <string name="lbl_action">Action</string>
+
+    <string name="lbl_bank_list">Bank List</string>
+
+    <string name="label_txn_limit">Txn. Limit :</string>
+    <string name="label_rem_limit">Remaining Limit :</string>
+
+    <string name="label_add_benificiary">Add Beneficary</string>
+    <string name="label_add_account">Add Account</string>
+    <string name="lbl_select_operator">Select Operator</string>
+
+    <string name="text_recharge_title">Recharge</string>
+    <string name="btn_text_view_plan">View Plans</string>
+
+    <string name="txt_details">Details:</string>
+    <string name="txt_data">Data:</string>
+    <string name="txt_validity">Validity:</string>
+
+    <string name="label_view_plans">View Plans</string>
+    <string name="text_kyc">Kyc Verification</string>
+
+    <string name="lbl_shop">Shop Name</string>
+    <string name="placeholder_shopname">Enter Shop Name</string>
+
+    <string name="lbl_shopaddress">Shop Address</string>
+    <string name="placeholder_shopaddress">Enter Shop Address</string>
+
+    <string name="lbl_address">Permanent Address</string>
+    <string name="placeholder_address">Enter Permanent Address</string>
+
+    <string name="lbl_area">Area</string>
+    <string name="placeholder_area">Enter Area</string>
+
+    <string name="lbl_pincode">Pincode</string>
+    <string name="placeholder_pincode">Enter Pincode</string>
+
+    <string name="lbl_district">District</string>
+    <string name="placeholder_district1">Enter District</string>
+
+    <string name="lbl_city">City</string>
+    <string name="placeholder_city">Enter City</string>
+
+    <string name="lbl_State">State</string>
+    <string name="placeholder_state">Enter State</string>
+
+    <string name="lbl_Doc">Select Document</string>
+    <string name="placeholder_doc">Enter Document</string>
+
+    <string name="lbl_pan_number">PAN Number</string>
+    <string name="placeholder_pannumber">Enter PAN Number</string>
+
+    <string name="lbl_adhar">Aadhar-Card Number : </string>
+    <string name="placeholder_adhar">Enter Aadhar-Card Number</string>
+
+    <string name="label_user_kyc">User Kyc</string>
+
+    <string name="label_no_data">No Data Found</string>
+    <string name="label_no_transaction_data">No Recent Transaction Data Found</string>
+    <string name="label_no_data_detail">Oops... this information is not available at a moment</string>
+
+    <string name="lbl_add_money_to_wallet">Add Money to Wallet</string>
+    <string name="lbl_add_money">Add Money</string>
+
+    <string name="lbl_select_account_num">Account Number</string>
+    <string name="placeholder_account_num">Enter Account Number</string>
+
+    <string name="lbl_utr_no">UTR/RRN Number</string>
+    <string name="placeholder_utr_num">Enter UTR/RRN Number</string>
+
+    <!-- Change Password-->
+    <string name="title_change_password">Change Password</string>
+
+    <string name="title_change_pin">Change Pin</string>
+    <string name="title_commission_plan">Commission Plan</string>
+
+    <string name="lbl_old_password">Old Password</string>
+    <string name="placeholder_old_password">Enter Old Password</string>
+
+    <string name="lbl_new_password">New Password</string>
+    <string name="placeholder_new_password">Enter New Password</string>
+
+    <string name="lbl_confirm_password">Confirm Password</string>
+    <string name="placeholder_confirm_password">Enter Confirm Password</string>
+
+    <string name="lbl_old_pin">Old Pin</string>
+    <string name="placeholder_old_pin">Enter Old Pin</string>
+
+    <string name="lbl_new_pin">New Pin</string>
+    <string name="placeholder_new_pin">Enter New Pin</string>
+
+    <string name="lbl_confirm_pin">Confirm Pin</string>
+    <string name="placeholder_confirm_pin">Enter Confirm Pin</string>
+
+    <string name="title_selectdate">Please select start date first</string>
+
+    <string name="text_wallet_to_wallet_title">Send Money To Wallet</string>
+
+    <string name="text_payment_details">Payment Details</string>
+    <string name="text_bill_details">Bill Details</string>
+    <string name="text_receipt">Receipt</string>
+    <string name="text_account_List">Account List</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_close">Close</string>
+    <string name="btn_another">Another Txn</string>
+    <string name="btn_share_screenshot">Share Screenshot</string>
+    <string name="btn_print">print</string>
+    <string name="msg_no_network">Please check your internet connection.</string>
+    <string name="no_internet">No internet connection</string>
+
+    <string name="txt_gps_title">Location disabled</string>
+    <string name="txt_gps_msg">Open your phone settings to activate geolocation services.</string>
+    <string name="txt_gps_btn">SETTINGS</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="msg_internet_seems_slow">Your internet connection seems unstable. Please wait…</string>
+    <string name="msg_unable_connect_server">We cannot connect to the server. Please try again later.</string>
+    <string name="msg_check_internet_connection">Network error. Please check internet connection and try again.</string>
+    <string name="msg_something_went_wrong">Oops! An error has occurred. Please try again.</string>
+
+    //validation message
+    <string name="please_enter_mobile_number">Please enter mobile number</string>
+    <string name="please_enter_digit_mobile_number">Please enter 10 digit mobile number</string>
+    <string name="please_enter_password">Please enter password</string>
+    <string name="please_enter_name">Please enter name</string>
+    <string name="please_enter_fathername">Please enter father name</string>
+    <string name="please_enter_firstname">Please enter first name</string>
+    <string name="please_enter_lastname">Please enter last name</string>
+    <string name="please_holder_bank_name">Please enter Bank Holder Name</string>
+    <string name="please_enter_email">Please enter email</string>
+    <string name="please_enter_valid_email">Please enter a valid email</string>
+    <string name="please_select_user_role">Please select user role</string>
+    <string name="please_select_operator">Please select operator</string>
+    <string name="please_enter_otp">Please enter OTP</string>
+    <string name="please_enter_district">Please enter district</string>
+    <string name="please_enter_pin">Please enter Pin</string>
+    <string name="please_enter_shop_name">Please enter shop name</string>
+    <string name="please_enter_shopaddress">Please enter shop address</string>
+    <string name="please_enter_address">Please enter permanent address</string>
+    <string name="please_enter_area">Please enter permanent area</string>
+    <string name="please_enter_pincode">Please enter pincode</string>
+    <string name="please_enter_city">Please enter city</string>
+    <string name="please_enter_state">Please enter state</string>
+    <string name="please_enter_document">Please select Id proof</string>
+    <string name="please_enter_pancard">Please enter Pan Number</string>
+    <string name="please_enter_aadhar">Please enter Aadhar Number</string>
+    <string name="please_upload_pan_image">Please Upload Pan card Image</string>
+    <string name="please_upload_aadhar_front">Please Upload Aadhar Front Side Image</string>
+    <string name="please_upload_aadhar_back">Please Upload Aadhar Back Side Image</string>
+    <string name="please_upload_doc_file">Please Upload ID proof Image</string>
+    <string name="please_upload_selfie_file">Please Upload Selfie Image</string>
+    <string name="please_enter_amount">Please enter amount</string>
+    <string name="please_enter_sender_name">Please enter Sender name</string>
+    <string name="please_enter_bank">Please Select Bank</string>
+    <string name="please_enter1_bank">Please Enter Bank Name</string>
+    <string name="please_enter_mobile">Please enter Mobile no.</string>
+    <string name="please_enter_device">Please Select Device</string>
+    <string name="please_enter_old_password">Please enter old password</string>
+    <string name="please_enter_new_password">Please enter new password</string>
+    <string name="please_enter_confirm_password">Please enter confirm password</string>
+    <string name="please_enter_confirm_password_match">Please match new and confirm password</string>
+    <string name="please_enter_old_pin">Please enter old Pin</string>
+    <string name="please_enter_new_pin">Please enter new Pin</string>
+    <string name="please_enter_confirm_pin">Please enter confirm Pin</string>
+    <string name="please_enter_confirm_pin_match">Please match new and confirm Pin</string>
+    <string name="please_upload_doc_image">Please Upload Bank Passbook Image</string>
+    <string name="please_enter_mandatory_field">Please enter mendatory field</string>
+    <string name="please_enter_dob">Please enter Date of birth</string>
+    <string name="please_enter_parm1">Please enter Parm1 </string>
+    <string name="please_enter_parm2">Please enter Parm2 </string>
+    <string name="please_enter_parm3">Please enter Parm3 </string>
+
+    <string name="please_enter_account_number">Please enter Account Number </string>
+    <string name="please_enter_ifsc_code">Please enter IFSC code </string>
+    <string name="please_enter_utr_rrn">Please enter UTR/RRN Number</string>
+    <string name="please_enter_date">Please enter Date</string>
+    <string name="please_upload_doc_proof">Please upload doc proof</string>
+
+
+    <string name="text_tooltip1_header1">Step 1</string>
+    <string name="text_tooltip1_header2">Accept Payment</string>
+    <string name="text_tooltip1_des">In this section by scanning of QR Code you can accept payment from customers</string>
+
+    <string name="text_tooltip2_header1">Step 2</string>
+    <string name="text_tooltip2_header2">View Profile</string>
+    <string name="text_tooltip2_des">In this section user can see their personal information and also can edit the profile information</string>
+
+    <string name="text_tooltip3_header1">Step 3</string>
+    <string name="text_tooltip3_header2">Menu List</string>
+    <string name="text_tooltip3_des">In this section user can see their profile,can change password,change pin and view privacy policy etc</string>
+
+    <string name="text_tooltip4_header1">Step 4</string>
+    <string name="text_tooltip4_header2">Wallet Section</string>
+    <string name="text_tooltip4_des">In this section user can see their wallet balance and also can add fund in wallet</string>
+
+
+    <string name="text_tooltip5_header1">Step 5</string>
+    <string name="text_tooltip5_header2">AEPS section</string>
+    <string name="text_tooltip5_des">In this section user can do balance enquiry, Adhar pay, Mini statement and Cash withdrawal</string>
+
+    <string name="text_tooltip6_header1">Step 6</string>
+    <string name="text_tooltip6_header2">BBPS section</string>
+    <string name="text_tooltip6_des">In this section user can do all online payment service like electricity bill ,Cable bill,DTH recharge ,Broadband bill,Traffic challan,Water bill,Insurance etc. </string>
+
+    <string name="text_quit_tutorial">Quit tutorial</string>
+    <string name="text_next_tutorial">Next</string>
+
+    <string name="txt_kyc_status">Your KYC is still pending\nPlease Contact Admin to approve your KYC</string>
+    <string name="btn_exit">Click to exit</string>
+    <string name="btn_back">Click to Home</string>
+
+    <string name="txt_title1">Application Pending</string>
+    <string name="txt_title2">Your application is currently being processed. Please wait for further updates.</string>
+    <string name="label_psa_registration">PSA Registration</string>
+
+
+    //Dmt Activity
+    <string name="tittle_dmt">DMT</string>
+    <string name="text_transfer_amount">Transfer Amount</string>
+    <string name="btn_send">Send</string>
+    <string name="title_dmt_transfer">DMT Transfer </string>
+
+    <string name="lbl_quantity">Quantity</string>
+    <string name="placeholder_text_quantity">Enter Quantity</string>
+    <string name="lbl_amounts">Amount</string>
+
+    <string name="please_enter_qty">Please Enter Quantity</string>
+    <string name="please_enter_message">Please Enter Message</string>
+    <string name="please_enter_txid">Please Enter Transaction ID</string>
+    <string name="please_enter_type">Please Enter Service Type</string>
+
+    <string name="lbl_service_type">Type</string>
+    <string name="placeholder_text_type">Enter Service Type</string>
+
+    <string name="lbl_txid">Transaction ID</string>
+    <string name="placeholder_text_txid">Enter Transaction Id</string>
+
+    <string name="lbl_complained">Remark</string>
+    <string name="placeholder_text_complained">Enter Remark</string>
+    <string name="lbl_mobile">Mobile</string>
+    <string name="placeholder_mobile">Enter mobile no.</string>
+
+
+    <string name="label_raised_complaint">Raised Complaint</string>
+    <string name="label_raised_ticket">Raised Ticket</string>
+    <string name="label_update_kyc">Update Aeps Kyc</string>
+
+
+    <string name="lbl_tickt_id">Ticket Id :</string>
+    <string name="lbl_service">Service :</string>
+    <string name="lbl_admin_msg">Admin Message :</string>
+    <string name="lbl_recent_ticket">Recent Ticket History</string>
+
+
+    <string name="lbl_accept_payment">Accept Payment</string>
+    <string name="txt_my_profile">Profile</string>
+    <string name="lbl_search">Search</string>
+    <string name="placeholder_text_search">Search</string>
+    <string name="text_text_search">Search by Name &amp; Mobile Number</string>
+    <string name="text_two_factor">Two Factor Verification</string>
+
+
+    <string name="label_pan_verfication">Pan Verification</string>
+    <string name="btn_verify_pan">Verify</string>
+    <string name="lbl_gender">Gender :</string>
+    <string name="lbl_constitution">Constitution :</string>
+
+    <string name="label_fasttag">Fasttag</string>
+    <string name="label_credit_bill_payment">Credit Card Payment</string>
+    <string name="text_credit_card">Credit Card</string>
+    <string name="text_no_plan_fetched">No Plan Fetched!!!!</string>
+    <string name="txt_sms">Sms:</string>
+
+    <string name="txt_business">Business</string>
+    <string name="txt_salary">Salary</string>
+
+    <string name="placeholder_residence_no">Enter Residence Number<font color='#FF0000'>*</font></string>
+    <string name="placeholder_road_street">Enter Road  &amp; Street Name<font color='#FF0000'>*</font></string>
+    <string name="placeholder_locality_area">Enter Locality Area<font color='#FF0000'>*</font></string>
+    <string name="placeholder_district">Enter City &amp; State<font color='#FF0000'>*</font></string>
+
+    <string name="placeholder_pincode1">Enter Pincode<font color='#FF0000'>*</font></string>
+    <string name="lbl_adhar1">Aadhar-Card Number<font color='#FF0000'>*</font></string>
+
+    <string name="lbl_pan_name">Pan-Card Holder Name<font color='#FF0000'>*</font></string>
+    <string name="lbl_pan_father_name">Pan-Card Father Name<font color='#FF0000'>*</font></string>
+    <string name="lbl_pan_dob">Pan-Card DOB<font color='#FF0000'>*</font></string>
+    <string name="txt_gender">Gender<font color='#FF0000'>*</font></string>
+
+    <string name="txt_female">Female</string>
+    <string name="txt_male">Male</string>
+
+    <string name="lbl_pan_number1">Pan-Card Number<font color='#FF0000'>*</font></string>
+    <string name="txt_add_more">Add More</string>
+    <string name="txt_investment_detail">Investment Details</string>
+    <string name="txt_upload_investment_detail">Upload Your All Investment Details</string>
+    <string name="txt_school_fee_amount">School Fee</string>
+
+    <string name="txt_no_file_chosen">No File Chosen</string>
+    <string name="txt_amount">Enter Amount</string>
+
+    <string name="txt_lic_amount">LIC Amount</string>
+    <string name="txt_mutual_found_amount">Mutual Found</string>
+    <string name="txt_sukanya_amount">Sukanya Yojna</string>
+    <string name="txt_housing_amount">Housing Loan</string>
+    <string name="txt_health_amount">Health Insurance</string>
+    <string name="txt_other_investment">Other Investment</string>
+    <string name="txt_chose_file">Choose File</string>
+    <string name="txt_download_form">Download Form</string>
+    <string name="txt_download">Download</string>
+    <string name="txt_view_detail">View Detail</string>
+    <string name="txt_verify_document">Verify all information is correct submitted by you.</string>
+    <string name="txt_other_income">Other Income</string>
+
+    <string name="placeholder_rent_income">Enter Rent Income</string>
+    <string name="placeholder_intrest_from_fdr">Enter Intrest From FDR</string>
+    <string name="placeholder_sb_income">Enter SB a/c Income</string>
+    <string name="placeholder_debtors">Enter Debtors<font color='#FF0000'>*</font></string>
+    <string name="placeholder_creditor">Enter Creditor<font color='#FF0000'>*</font></string>
+    <string name="placeholder_cash">Enter Cash<font color='#FF0000'>*</font></string>
+    <string name="placeholder_Stock">Enter Stock<font color='#FF0000'>*</font></string>
+
+    <string name="txt_capital_gain">Capital Gain</string>
+    <string name="txt_add_other_income">Add Any Other Income</string>
+    <string name="txt_for_business">For Business</string>
+    <string name="txt_sale_turnover_amount">Sale &amp; Turnover Amount</string>
+    <string name="txt_rate_of_interest">Rate of interest</string>
+    <string name="txt_lone_duration">Loan duration</string>
+    <string name="txt_any_other">Any other</string>
+    <string name="txt_placeholder_lone_interest_rate">Enter interest Rate</string>
+    <string name="txt_placeholder_lone_duration">Enter Loan duration</string>
+    <string name="txt_placeholder_lone_any_rate">Enter any other</string>
+
+    <string name="txt_sale_building">Sale of Land,\nBuilding ,Property</string>
+    <string name="txt_sale_share">Sale of Share</string>
+    <string name="txt_placeholder_other_expenses">Any Other Expenses on Purchase Property.</string>
+
+    <string name="txt_placeholder_firm_name">Enter Firm Name</string>
+    <string name="txt_placeholder_firm_detail">Enter Firm Detail</string>
+    <string name="txt_document_detail">Documents Details</string>
+    <string name="txt_phone_number">Mobile Number<font color='#FF0000'>*</font></string>
+    <string name="txt_firm_address_no">Firm Address </string>
+
+    <string name="txt_palceholder_gst_number">Enter GST Number</string>
+    <string name="txt_palceholder_cash_sale">Enter Cash Sale<font color='#FF0000'>*</font></string>
+    <string name="txt_palceholder_bank_sale">Enter Bank Sale<font color='#FF0000'>*</font></string>
+
+    <string name="txt_self_detail">Self Declaration By Client</string>
+    <string name="txt_client_name">Client Name<font color='#FF0000'>*</font></string>
+    <string name="txt_register_portal">Register In ITR Portal?</string>
+    <string name="txt_new_user">New User</string>
+    <string name="txt_forgetpassword">Forget Password</string>
+    <string name="txt_register_tax_portal">Register Now at Income Tax Portal</string>
+    <string name="txt_resetpassword_tax_portal">Reset Password on Income Tax Portal</string>
+    <string name="txt_user_name_with_pan">User Name(Client Pan No)<font color='#FF0000'>*</font></string>
+    <string name="txt_password">Password<font color='#FF0000'>*</font></string>
+    <string name="txt_your_detail">Your Details</string>
+    <string name="txt_ite_copy">Copy Of ITR</string>
+    <string name="txt_whatsapp_mobile">WhatsApp Mobile Number<font color='#FF0000'>*</font></string>
+    <string name="txt_register_email">Register Email<font color='#FF0000'>*</font></string>
+    <string name="txt_submit">Submit</string>
+    <string name="lbl_account_name">Bank Name<font color='#FF0000'>*</font></string>
+    <string name="placeholder_account_type">Select Account Type<font color='#FF0000'>*</font></string>
+    <string name="lbl_account_number1">Bank Account Number<font color='#FF0000'>*</font></string>
+    <string name="lbl_ifsc_code1">Bank IFSC Code<font color='#FF0000'>*</font></string>
+    <string name="txt_bank_detail">Add Bank Detail</string>
+    <string name="txt_investment_name">Investment Name</string>
+    <string name="txt_income_name">Enter Other Income Name</string>
+    <string name="txt_add">Add</string>
+    <string name="txt_camera">  Camera</string>
+    <string name="txt_selectoption">Choose an option</string>
+    <string name="txt_gallery">  Gallery</string>
+    <string name="txt_pdf">  PDF</string>
+    <string name="txt_file">  File</string>
+    <string name="txt_form_rtr">Form ITR</string>
+    <string name="txt_saving_account">Saving Account</string>
+    <string name="txt_current_account">Current Account</string>
+    <string name="txt_alert_residence_number">Please enter residence number!</string>
+    <string name="txt_alert_road_name">Please enter road  &amp; street name!</string>
+    <string name="txt_alert_locality_area">Please enter locality area!</string>
+    <string name="txt_alert_citystate_number">Please enter city &amp; state!</string>
+    <string name="txt_alert_pincode_number">Please enter pin-code number!</string>
+    <string name="txt_aadhar_address">Please enter Aadhar-Card address!</string>
+    <string name="txt_aadhar_number">Please enter Aadhar-Card number!</string>
+    <string name="txt_aadhar_number_validation">Aadhar number is not valid</string>
+    <string name="txt_empty_front_aadhar_img">Please attach your Aadhar Card front image!</string>
+    <string name="txt_empty_back_aadhar_img">Please attach your Aadhar Card back image!</string>
+    <string name="txt_empty_gst_registration_img">Please attach your GST registration certificate!</string>
+    <string name="txt_empty_msme_registration_img">Please attach your MSME registration certificate!</string>
+    <string name="txt_empty_self_img_img">Please attach your Self image!</string>
+    <string name="txt_pan_card_name">Please enter Pan-Card holder name!</string>
+    <string name="txt_pan_card_fname">Please enter Pan-Card holder father name!</string>
+    <string name="txt_pan_card_dob">Please select Date Of Birth</string>
+    <string name="txt_select_gender">Please select Gender</string>
+    <string name="txt_pan_card_number">Please enter Pan-Card number!</string>
+    <string name="txt_pan_card_not_valid">Pan-Card number is not valid!</string>
+    <string name="txt_empty_pancard_img">Please attach your Pancard!</string>
+    <string name="txt_empty_form_sis_img">Please attach your Frm16!</string>
+    <string name="txt_alert_bank_detail">Please enter bank detail!</string>
+    <string name="txt_alert_lic_amount">Please enter LIC amount!</string>
+    <string name="txt_alert_mutual_found_amount">Please enter Mutual Found amount!</string>
+    <string name="txt_alert_sukanya_yojna_amount">Please enter Sukanya Yojna amount!</string>
+    <string name="txt_alert_house_lone_amount">Please enter Housing Loan amount!</string>
+    <string name="txt_alert_health_insurance_amount">Please enter Health Insurance amount!</string>
+    <string name="txt_alert_self_detail">Please attach self detail form image!</string>
+    <string name="txt_alert_firm_username">Please enter username!</string>
+    <string name="txt_alert_firm_password">Please enter password!</string>
+    <string name="txt_alert_whatsapp_mobile_number">Please enter  your whatsapp mobile number!</string>
+    <string name="txt_alert_regoster_emailid">Please enter your register email!</string>
+    <string name="txt_alert_verify">Please verify all information is correct submitted by you!</string>
+    <string name="txt_alert_mobilenumber">Please Enter Your Mobile Number!</string>
+    <string name="txt_valid_email">Please Provide a Valid Email!</string>
+    <string name="txt_btn_verify">Verify otp to complete self declaration</string>
+    <string name="txt_btn_verify_otp">Verify otp</string>
+    <string name="txt_firm_detail">Firm Details</string>
+    <string name="txt_alert_empty_other_investment_name">Please enter other investment name!</string>
+    <string name="txt_alert_attach_other_investment_img">Please attach other investment image!</string>
+    <string name="txt_alert_other_investment_amount">Please enter other investment amount!</string>
+    <string name="txt_alert_other_document_file">Please attach other document file.</string>
+    <string name="txt_expenses_name">Enter Other Expenses Name</string>
+    <string name="txt_bank_name">Please enter bank Name</string>
+    <string name="txt_bank_account_number">Please enter bank account number!</string>
+    <string name="txt_bank_ifsc_code">Please enter bank ifsc code!</string>
+    <string name="txt_empty_bank_statement_img">Please attach your Bank Statement!</string>
+    <string name="txt_bank_account_type">Please select account type</string>
+    <string name="txt_alert_school_amount">Please enter School Fee amount!</string>
+    <string name="txt_self_declaration">Self-Declaration for Filing Income Tax Returns</string>
+    <string name="txt_self_declaration_detail">I, hereby declare that, as a client, I authorize Ecuzen Business Partner to file my income tax return on my behalf. I confirm that the data provided by me for the filing of my income tax return is true, correct, and matches with my available records to the best of my knowledge.\nI understand and agree that I will be solely responsible for any misleading or incorrect data provided by me. I acknowledge that it is my duty to ensure the accuracy and completeness of all information provided for the filing of my income tax return.\n\nI further confirm that in order to validate and accept this declaration, I have willingly provided a mobile OTP (One-Time Password) as a confirmation of acceptance.\nI acknowledge that any false or fraudulent declaration made herein may result in penalties under the provisions of the Income Tax Act, 1961 as amended by Finance Act 2021.</string>
+    <string name="txt_agree">I Agree</string>
+    <string name="txt_send_otp">Verification OTP sent on your register mobile number.</string>
+    <string name="placeholder_verification_code">Enter Verification Code</string>
+
+
+    <string name="please_select_shop_image">Please select Shop Image</string>
+    <string name="txt_outlet_id">Please enter Outlet</string>
+    <string name="txt_outlet">Outlet</string>
+    <string name="btn_text_aeps_update_kyc">Update Aeps Kyc</string>
+    <string name="please_dmt_kyc">Money Transfer Kyc</string>
+    <string name="please_verification_aadhar">Aadhar Validation</string>
+
+    <string name="hint_select_type">Select Type</string>
+
+    <array name="transactionType">
+        <item>balanceEnquiry</item>
+        <item>cashWithdrawal</item>
+    </array>
+
+    <string name="lbl_select_account_type">Select Account Type</string>
+    <array name="Select_account_type">
+        <item>Savings Account</item>
+        <item>Current Account</item>
+    </array>
+</resources>

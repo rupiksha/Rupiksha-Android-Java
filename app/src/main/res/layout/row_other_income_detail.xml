@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clTop"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_30sdp"
+        android:paddingHorizontal="@dimen/heightsize_16dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4"/>
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8"/>
+
+
+        <EditText
+            android:id="@+id/txtTitle"
+            android:layout_width="@dimen/heightsize_0dp"
+            android:layout_height="match_parent"
+            android:hint="@string/txt_income_name"
+            android:gravity="start|center_vertical"
+            android:fontFamily="@font/dmsans_medium"
+            android:textSize="@dimen/textsize_11sp"
+            android:textColor="@color/app_1E1E1E"
+            android:textColorHint="@color/app_1E1E1E_40"
+            android:background="@color/color_transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <EditText
+            android:id="@+id/txtAmount"
+            android:layout_width="@dimen/heightsize_0dp"
+            android:layout_height="match_parent"
+            android:hint="@string/txt_amount"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:paddingVertical="@dimen/_4sdp"
+            android:paddingStart="@dimen/_3sdp"
+            android:textColorHint="@color/app_1E1E1E_40"
+            android:fontFamily="@font/dmsans_medium"
+            android:textSize="@dimen/textsize_11sp"
+            android:textColor="@color/app_1E1E1E"
+            android:background="@color/color_transparent"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/guideline1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardViewAdd"
+            android:layout_width="@dimen/heightsize_0dp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginHorizontal="@dimen/_3sdp"
+            android:background="@color/white"
+            app:cardBackgroundColor="@color/white"
+            android:elevation="@dimen/_2sdp"
+            app:cardCornerRadius="@dimen/_3sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline1"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/txtAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/txt_add"
+                android:fontFamily="@font/dmsans_medium"
+                android:textSize="@dimen/textsize_14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0.3dp"
+            android:background="@color/app_D8D8D8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/clTop"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
