@@ -110,9 +110,13 @@ fun AepsKycScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Personal Info
-            Text("Personal Information", fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Start))
+            Text(
+                "Personal Information",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.Start)
+            )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            
+
             Row(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = firstName,
@@ -128,7 +132,7 @@ fun AepsKycScreen(
                     modifier = Modifier.weight(1f)
                 )
             }
-            
+
             OutlinedTextField(
                 value = mobile,
                 onValueChange = { mobile = it },
@@ -136,7 +140,7 @@ fun AepsKycScreen(
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone)
             )
-            
+
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -146,7 +150,11 @@ fun AepsKycScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Address Details", fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Start))
+            Text(
+                "Address Details",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.Start)
+            )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             OutlinedTextField(
@@ -155,7 +163,7 @@ fun AepsKycScreen(
                 label = { Text("Shop Name") },
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             OutlinedTextField(
                 value = address,
                 onValueChange = { address = it },
@@ -184,7 +192,9 @@ fun AepsKycScreen(
                 value = selectedState?.name ?: "",
                 onValueChange = { },
                 label = { Text("Select State") },
-                modifier = Modifier.fillMaxWidth().clickable { showStateDialog = true },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showStateDialog = true },
                 enabled = false,
                 colors = OutlinedTextFieldDefaults.colors(
                     disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -193,7 +203,11 @@ fun AepsKycScreen(
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-            Text("Identity & Bank Details", fontWeight = FontWeight.Bold, modifier = Modifier.align(Alignment.Start))
+            Text(
+                "Identity & Bank Details",
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.align(Alignment.Start)
+            )
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
 
             OutlinedTextField(
@@ -202,7 +216,7 @@ fun AepsKycScreen(
                 label = { Text("PAN Number") },
                 modifier = Modifier.fillMaxWidth()
             )
-            
+
             OutlinedTextField(
                 value = aadharNumber,
                 onValueChange = { aadharNumber = it },
@@ -215,7 +229,9 @@ fun AepsKycScreen(
                 value = selectedBank?.name ?: "",
                 onValueChange = { },
                 label = { Text("Select Bank") },
-                modifier = Modifier.fillMaxWidth().clickable { showBankDialog = true },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable { showBankDialog = true },
                 enabled = false,
                 colors = OutlinedTextFieldDefaults.colors(
                     disabledTextColor = MaterialTheme.colorScheme.onSurface,
@@ -258,12 +274,14 @@ fun AepsKycScreen(
                         "address" to address.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "pincode" to pinCode.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "city" to city.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "state" to (selectedState?.id?.toString() ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+                        "state" to (selectedState?.id?.toString()
+                            ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "pan" to panNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "aadhar" to aadharNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "bankAccountName" to accountHolderName.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "companyBankAccountNumber" to accountNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "companyBankName" to (selectedBank?.name ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull()),
+                        "companyBankName" to (selectedBank?.name
+                            ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "bankIfscCode" to ifscCode.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "lat" to "0.0".toRequestBody("multipart/form-data".toMediaTypeOrNull()),
                         "log" to "0.0".toRequestBody("multipart/form-data".toMediaTypeOrNull()),
@@ -271,7 +289,9 @@ fun AepsKycScreen(
                     )
                     viewModel.submitKyc(map, null)
                 },
-                modifier = Modifier.fillMaxWidth().height(50.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0D47A1)),
                 enabled = kycState !is Resource.Loading
             ) {
@@ -328,9 +348,19 @@ fun StateSelectionDialog(
         text = {
             Box(modifier = Modifier.height(400.dp)) {
                 when (stateListState) {
-                    is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    is Resource.Loading -> CircularProgressIndicator(
+                        modifier = Modifier.align(
+                            Alignment.Center
+                        )
+                    )
+
                     is Resource.Success -> {
-                        val filtered = stateListState.data?.filter { it.name?.contains(searchQuery, ignoreCase = true) == true } ?: emptyList()
+                        val filtered = stateListState.data?.filter {
+                            it.name?.contains(
+                                searchQuery,
+                                ignoreCase = true
+                            ) == true
+                        } ?: emptyList()
                         LazyColumn {
                             items(filtered) { state ->
                                 ListItem(
@@ -341,7 +371,12 @@ fun StateSelectionDialog(
                             }
                         }
                     }
-                    is Resource.Error -> Text(text = stateListState.message ?: "Error", color = Color.Red)
+
+                    is Resource.Error -> Text(
+                        text = stateListState.message ?: "Error",
+                        color = Color.Red
+                    )
+
                     else -> {}
                 }
             }
