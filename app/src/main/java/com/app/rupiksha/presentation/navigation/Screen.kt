@@ -10,6 +10,7 @@ sealed class Screen(val route: String) {
     object Reports : Screen("reports_screen")
     object Wallet : Screen("wallet_screen")
     object Support : Screen("support_screen")
+    object Profile : Screen("profile_screen")
     object Recharge : Screen("recharge_screen/{title}/{type}") {
         fun createRoute(title: String, type: String) = "recharge_screen/$title/$type"
     }
@@ -21,6 +22,9 @@ sealed class Screen(val route: String) {
     object BbpsCategories : Screen("bbps_categories_screen")
     object Aeps : Screen("aeps_screen/{title}/{type}") {
         fun createRoute(title: String, type: String) = "aeps_screen/$title/$type"
+    }
+    object AepsKyc : Screen("aeps_kyc_screen/{title}/{aepsStatus}") {
+        fun createRoute(title: String, aepsStatus: String) = "aeps_kyc_screen/$title/$aepsStatus"
     }
 
     object DmtLogin : Screen("dmt_login_screen")
@@ -39,6 +43,10 @@ sealed class Screen(val route: String) {
     }
     object DmtKyc : Screen("dmt_kyc_screen/{aadhar}/{otpId}/{mobile}") {
         fun createRoute(aadhar: String, otpId: String, mobile: String) = "dmt_kyc_screen/$aadhar/$otpId/$mobile"
+    }
+
+    object Payout : Screen("payout_screen/{title}") {
+        fun createRoute(title: String) = "payout_screen/$title"
     }
 
     object Otp : Screen("otp_screen/{logkey}") {

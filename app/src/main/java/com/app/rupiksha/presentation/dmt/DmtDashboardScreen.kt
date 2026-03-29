@@ -47,14 +47,15 @@ fun DmtDashboardScreen(
     var transferPin by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
-        viewModel.getDmtBankList()
+        viewModel.getDmtAccountList()
     }
 
     LaunchedEffect(initiateTransactionState) {
         if (initiateTransactionState is Resource.Success) {
             showTransferDialog = false
             showOtpDialog = true
-            Toast.makeText(context, initiateTransactionState?.data?.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, initiateTransactionState?.data?.message, Toast.LENGTH_SHORT)
+                .show()
         } else if (initiateTransactionState is Resource.Error) {
             Toast.makeText(context, initiateTransactionState?.message, Toast.LENGTH_SHORT).show()
         }
@@ -64,8 +65,8 @@ fun DmtDashboardScreen(
         if (doTransactionState is Resource.Success) {
             showOtpDialog = false
             Toast.makeText(context, doTransactionState?.data?.message, Toast.LENGTH_LONG).show()
-            // Here you could show a success receipt
             viewModel.resetStates()
+            viewModel.getDmtAccountList() // Refresh list
         } else if (doTransactionState is Resource.Error) {
             Toast.makeText(context, doTransactionState?.message, Toast.LENGTH_SHORT).show()
         }
@@ -118,10 +119,14 @@ fun DmtDashboardScreen(
                         CircularProgressIndicator()
                     }
                 }
+
                 is Resource.Success -> {
                     val beneficiaries = bankListState?.data?.data?.bankdetaillist ?: emptyList()
                     if (beneficiaries.isEmpty()) {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
                             Text("No beneficiaries found")
                         }
                     } else {
@@ -138,11 +143,13 @@ fun DmtDashboardScreen(
                         }
                     }
                 }
+
                 is Resource.Error -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(text = bankListState?.message ?: "Error", color = Color.Red)
                     }
                 }
+
                 else -> {}
             }
         }
@@ -167,13 +174,19 @@ fun DmtDashboardScreen(
                 Button(
                     onClick = {
                         if (transferAmount.isNotEmpty()) {
-                            viewModel.initiateTransaction(selectedBeneficiary?.beneId ?: "", transferAmount)
+                            viewModel.initiateTransaction(
+                                selectedBeneficiary?.beneId ?: "",
+                                transferAmount
+                            )
                         }
                     },
                     enabled = initiateTransactionState !is Resource.Loading
                 ) {
                     if (initiateTransactionState is Resource.Loading) {
-                        CircularProgressIndicator(size = 20.dp, color = Color.White)
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = Color.White
+                        )
                     } else {
                         Text("INITIATE")
                     }
@@ -204,13 +217,18 @@ fun DmtDashboardScreen(
                 Button(
                     onClick = {
                         if (transferPin.isNotEmpty()) {
-                            viewModel.doTransaction(selectedBeneficiary?.beneId ?: "", transferAmount, transferPin)
+                            viewModel.doTransaction(
+                                transferPin
+                            )
                         }
                     },
                     enabled = doTransactionState !is Resource.Loading
                 ) {
                     if (doTransactionState is Resource.Loading) {
-                        CircularProgressIndicator(size = 20.dp, color = Color.White)
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = Color.White
+                        )
                     } else {
                         Text("CONFIRM")
                     }
@@ -255,7 +273,11 @@ fun BeneficiaryItem(beneficiary: DMTBankdetailListModel, onTransferClick: () -> 
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = beneficiary.name ?: "Unknown", fontWeight = FontWeight.Bold)
-                Text(text = "${beneficiary.bankname} - ${beneficiary.accno}", fontSize = 12.sp, color = Color.Gray)
+                Text(
+                    text = "${beneficiary.bankname} - ${beneficiary.accno}",
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
                 Text(text = "IFSC: ${beneficiary.ifsc}", fontSize = 12.sp, color = Color.Gray)
             }
             Button(

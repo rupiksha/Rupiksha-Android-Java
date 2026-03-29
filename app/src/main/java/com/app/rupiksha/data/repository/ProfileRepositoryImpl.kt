@@ -1,36 +1,30 @@
 package com.app.rupiksha.data.repository
 
 import com.app.rupiksha.apis.ApiInterface
-import com.app.rupiksha.domain.repository.WalletRepository
+import com.app.rupiksha.domain.repository.ProfileRepository
 import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.BaseResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
-class WalletRepositoryImpl @Inject constructor(
+class ProfileRepositoryImpl @Inject constructor(
     private val api: ApiInterface
-) : WalletRepository {
+) : ProfileRepository {
 
-    override suspend fun fetchUser(
+    override suspend fun getUserInfo(headers: Map<String, String>): Resource<BaseResponse> {
+        return safeApiCall { api.getUserInfo(headers).execute() }
+    }
+
+    override suspend fun updateProfile(
         headers: Map<String, String>,
-        requestBody: RequestBody
+        partMap: Map<String, RequestBody>,
+        profileImage: MultipartBody.Part?
     ): Resource<BaseResponse> {
-        return safeApiCall { api.getFetchUser(headers, requestBody).execute() }
+        return safeApiCall { api.editProfile(headers, HashMap(partMap), profileImage).execute() }
     }
 
-    override suspend fun doWalletTransaction(
-        headers: Map<String, String>,
-        requestBody: RequestBody
-    ): Resource<BaseResponse> {
-        return safeApiCall { api.getdowalletTransaction(headers, requestBody).execute() }
-    }
-
-    override suspend fun getWalletBalance(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getWalletBalance(headers).execute() }
-    }
-
-    override suspend fun getAddFundBankList(headers: Map<String, String>): Resource<BaseResponse> {
+    override suspend fun getAddMoneyBankList(headers: Map<String, String>): Resource<BaseResponse> {
         return safeApiCall { api.getfundbanklist(headers).execute() }
     }
 

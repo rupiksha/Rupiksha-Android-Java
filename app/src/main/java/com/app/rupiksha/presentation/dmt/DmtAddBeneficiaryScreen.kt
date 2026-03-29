@@ -40,7 +40,7 @@ fun DmtAddBeneficiaryScreen(
     var selectedBank by remember { mutableStateOf<BankModel?>(null) }
     var showBankDialog by remember { mutableStateOf(false) }
 
-    val bankListState by viewModel.bankListState.collectAsState()
+    val dmtBanksState by viewModel.dmtBanksState.collectAsState()
     val addAccountState by viewModel.addAccountState.collectAsState()
     val context = LocalContext.current
 
@@ -163,7 +163,7 @@ fun DmtAddBeneficiaryScreen(
 
     if (showBankDialog) {
         BankSelectionDialog(
-            bankListState = bankListState,
+            bankListState = dmtBanksState,
             onDismiss = { showBankDialog = false },
             onBankSelected = {
                 selectedBank = it

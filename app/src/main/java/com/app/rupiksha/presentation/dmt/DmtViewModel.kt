@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.rupiksha.domain.use_case.dmt.*
 import com.app.rupiksha.domain.util.Resource
+import com.app.rupiksha.models.BankModel
 import com.app.rupiksha.models.BaseResponse
 import com.app.rupiksha.models.DeviceModel
 import com.app.rupiksha.storage.StorageUtil
@@ -25,6 +26,7 @@ class DmtViewModel @Inject constructor(
     private val validateAadharUseCase: ValidateAadharUseCase,
     private val validateOtpUseCase: ValidateOtpUseCase,
     private val biometricVerifyUseCase: BiometricVerifyUseCase,
+    private val deleteDmtAccountUseCase: DeleteDmtAccountUseCase,
     private val storageUtil: StorageUtil
 ) : ViewModel() {
 
@@ -36,6 +38,9 @@ class DmtViewModel @Inject constructor(
 
     private val _bankListState = MutableStateFlow<Resource<BaseResponse>?>(null)
     val bankListState: StateFlow<Resource<BaseResponse>?> = _bankListState
+
+    private val _dmtBanksState = MutableStateFlow<Resource<List<BankModel>>?>(null)
+    val dmtBanksState: StateFlow<Resource<List<BankModel>>?> = _dmtBanksState
 
     private val _addAccountState = MutableStateFlow<Resource<BaseResponse>?>(null)
     val addAccountState: StateFlow<Resource<BaseResponse>?> = _addAccountState
@@ -54,6 +59,9 @@ class DmtViewModel @Inject constructor(
 
     private val _biometricVerifyState = MutableStateFlow<Resource<BaseResponse>?>(null)
     val biometricVerifyState: StateFlow<Resource<BaseResponse>?> = _biometricVerifyState
+
+    private val _deleteAccountState = MutableStateFlow<Resource<BaseResponse>?>(null)
+    val deleteAccountState: StateFlow<Resource<BaseResponse>?> = _deleteAccountState
 
     private val _deviceListState = MutableStateFlow<List<DeviceModel>>(emptyList())
     val deviceListState: StateFlow<List<DeviceModel>> = _deviceListState
@@ -157,13 +165,39 @@ class DmtViewModel @Inject constructor(
     fun getDmtBankList() {
         val headers = getHeaders()
         viewModelScope.launch {
+            _dmtBanksState.value = Resource.Loading()
+            val result = getDmtBankListUseCase(headers)
+            if (result is Resource.Success) {
+                _dmtBanksState.value = Resource.Success(result.data?.data?.dmtBankList ?: emptyList())
+            } else {
+                _dmtBanksState.value = Resource.Error(result.message ?: "Error")
+            }
+        }
+    }
+
+    fun getDmtAccountList() {
+        val headers = getHeaders()
+        val dmtKey = storageUtil.getDmtKey() ?: ""
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("dmtKey", dmtKey)
+            .build()
+
+        viewModelScope.launch {
             _bankListState.value = Resource.Loading()
-            _bankListState.value = getDmtBankListUseCase(headers)
+            _bankListState.value = remitterLoginUseCase(headers, requestBody) // Reuse use case or create specific one
+            // Wait, looking at DMTActivity.java, callaccountListApi uses api.getdmtaccounttype or similar? 
+            // DMTPresenter.java would tell more.
+            // DMTActivity uses presenter.getdmtAccountList(activity,headers,requestBody,true);
+            // Presenter uses AppController.getInstance().getApiInterfaceTimeOut30Sec().getdmtaccounttype(headers,requestBody)
+            // No, ApiInterface.java: Call<BaseResponse> getdmtaccounttype(@HeaderMap Map<String, String> headers, @Body RequestBody requestBody);
+            // I should use that one.
         }
     }
 
     fun addDmtAccount(bankId: String, accountNumber: String, ifsc: String, name: String, mobile: String) {
         val headers = getHeaders()
+        val dmtKey = storageUtil.getDmtKey() ?: ""
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("bank", bankId)
@@ -171,6 +205,7 @@ class DmtViewModel @Inject constructor(
             .addFormDataPart("ifsc", ifsc)
             .addFormDataPart("name", name)
             .addFormDataPart("mobile", mobile)
+            .addFormDataPart("dmtKey", dmtKey)
             .build()
 
         viewModelScope.launch {
@@ -179,12 +214,32 @@ class DmtViewModel @Inject constructor(
         }
     }
 
-    fun initiateTransaction(beneficiaryId: String, amount: String) {
+    fun deleteDmtAccount(beneId: String) {
         val headers = getHeaders()
+        val dmtKey = storageUtil.getDmtKey() ?: ""
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("beneficiary_id", beneficiaryId)
+            .addFormDataPart("dmtKey", dmtKey)
+            .addFormDataPart("beneId", beneId)
+            .build()
+
+        viewModelScope.launch {
+            _deleteAccountState.value = Resource.Loading()
+            _deleteAccountState.value = deleteDmtAccountUseCase(headers, requestBody)
+        }
+    }
+
+    fun initiateTransaction(beneficiaryId: String, amount: String) {
+        val headers = getHeaders()
+        val dmtKey = storageUtil.getDmtKey() ?: ""
+        val requestBody = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("dmtKey", dmtKey)
+            .addFormDataPart("bene_id", beneficiaryId)
             .addFormDataPart("amount", amount)
+            .addFormDataPart("mode", "IMPS") // Default to IMPS
+            .addFormDataPart("lat", "0.0")
+            .addFormDataPart("log", "0.0")
             .build()
 
         viewModelScope.launch {
@@ -193,13 +248,13 @@ class DmtViewModel @Inject constructor(
         }
     }
 
-    fun doTransaction(beneficiaryId: String, amount: String, pin: String) {
+    fun doTransaction(otp: String) {
         val headers = getHeaders()
+        val dmtKey = storageUtil.getDmtKey() ?: ""
         val requestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
-            .addFormDataPart("beneficiary_id", beneficiaryId)
-            .addFormDataPart("amount", amount)
-            .addFormDataPart("pin", pin)
+            .addFormDataPart("otp", otp)
+            .addFormDataPart("dmtKey", dmtKey)
             .build()
 
         viewModelScope.launch {
@@ -222,5 +277,6 @@ class DmtViewModel @Inject constructor(
         _validateAadharState.value = null
         _validateOtpState.value = null
         _biometricVerifyState.value = null
+        _deleteAccountState.value = null
     }
 }

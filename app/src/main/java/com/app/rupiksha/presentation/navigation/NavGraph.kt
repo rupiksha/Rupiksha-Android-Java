@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.app.rupiksha.presentation.aeps.AepsKycScreen
 import com.app.rupiksha.presentation.aeps.AepsScreen
 import com.app.rupiksha.presentation.bbps.BbpsCategoriesScreen
 import com.app.rupiksha.presentation.bbps.BbpsScreen
@@ -17,6 +18,8 @@ import com.app.rupiksha.presentation.login.otp.OtpScreen
 import com.app.rupiksha.presentation.login.otp.PinVerifyScreen
 import com.app.rupiksha.presentation.login.signin.SignInScreen
 import com.app.rupiksha.presentation.login.signup.SignUpScreen
+import com.app.rupiksha.presentation.payout.PayoutScreen
+import com.app.rupiksha.presentation.profile.ProfileScreen
 import com.app.rupiksha.presentation.recharge.RechargeScreen
 import com.app.rupiksha.presentation.reports.ReportDetailsScreen
 import com.app.rupiksha.presentation.reports.ReportScreen
@@ -71,6 +74,9 @@ fun NavGraph(navController: NavHostController) {
         composable(route = Screen.Support.route) {
             SupportScreen(navController = navController)
         }
+        composable(route = Screen.Profile.route) {
+            ProfileScreen(navController = navController)
+        }
         composable(
             route = Screen.Recharge.route,
             arguments = listOf(
@@ -107,6 +113,17 @@ fun NavGraph(navController: NavHostController) {
             val type = backStackEntry.arguments?.getString("type") ?: ""
             AepsScreen(navController = navController, title = title, type = type)
         }
+        composable(
+            route = Screen.AepsKyc.route,
+            arguments = listOf(
+                navArgument("title") { type = NavType.StringType },
+                navArgument("aepsStatus") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+            val aepsStatus = backStackEntry.arguments?.getString("aepsStatus") ?: ""
+            AepsKycScreen(navController = navController, title = title, aepsStatus = aepsStatus)
+        }
         composable(route = Screen.DmtLogin.route) {
             DmtLoginScreen(navController = navController)
         }
@@ -122,14 +139,14 @@ fun NavGraph(navController: NavHostController) {
             DmtRegisterScreen(navController = navController, phone = phone, dmtKey = dmtKey)
         }
         composable(
-            route = "v_aadhar_screen/{phone}",
+            route = Screen.DmtVAadhar.route,
             arguments = listOf(navArgument("phone") { type = NavType.StringType })
         ) { backStackEntry ->
             val phone = backStackEntry.arguments?.getString("phone") ?: ""
             VAadharScreen(navController = navController, phone = phone)
         }
         composable(
-            route = "dmt_otp_screen/{mobile}/{otpId}/{aadhar}",
+            route = Screen.DmtOtp.route,
             arguments = listOf(
                 navArgument("mobile") { type = NavType.StringType },
                 navArgument("otpId") { type = NavType.StringType },
@@ -142,6 +159,19 @@ fun NavGraph(navController: NavHostController) {
             DmtOtpScreen(navController = navController, mobile = mobile, otpId = otpId, aadhar = aadhar)
         }
         composable(
+            route = Screen.DmtKyc.route,
+            arguments = listOf(
+                navArgument("aadhar") { type = NavType.StringType },
+                navArgument("otpId") { type = NavType.StringType },
+                navArgument("mobile") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val aadhar = backStackEntry.arguments?.getString("aadhar") ?: ""
+            val otpId = backStackEntry.arguments?.getString("otpId") ?: ""
+            val mobile = backStackEntry.arguments?.getString("mobile") ?: ""
+            DmtKycScreen(navController = navController, aadhar = aadhar, otpId = otpId, mobile = mobile)
+        }
+        composable(
             route = Screen.DmtDashboard.route,
             arguments = listOf(
                 navArgument("phone") { type = NavType.StringType },
@@ -151,6 +181,16 @@ fun NavGraph(navController: NavHostController) {
             val phone = backStackEntry.arguments?.getString("phone") ?: ""
             val dmtKey = backStackEntry.arguments?.getString("dmtKey") ?: ""
             DmtDashboardScreen(navController = navController, phone = phone, dmtKey = dmtKey)
+        }
+        composable(route = Screen.DmtAddBeneficiary.route) {
+            DmtAddBeneficiaryScreen(navController = navController)
+        }
+        composable(
+            route = Screen.Payout.route,
+            arguments = listOf(navArgument("title") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val title = backStackEntry.arguments?.getString("title") ?: ""
+            PayoutScreen(navController = navController, title = title)
         }
         composable(
             route = Screen.ReportDetails.route,

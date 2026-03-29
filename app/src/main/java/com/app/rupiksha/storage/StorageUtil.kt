@@ -51,6 +51,23 @@ class StorageUtil @Inject constructor(private val context: Context) {
         return gson.fromJson(json, type)
     }
 
+    fun setDmtKey(key: String) {
+        sharedPreferences.edit().putString(AppConstants.SHARED_PREF_DMT_KEY, key).apply()
+    }
+
+    fun getDmtKey(): String? = sharedPreferences.getString(AppConstants.SHARED_PREF_DMT_KEY, null)
+
+    fun saveDMTInfo(dmtInfo: DmtProfileDataModel) {
+        val json = gson.toJson(dmtInfo)
+        sharedPreferences.edit().putString(AppConstants.SHARED_PREF_DMT_INFO, json).apply()
+    }
+
+    fun getDMTInfo(): DmtProfileDataModel? {
+        val json = sharedPreferences.getString(AppConstants.SHARED_PREF_DMT_INFO, null) ?: return null
+        val type = object : TypeToken<DmtProfileDataModel>() {}.type
+        return gson.fromJson(json, type)
+    }
+
     fun clearAll() {
         sharedPreferences.edit().clear().apply()
     }
