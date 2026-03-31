@@ -10,6 +10,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.History
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -24,8 +26,10 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.app.rupiksha.domain.util.Resource
+import com.app.rupiksha.models.BaseResponse
 import com.app.rupiksha.models.DMTBankdetailListModel
 import com.app.rupiksha.presentation.navigation.Screen
+import com.app.rupiksha.presentation.recharge.ReceiptRow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,9 +46,10 @@ fun DmtDashboardScreen(
 
     var showTransferDialog by remember { mutableStateOf(false) }
     var showOtpDialog by remember { mutableStateOf(false) }
+    var showReceiptDialog by remember { mutableStateOf(false) }
     var selectedBeneficiary by remember { mutableStateOf<DMTBankdetailListModel?>(null) }
     var transferAmount by remember { mutableStateOf("") }
-    var transferPin by remember { mutableStateOf("") }
+    var transferOtp by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         viewModel.getDmtAccountList()
@@ -54,8 +59,7 @@ fun DmtDashboardScreen(
         if (initiateTransactionState is Resource.Success) {
             showTransferDialog = false
             showOtpDialog = true
-            Toast.makeText(context, initiateTransactionState?.data?.message, Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(context, initiateTransactionState?.data?.message, Toast.LENGTH_SHORT).show()
         } else if (initiateTransactionState is Resource.Error) {
             Toast.makeText(context, initiateTransactionState?.message, Toast.LENGTH_SHORT).show()
         }
@@ -64,9 +68,8 @@ fun DmtDashboardScreen(
     LaunchedEffect(doTransactionState) {
         if (doTransactionState is Resource.Success) {
             showOtpDialog = false
-            Toast.makeText(context, doTransactionState?.data?.message, Toast.LENGTH_LONG).show()
-            viewModel.resetStates()
-            viewModel.getDmtAccountList() // Refresh list
+            showReceiptDialog = true
+            viewModel.getDmtAccountList()
         } else if (doTransactionState is Resource.Error) {
             Toast.makeText(context, doTransactionState?.message, Toast.LENGTH_SHORT).show()
         }
@@ -82,7 +85,9 @@ fun DmtDashboardScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* Navigate to History */ }) {
+                    IconButton(onClick = { 
+                        navController.navigate(Screen.ReportDetails.createRoute("DMT Reports", "dmt-report"))
+                    }) {
                         Icon(Icons.Default.History, contentDescription = "History")
                     }
                 }
@@ -135,10 +140,16 @@ fun DmtDashboardScreen(
                             contentPadding = PaddingValues(bottom = 80.dp)
                         ) {
                             items(beneficiaries) { beneficiary ->
-                                BeneficiaryItem(beneficiary = beneficiary) {
-                                    selectedBeneficiary = beneficiary
-                                    showTransferDialog = true
-                                }
+                                BeneficiaryItem(
+                                    beneficiary = beneficiary,
+                                    onTransferClick = {
+                                        selectedBeneficiary = beneficiary
+                                        showTransferDialog = true
+                                    },
+                                    onDeleteClick = {
+                                        viewModel.deleteAccount(beneficiary.beneId ?: "")
+                                    }
+                                )
                             }
                         }
                     }
@@ -201,13 +212,13 @@ fun DmtDashboardScreen(
     if (showOtpDialog) {
         AlertDialog(
             onDismissRequest = { showOtpDialog = false },
-            title = { Text("Enter Transaction PIN") },
+            title = { Text("Enter OTP") },
             text = {
                 Column {
                     OutlinedTextField(
-                        value = transferPin,
-                        onValueChange = { transferPin = it },
-                        label = { Text("PIN/OTP") },
+                        value = transferOtp,
+                        onValueChange = { transferOtp = it },
+                        label = { Text("OTP") },
                         modifier = Modifier.fillMaxWidth(),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword)
                     )
@@ -216,10 +227,8 @@ fun DmtDashboardScreen(
             confirmButton = {
                 Button(
                     onClick = {
-                        if (transferPin.isNotEmpty()) {
-                            viewModel.doTransaction(
-                                transferPin
-                            )
+                        if (transferOtp.isNotEmpty()) {
+                            viewModel.doTransaction(transferOtp)
                         }
                     },
                     enabled = doTransactionState !is Resource.Loading
@@ -239,28 +248,26 @@ fun DmtDashboardScreen(
             }
         )
     }
-}
 
-@Composable
-fun RemitterInfoCard(phone: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.White)
-    ) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Remitter:", fontWeight = FontWeight.Bold, color = Color.Gray)
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(text = phone, fontWeight = FontWeight.Bold)
+    if (showReceiptDialog) {
+        DmtReceiptDialog(
+            response = doTransactionState?.data!!,
+            onDismiss = {
+                showReceiptDialog = false
+                viewModel.resetStates()
+                transferAmount = ""
+                transferOtp = ""
             }
-        }
+        )
     }
 }
 
 @Composable
-fun BeneficiaryItem(beneficiary: DMTBankdetailListModel, onTransferClick: () -> Unit) {
+fun BeneficiaryItem(
+    beneficiary: DMTBankdetailListModel,
+    onTransferClick: () -> Unit,
+    onDeleteClick: () -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -280,12 +287,60 @@ fun BeneficiaryItem(beneficiary: DMTBankdetailListModel, onTransferClick: () -> 
                 )
                 Text(text = "IFSC: ${beneficiary.ifsc}", fontSize = 12.sp, color = Color.Gray)
             }
-            Button(
-                onClick = onTransferClick,
-                colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
-            ) {
-                Text("TRANSFER", fontSize = 12.sp)
+            Row {
+                IconButton(onClick = onDeleteClick) {
+                    Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.Red)
+                }
+                Button(
+                    onClick = onTransferClick,
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
+                ) {
+                    Text("TRANSFER", fontSize = 12.sp)
+                }
             }
         }
     }
+}
+
+@Composable
+fun DmtReceiptDialog(response: BaseResponse, onDismiss: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        confirmButton = {
+            Button(onClick = onDismiss, modifier = Modifier.fillMaxWidth()) {
+                Text("CLOSE")
+            }
+        },
+        title = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
+                Icon(
+                    Icons.Default.CheckCircle,
+                    contentDescription = null,
+                    tint = Color.Green,
+                    modifier = Modifier.size(64.dp)
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text("Transaction Success", fontWeight = FontWeight.Bold)
+            }
+        },
+        text = {
+            val data = response.data?.dmtReceiptData
+            Column(modifier = Modifier.fillMaxWidth()) {
+                if (data != null) {
+                    ReceiptRow("Status", data.status ?: "SUCCESS")
+                    ReceiptRow("Transaction ID", data.txnid ?: "N/A")
+                    ReceiptRow("Date", data.date ?: "N/A")
+                    ReceiptRow("Name", data.name ?: "N/A")
+                    ReceiptRow("Account", data.account ?: "N/A")
+                    ReceiptRow("IFSC", data.ifsc ?: "N/A")
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    ReceiptRow("Amount", "₹ ${data.amount1 ?: "0.0"}")
+                    ReceiptRow("Charge", "₹ ${data.amount2 ?: "0.0"}")
+                    ReceiptRow("Total", "₹ ${data.total ?: "0.0"}")
+                } else {
+                    Text(response.message ?: "Transaction Finished")
+                }
+            }
+        }
+    )
 }

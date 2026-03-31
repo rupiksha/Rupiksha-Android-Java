@@ -1,0 +1,14 @@
+package com.app.rupiksha.domain.use_case.qtransfer
+
+import com.app.rupiksha.domain.repository.QuickTransferRepository
+import com.app.rupiksha.domain.util.Resource
+import com.app.rupiksha.models.BaseResponse
+import javax.inject.Inject
+
+class GetGlobalBankListUseCase @Inject constructor(
+    private val repository: QuickTransferRepository
+) {
+    suspend operator fun invoke(headers: Map<String, String>): Resource<BaseResponse> {
+        return repository.getGlobalBankList(headers)
+    }
+}

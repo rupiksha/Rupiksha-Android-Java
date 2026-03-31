@@ -4,6 +4,7 @@ import com.app.rupiksha.apis.ApiInterface
 import com.app.rupiksha.domain.repository.UserRepository
 import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.BaseResponse
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject
 
@@ -41,6 +42,46 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getSupport(headers: Map<String, String>): Resource<BaseResponse> {
         return safeApiCall { api.getSupport(headers).execute() }
+    }
+
+    override suspend fun changePassword(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.changePassword(headers, requestBody).execute() }
+    }
+
+    override suspend fun changePin(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.changePin(headers, requestBody).execute() }
+    }
+
+    override suspend fun getDocumentList(): Resource<BaseResponse> {
+        return safeApiCall { api.getDocumentList().execute() }
+    }
+
+    override suspend fun submitUserKyc(
+        headers: Map<String, String>,
+        map: Map<String, RequestBody>,
+        panImage: MultipartBody.Part?,
+        aadharFront: MultipartBody.Part?,
+        aadharBack: MultipartBody.Part?,
+        docImage: MultipartBody.Part?,
+        selfie: MultipartBody.Part?
+    ): Resource<BaseResponse> {
+        return safeApiCall {
+            api.getuserKyc(
+                HashMap(headers),
+                HashMap(map),
+                panImage,
+                aadharFront,
+                aadharBack,
+                docImage,
+                selfie
+            ).execute()
+        }
     }
 
     private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {

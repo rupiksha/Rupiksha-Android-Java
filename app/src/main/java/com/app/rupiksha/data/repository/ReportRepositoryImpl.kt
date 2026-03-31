@@ -19,6 +19,10 @@ class ReportRepositoryImpl @Inject constructor(
         return safeApiCall { api.getReport(headers, requestBody).execute() }
     }
 
+    override suspend fun getCommissionPlan(headers: Map<String, String>): Resource<BaseResponse> {
+        return safeApiCall { api.getCommissionPlan(headers).execute() }
+    }
+
     private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()

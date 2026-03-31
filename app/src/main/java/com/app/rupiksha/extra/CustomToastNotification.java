@@ -11,11 +11,9 @@ import com.app.rupiksha.R;
 import com.app.rupiksha.databinding.CustomToastNotificationBinding;
 
 
-public class CustomToastNotification
-{
+public class CustomToastNotification {
 
-    public CustomToastNotification(Context context, String message)
-    {
+    public CustomToastNotification(Context context, String message) {
         if (context != null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             CustomToastNotificationBinding binding = DataBindingUtil.inflate(inflater,

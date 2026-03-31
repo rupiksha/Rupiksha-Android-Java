@@ -53,4 +53,34 @@ abstract class RepositoryModule {
     abstract fun bindDmtRepository(
         dmtRepositoryImpl: DmtRepositoryImpl
     ): DmtRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindPayoutRepository(
+        payoutRepositoryImpl: PayoutRepositoryImpl
+    ): PayoutRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSupportRepository(
+        supportRepositoryImpl: SupportRepositoryImpl
+    ): SupportRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindQuickTransferRepository(
+        quickTransferRepositoryImpl: QuickTransferRepositoryImpl
+    ): QuickTransferRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindProfileRepository(
+        profileRepositoryImpl: ProfileRepositoryImpl
+    ): ProfileRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUtiRepository(
+        utiRepositoryImpl: UtiRepositoryImpl
+    ): UtiRepository
 }

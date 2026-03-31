@@ -15,4 +15,6 @@ interface AepsRepository {
     suspend fun getStateList(): Resource<BaseResponse>
     suspend fun submitAepsKyc(headers: Map<String, String>, map: Map<String, RequestBody>, shopImage: MultipartBody.Part?): Resource<BaseResponse>
     suspend fun updateAepsKyc(headers: Map<String, String>, map: Map<String, RequestBody>, shopImage: MultipartBody.Part?): Resource<BaseResponse>
+    suspend fun verifyTwoFactor(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse>
+    suspend fun verifyApTwoFactor(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse>
 }

@@ -1,5 +1,8 @@
 package com.app.rupiksha.presentation.login
 
+import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -15,6 +18,8 @@ import com.app.rupiksha.presentation.navigation.Screen
 
 @Composable
 fun LoginScreen(navController: NavController) {
+    val context = LocalContext.current
+    
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +59,13 @@ fun LoginScreen(navController: NavController) {
         
         TextButton(
             onClick = {
-                // Dial action can be moved to a helper or kept here
+                val u = Uri.parse("tel:" + "+91 7004128310")
+                val i = Intent(Intent.ACTION_DIAL, u)
+                try {
+                    context.startActivity(i)
+                } catch (s: SecurityException) {
+                    Toast.makeText(context, "An error occurred", Toast.LENGTH_LONG).show()
+                }
             }
         ) {
             Text(text = "Contact Us: +91 7004128310")

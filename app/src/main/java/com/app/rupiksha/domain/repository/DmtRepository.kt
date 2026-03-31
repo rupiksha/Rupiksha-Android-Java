@@ -15,7 +15,13 @@ interface DmtRepository {
         requestBody: RequestBody
     ): Resource<BaseResponse>
 
+    suspend fun getDmtAccountList(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse>
+
     suspend fun getDmtBankList(headers: Map<String, String>): Resource<BaseResponse>
+
     suspend fun addDmtAccount(
         headers: Map<String, String>,
         requestBody: RequestBody

@@ -23,9 +23,11 @@ class AepsViewModel @Inject constructor(
     private val aepsBalanceEnquiryUseCase: AepsBalanceEnquiryUseCase,
     private val aepsCashWithdrawalUseCase: AepsCashWithdrawalUseCase,
     private val aepsMiniStatementUseCase: AepsMiniStatementUseCase,
+    private val aepsAadharPayUseCase: AepsAadharPayUseCase,
     private val getStateListUseCase: GetStateListUseCase,
     private val submitAepsKycUseCase: SubmitAepsKycUseCase,
     private val updateAepsKycUseCase: UpdateAepsKycUseCase,
+    private val verifyTwoFactorUseCase: VerifyTwoFactorUseCase,
     private val storageUtil: StorageUtil
 ) : ViewModel() {
 
@@ -44,8 +46,12 @@ class AepsViewModel @Inject constructor(
     private val _kycState = MutableStateFlow<Resource<BaseResponse>?>(null)
     val kycState: StateFlow<Resource<BaseResponse>?> = _kycState
 
+    private val _twoFactorState = MutableStateFlow<Resource<BaseResponse>?>(null)
+    val twoFactorState: StateFlow<Resource<BaseResponse>?> = _twoFactorState
+
     init {
         loadDevices()
+        getBankList()
     }
 
     private fun loadDevices() {
@@ -92,6 +98,22 @@ class AepsViewModel @Inject constructor(
         }
     }
 
+    fun verifyTwoFactor(parsedData: Map<String, String>, lat: String, log: String) {
+        val headers = getHeaders()
+        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+            .addFormDataPart("lat", lat)
+            .addFormDataPart("log", log)
+            
+        parsedData.forEach { (key, value) ->
+            builder.addFormDataPart(key, value)
+        }
+
+        viewModelScope.launch {
+            _twoFactorState.value = Resource.Loading()
+            _twoFactorState.value = verifyTwoFactorUseCase(headers, builder.build())
+        }
+    }
+
     fun performTransaction(
         type: String,
         mobile: String,
@@ -126,6 +148,7 @@ class AepsViewModel @Inject constructor(
                 "Withdrawal" -> aepsCashWithdrawalUseCase(headers, builder.build())
                 "Balance Enquiry" -> aepsBalanceEnquiryUseCase(headers, builder.build())
                 "Mini Statement" -> aepsMiniStatementUseCase(headers, builder.build())
+                "Aadhar Pay" -> aepsAadharPayUseCase(headers, builder.build())
                 else -> Resource.Error("Invalid transaction type")
             }
             _transactionState.value = result
@@ -133,12 +156,13 @@ class AepsViewModel @Inject constructor(
     }
 
     private fun getHeaders() = mapOf(
-        "headerToken" to (storageUtil.getAccessToken() ?: ""),
-        "headerKey" to storageUtil.getApiKey()
+        "headerToken" to (storageUtil.accessToken),
+        "headerKey" to storageUtil.apiKey
     )
 
     fun resetTransactionState() {
         _transactionState.value = null
         _kycState.value = null
+        _twoFactorState.value = null
     }
 }

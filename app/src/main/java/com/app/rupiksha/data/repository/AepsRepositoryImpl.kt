@@ -33,9 +33,6 @@ class AepsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun aadharPay(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        // Casting issue previously, let's fix it by using PartMap if needed or Body
-        // ApiInterface shows: Call<BaseResponse> aepsaadharPay(@HeaderMap Map<String, String> headers, @PartMap() Map<String, RequestBody> partMa);
-        // It's defined as @Multipart @POST("aeps/aadhar-pay")
         return Resource.Error("Multipart mapping needed for Aadhar Pay")
     }
 
@@ -44,13 +41,19 @@ class AepsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun submitAepsKyc(headers: Map<String, String>, map: Map<String, RequestBody>, shopImage: MultipartBody.Part?): Resource<BaseResponse> {
-        // In ApiInterface: Call<BaseResponse> getDokyc(@HeaderMap Map<String, String> headers, @PartMap() HashMap<String, RequestBody> map, @Part MultipartBody.Part uploadedshopImage);
         return safeApiCall { api.getDokyc(headers, HashMap(map), shopImage).execute() }
     }
 
     override suspend fun updateAepsKyc(headers: Map<String, String>, map: Map<String, RequestBody>, shopImage: MultipartBody.Part?): Resource<BaseResponse> {
-        // In ApiInterface: Call<BaseResponse> getUpdateAepsKyc(@HeaderMap Map<String, String> headers, @PartMap() HashMap<String, RequestBody> map, @Part MultipartBody.Part uploadedshopImage);
         return safeApiCall { api.getUpdateAepsKyc(headers, HashMap(map), shopImage).execute() }
+    }
+
+    override suspend fun verifyTwoFactor(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
+        return safeApiCall { api.verifyTwoFAFingurePrint(headers, requestBody).execute() }
+    }
+
+    override suspend fun verifyApTwoFactor(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
+        return safeApiCall { api.verifyAPTwoFAFingurePrint(headers, requestBody).execute() }
     }
 
     private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {

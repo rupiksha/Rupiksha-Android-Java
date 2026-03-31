@@ -49,7 +49,7 @@ fun PayoutScreen(
     var mobile by remember { mutableStateOf("") }
     var senderName by remember { mutableStateOf("") }
     var selectedMode by remember { mutableStateOf("IMPS") }
-    
+
     var showOtpDialog by remember { mutableStateOf(false) }
     var showPinDialog by remember { mutableStateOf(false) }
     var txnKey by remember { mutableStateOf("") }
@@ -158,7 +158,10 @@ fun PayoutScreen(
                                 }
                             }
                         }
-                        else -> { DropdownMenuItem(text = { Text("Loading...") }, onClick = {}) }
+
+                        else -> {
+                            DropdownMenuItem(text = { Text("Loading...") }, onClick = {})
+                        }
                     }
                 }
             }
@@ -186,7 +189,10 @@ fun PayoutScreen(
 
             // Mode Selection
             Text("Transfer Mode", fontWeight = FontWeight.Bold)
-            Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 listOf("IMPS", "NEFT", "RTGS").forEach { m ->
                     Row(
                         modifier = Modifier.selectable(
@@ -242,6 +248,7 @@ fun PayoutScreen(
                         }
                     }
                 }
+
                 else -> {}
             }
         }
@@ -249,7 +256,7 @@ fun PayoutScreen(
 
     if (showOtpDialog || showPinDialog) {
         AlertDialog(
-            onDismissRequest = { 
+            onDismissRequest = {
                 showOtpDialog = false
                 showPinDialog = false
             },
@@ -273,7 +280,10 @@ fun PayoutScreen(
                     enabled = transactionState !is Resource.Loading
                 ) {
                     if (transactionState is Resource.Loading) {
-                        CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color.White)
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            color = Color.White
+                        )
                     } else {
                         Text("VERIFY")
                     }
@@ -292,7 +302,11 @@ fun PayoutAccountItem(account: PayoutAccountModel, onDelete: () -> Unit) {
         Row(modifier = Modifier.padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = account.name ?: "", fontWeight = FontWeight.Bold)
-                Text(text = "${account.bankName} - ${account.account}", fontSize = 12.sp, color = Color.Gray)
+                Text(
+                    text = "${account.bankName} - ${account.account}",
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
             }
             IconButton(onClick = onDelete) {
                 Icon(Icons.Default.Delete, contentDescription = "Delete", tint = Color.Red)

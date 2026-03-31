@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -51,14 +50,30 @@ fun HomeScreen(
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            HomeDrawerContent(userInfo = userInfo, onLogout = { viewModel.logout() })
+            HomeDrawerContent(
+                userInfo = userInfo, 
+                onLogout = { viewModel.logout() },
+                onProfileClick = {
+                    scope.launch { drawerState.close() }
+                    navController.navigate(Screen.Profile.route)
+                },
+                onChangePasswordClick = {
+                    scope.launch { drawerState.close() }
+                    navController.navigate(Screen.ChangePassword.route)
+                },
+                onChangePinClick = {
+                    scope.launch { drawerState.close() }
+                    navController.navigate(Screen.ChangePin.route)
+                }
+            )
         }
     ) {
         Scaffold(
             topBar = {
                 HomeTopBar(
                     onMenuClick = { scope.launch { drawerState.open() } },
-                    profileImageUrl = userInfo?.profile
+                    profileImageUrl = userInfo?.profile,
+                    onProfileClick = { navController.navigate(Screen.Profile.route) }
                 )
             },
             bottomBar = { HomeBottomBar(navController) },
@@ -77,22 +92,31 @@ fun HomeScreen(
                         .background(Color(0xFFF5F5F5))
                 ) {
                     // Wallet Balance Card
-                    WalletBalanceCard(balance = userProfileState?.data?.walletBalance ?: 0.0)
+                    WalletBalanceCard(
+                        balance = userProfileState?.data?.walletBalance ?: 0.0,
+                        onRefresh = { viewModel.getUserProfile() },
+                        onAddMoney = { navController.navigate(Screen.Wallet.route) } // Assuming tab navigation or handled in WalletScreen
+                    )
 
                     // Services Sections
                     if (userProfileState is Resource.Success) {
                         val data = userProfileState?.data?.data
                         
                         ServiceSection(title = "AEPS Services", items = data?.aeps ?: emptyList()) { service ->
-                            navController.navigate(Screen.Recharge.createRoute(service.name, service.type))
+                            navController.navigate(Screen.Aeps.createRoute(service.name, service.type))
                         }
                         
                         ServiceSection(title = "BBPS Services", items = data?.bbps ?: emptyList()) { service ->
-                            navController.navigate(Screen.Recharge.createRoute(service.name, service.type))
+                            navController.navigate(Screen.Bbps.createRoute(service.name, service.type))
                         }
 
                         ServiceSection(title = "Money Transfer", items = data?.utility ?: emptyList()) { service ->
-                            navController.navigate(Screen.Recharge.createRoute(service.name, service.type))
+                            when (service.type.lowercase()) {
+                                "dmt" -> navController.navigate(Screen.DmtLogin.route)
+                                "payout" -> navController.navigate(Screen.Payout.createRoute(service.name))
+                                "qt" -> navController.navigate(Screen.QuickTransfer.createRoute(service.name))
+                                else -> { /* Handle others like CMS, UTI, MATM */ }
+                            }
                         }
                     } else if (userProfileState is Resource.Loading) {
                         Box(modifier = Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
@@ -107,7 +131,7 @@ fun HomeScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopBar(onMenuClick: () -> Unit, profileImageUrl: String?) {
+fun HomeTopBar(onMenuClick: () -> Unit, profileImageUrl: String?, onProfileClick: () -> Unit) {
     TopAppBar(
         title = { Text("Rupiksha") },
         navigationIcon = {
@@ -122,7 +146,7 @@ fun HomeTopBar(onMenuClick: () -> Unit, profileImageUrl: String?) {
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
-                    .clickable { /* Navigate to profile */ },
+                    .clickable { onProfileClick() },
                 placeholder = painterResource(R.drawable.logo)
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -131,7 +155,13 @@ fun HomeTopBar(onMenuClick: () -> Unit, profileImageUrl: String?) {
 }
 
 @Composable
-fun HomeDrawerContent(userInfo: com.app.rupiksha.models.ModelUserInfo?, onLogout: () -> Unit) {
+fun HomeDrawerContent(
+    userInfo: com.app.rupiksha.models.ModelUserInfo?, 
+    onLogout: () -> Unit,
+    onProfileClick: () -> Unit,
+    onChangePasswordClick: () -> Unit,
+    onChangePinClick: () -> Unit
+) {
     ModalDrawerSheet {
         Column(modifier = Modifier.padding(16.dp)) {
             AsyncImage(
@@ -142,13 +172,25 @@ fun HomeDrawerContent(userInfo: com.app.rupiksha.models.ModelUserInfo?, onLogout
             Spacer(modifier = Modifier.height(8.dp))
             Text(text = userInfo?.name ?: "User", fontWeight = FontWeight.Bold)
             Text(text = userInfo?.email ?: "", fontSize = 12.sp)
-            Divider(modifier = Modifier.padding(vertical = 16.dp))
+            HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
             
             NavigationDrawerItem(
                 label = { Text("Profile") },
                 selected = false,
-                onClick = { /* Navigate */ },
+                onClick = onProfileClick,
                 icon = { Icon(Icons.Default.Person, contentDescription = null) }
+            )
+            NavigationDrawerItem(
+                label = { Text("Change Password") },
+                selected = false,
+                onClick = onChangePasswordClick,
+                icon = { Icon(Icons.Default.Lock, contentDescription = null) }
+            )
+            NavigationDrawerItem(
+                label = { Text("Change PIN") },
+                selected = false,
+                onClick = onChangePinClick,
+                icon = { Icon(Icons.Default.Pin, contentDescription = null) }
             )
             NavigationDrawerItem(
                 label = { Text("Logout") },
@@ -192,7 +234,7 @@ fun HomeBottomBar(navController: NavController) {
 }
 
 @Composable
-fun WalletBalanceCard(balance: Double) {
+fun WalletBalanceCard(balance: Double, onRefresh: () -> Unit, onAddMoney: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -207,10 +249,10 @@ fun WalletBalanceCard(balance: Double) {
                 Text(text = "Wallet Balance", color = Color.Gray, fontSize = 14.sp)
                 Text(text = "₹ $balance", fontSize = 24.sp, fontWeight = FontWeight.Bold)
             }
-            IconButton(onClick = { /* Refresh */ }) {
+            IconButton(onClick = onRefresh) {
                 Icon(Icons.Default.Refresh, contentDescription = "Refresh")
             }
-            Button(onClick = { /* Add Money */ }) {
+            Button(onClick = onAddMoney) {
                 Text("ADD")
             }
         }
