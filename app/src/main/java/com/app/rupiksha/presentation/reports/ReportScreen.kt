@@ -64,7 +64,7 @@ fun ReportScreen(
                 ) {
                     items(reports) { report ->
                         ReportItem(report = report) {
-                             navController.navigate(Screen.ReportDetails.createRoute(report.name, report.type))
+                             navController.navigate(Screen.ReportDetails.createRoute(report.name ?: "", report.type ?: ""))
                         }
                     }
                 }
@@ -106,7 +106,7 @@ fun ReportItem(report: ReportTypeModel, onClick: () -> Unit) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = report.name,
+                text = report.name ?: "",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,

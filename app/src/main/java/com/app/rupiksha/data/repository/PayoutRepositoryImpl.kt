@@ -13,7 +13,7 @@ class PayoutRepositoryImpl @Inject constructor(
 ) : PayoutRepository {
 
     override suspend fun getPayoutBankList(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getPayoutBank(headers).execute() }
+        return safeApiCall { api.getPayoutBank(headers) }
     }
 
     override suspend fun addPayoutAccount(
@@ -21,31 +21,35 @@ class PayoutRepositoryImpl @Inject constructor(
         map: Map<String, RequestBody>,
         panImage: MultipartBody.Part?
     ): Resource<BaseResponse> {
-        return safeApiCall { api.addPayoutAccount(headers, HashMap(map), panImage).execute() }
+        return if (panImage != null) {
+            safeApiCall { api.addPayoutAccount(headers, HashMap(map), panImage) }
+        } else {
+            Resource.Error("PAN image is required")
+        }
     }
 
     override suspend fun deletePayoutAccount(
         headers: Map<String, String>,
         requestBody: RequestBody
     ): Resource<BaseResponse> {
-        return safeApiCall { api.deletePayoutAccount(headers, requestBody).execute() }
+        return safeApiCall { api.deletePayoutAccount(headers, requestBody) }
     }
 
     override suspend fun initiatePayoutTransaction(
         headers: Map<String, String>,
         requestBody: RequestBody
     ): Resource<BaseResponse> {
-        return safeApiCall { api.initiatePayoutTransaction(headers, requestBody).execute() }
+        return safeApiCall { api.initiatePayoutTransaction(headers, requestBody) }
     }
 
     override suspend fun doPayoutTransaction(
         headers: Map<String, String>,
         requestBody: RequestBody
     ): Resource<BaseResponse> {
-        return safeApiCall { api.dopayouttransaction(headers, requestBody).execute() }
+        return safeApiCall { api.dopayouttransaction(headers, requestBody) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

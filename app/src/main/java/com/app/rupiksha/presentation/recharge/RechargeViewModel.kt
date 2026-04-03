@@ -1,5 +1,6 @@
 package com.app.rupiksha.presentation.recharge
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.rupiksha.domain.use_case.recharge.DoRechargeUseCase
@@ -23,8 +24,11 @@ class RechargeViewModel @Inject constructor(
     private val getOperatorsUseCase: GetOperatorsUseCase,
     private val fetchOperatorUseCase: FetchOperatorUseCase,
     private val doRechargeUseCase: DoRechargeUseCase,
-    private val storageUtil: StorageUtil
+    private val storageUtil: StorageUtil,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    private val type: String = savedStateHandle.get<String>("type") ?: "mobile"
 
     private val _operatorsState = MutableStateFlow<Resource<List<RechargeOperatorModel>>?>(null)
     val operatorsState: StateFlow<Resource<List<RechargeOperatorModel>>?> = _operatorsState
@@ -42,14 +46,14 @@ class RechargeViewModel @Inject constructor(
     val planTitlesState: StateFlow<List<PlanDataModel>> = _planTitlesState
 
     init {
-        getOperators()
+        getOperators(type)
     }
 
-    fun getOperators() {
+    fun getOperators(type: String) {
         val headers = getHeaders()
         viewModelScope.launch {
             _operatorsState.value = Resource.Loading()
-            val result = getOperatorsUseCase(headers)
+            val result = getOperatorsUseCase(type, headers)
             if (result is Resource.Success) {
                 _operatorsState.value =
                     Resource.Success(result.data?.data?.operatorList ?: emptyList())
@@ -94,8 +98,8 @@ class RechargeViewModel @Inject constructor(
     }
 
     private fun getHeaders() = mapOf(
-        "headerToken" to (storageUtil.getAccessToken() ?: ""),
-        "headerKey" to storageUtil.getApiKey()
+        "headerToken" to storageUtil.accessToken,
+        "headerKey" to storageUtil.apiKey
     )
 
     fun resetRechargeState() {

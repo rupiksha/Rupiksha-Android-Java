@@ -77,7 +77,7 @@ fun BbpsCategoriesScreen(
                         ) {
                             items(categories) { category ->
                                 BbpsCategoryItem(category = category) {
-                                    navController.navigate(Screen.Bbps.createRoute(category.name, category.type))
+                                    navController.navigate(Screen.Bbps.createRoute(category.name ?: "", category.type ?: ""))
                                 }
                             }
                         }
@@ -126,7 +126,7 @@ fun BbpsCategoryItem(category: BbpsServiceModel, onClick: () -> Unit) {
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = category.name,
+                text = category.name ?: "",
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,

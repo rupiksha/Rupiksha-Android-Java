@@ -10,6 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Logout
+import androidx.compose.material.icons.automirrored.filled.ReceiptLong
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -64,6 +66,14 @@ fun HomeScreen(
                 onChangePinClick = {
                     scope.launch { drawerState.close() }
                     navController.navigate(Screen.ChangePin.route)
+                },
+                onBbpsReportsClick = {
+                    scope.launch { drawerState.close() }
+                    navController.navigate(Screen.BbpsReports.route)
+                },
+                onAddMemberClick = {
+                    scope.launch { drawerState.close() }
+                    navController.navigate(Screen.AddMember.route)
                 }
             )
         }
@@ -78,7 +88,7 @@ fun HomeScreen(
             },
             bottomBar = { HomeBottomBar(navController) },
             floatingActionButton = {
-                FloatingActionButton(onClick = { /* Open QR Scanner */ }) {
+                FloatingActionButton(onClick = { navController.navigate(Screen.QrCode.route) }) {
                     Icon(Icons.Default.QrCodeScanner, contentDescription = "QR Scanner")
                 }
             },
@@ -95,7 +105,7 @@ fun HomeScreen(
                     WalletBalanceCard(
                         balance = userProfileState?.data?.walletBalance ?: 0.0,
                         onRefresh = { viewModel.getUserProfile() },
-                        onAddMoney = { navController.navigate(Screen.Wallet.route) } // Assuming tab navigation or handled in WalletScreen
+                        onAddMoney = { navController.navigate(Screen.Wallet.route) } 
                     )
 
                     // Services Sections
@@ -103,19 +113,27 @@ fun HomeScreen(
                         val data = userProfileState?.data?.data
                         
                         ServiceSection(title = "AEPS Services", items = data?.aeps ?: emptyList()) { service ->
-                            navController.navigate(Screen.Aeps.createRoute(service.name, service.type))
+                            navController.navigate(Screen.Aeps.createRoute(service.name ?: "", service.type ?: ""))
                         }
                         
                         ServiceSection(title = "BBPS Services", items = data?.bbps ?: emptyList()) { service ->
-                            navController.navigate(Screen.Bbps.createRoute(service.name, service.type))
+                            // Always go to Categories screen first for BBPS
+                            navController.navigate(Screen.BbpsCategories.route)
                         }
 
-                        ServiceSection(title = "Money Transfer", items = data?.utility ?: emptyList()) { service ->
-                            when (service.type.lowercase()) {
+                        ServiceSection(title = "Recharge & Utility", items = data?.utility ?: emptyList()) { service ->
+                            val type = service.type ?: ""
+                            val name = service.name ?: ""
+                            when (type.lowercase()) {
                                 "dmt" -> navController.navigate(Screen.DmtLogin.route)
-                                "payout" -> navController.navigate(Screen.Payout.createRoute(service.name))
-                                "qt" -> navController.navigate(Screen.QuickTransfer.createRoute(service.name))
-                                else -> { /* Handle others like CMS, UTI, MATM */ }
+                                "payout" -> navController.navigate(Screen.Payout.createRoute(name))
+                                "qt" -> navController.navigate(Screen.QuickTransfer.createRoute(name))
+                                "mobile", "dth" -> navController.navigate(Screen.Recharge.createRoute(name, type))
+                                "cms" -> navController.navigate(Screen.Cms.createRoute(name))
+                                "uti" -> navController.navigate(Screen.Uti.route)
+                                "pan" -> navController.navigate(Screen.PanVerification.route)
+                                "itr", "tax" -> navController.navigate(Screen.TaxForm.route)
+                                else -> { /* Handle others */ }
                             }
                         }
                     } else if (userProfileState is Resource.Loading) {
@@ -160,7 +178,9 @@ fun HomeDrawerContent(
     onLogout: () -> Unit,
     onProfileClick: () -> Unit,
     onChangePasswordClick: () -> Unit,
-    onChangePinClick: () -> Unit
+    onChangePinClick: () -> Unit,
+    onBbpsReportsClick: () -> Unit,
+    onAddMemberClick: () -> Unit
 ) {
     ModalDrawerSheet {
         Column(modifier = Modifier.padding(16.dp)) {
@@ -173,12 +193,24 @@ fun HomeDrawerContent(
             Text(text = userInfo?.name ?: "User", fontWeight = FontWeight.Bold)
             Text(text = userInfo?.email ?: "", fontSize = 12.sp)
             HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
-            
+
             NavigationDrawerItem(
                 label = { Text("Profile") },
                 selected = false,
                 onClick = onProfileClick,
                 icon = { Icon(Icons.Default.Person, contentDescription = null) }
+            )
+            NavigationDrawerItem(
+                label = { Text("Add Member") },
+                selected = false,
+                onClick = onAddMemberClick,
+                icon = { Icon(Icons.Default.GroupAdd, contentDescription = null) }
+            )
+            NavigationDrawerItem(
+                label = { Text("BBPS Reports") },
+                selected = false,
+                onClick = onBbpsReportsClick,
+                icon = { Icon(Icons.AutoMirrored.Filled.ReceiptLong, contentDescription = null) }
             )
             NavigationDrawerItem(
                 label = { Text("Change Password") },
@@ -196,7 +228,7 @@ fun HomeDrawerContent(
                 label = { Text("Logout") },
                 selected = false,
                 onClick = onLogout,
-                icon = { Icon(Icons.Default.Logout, contentDescription = null) }
+                icon = { Icon(Icons.AutoMirrored.Filled.Logout, contentDescription = null) }
             )
         }
     }
@@ -279,9 +311,9 @@ fun <T> ServiceSection(title: String, items: List<T>, onItemClick: (T) -> Unit) 
 @Composable
 fun <T> ServiceItem(item: T, onClick: (T) -> Unit) {
     val (name, iconUrl) = when (item) {
-        is AepsServiceModel -> item.name to item.icon
-        is BbpsServiceModel -> item.name to item.icon
-        is MoneyTransferServiceModel -> item.name to item.icon
+        is AepsServiceModel -> (item.name ?: "") to (item.icon ?: "")
+        is BbpsServiceModel -> (item.name ?: "") to (item.icon ?: "")
+        is MoneyTransferServiceModel -> (item.name ?: "") to (item.icon ?: "")
         else -> "" to ""
     }
 

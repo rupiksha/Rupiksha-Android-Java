@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetOperatorsUseCase @Inject constructor(
     private val repository: RechargeRepository
 ) {
-    suspend operator fun invoke(headers: Map<String, String>): Resource<BaseResponse> {
-        return repository.getOperators(headers)
+    suspend operator fun invoke(type: String, headers: Map<String, String>): Resource<BaseResponse> {
+        return repository.getOperators(type, headers)
     }
 }

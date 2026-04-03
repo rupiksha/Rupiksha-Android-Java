@@ -9,4 +9,5 @@ interface BbpsRepository {
     suspend fun getBillerList(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse>
     suspend fun fetchBill(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse>
     suspend fun payBill(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse>
+    suspend fun getBbpsReports(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse>
 }

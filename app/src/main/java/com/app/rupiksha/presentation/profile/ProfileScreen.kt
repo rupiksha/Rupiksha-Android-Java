@@ -159,8 +159,10 @@ fun ProfileScreen(
                         val body = imageUri?.let { uri ->
                             try {
                                 val file = FileUtil.from(context, uri)
-                                val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                                MultipartBody.Part.createFormData("profile", file.name, requestFile)
+                                file?.let {
+                                    val requestFile = it.asRequestBody("image/*".toMediaTypeOrNull())
+                                    MultipartBody.Part.createFormData("profile", it.name, requestFile)
+                                }
                             } catch (e: Exception) { null }
                         }
                         viewModel.updateProfile(name, mobile, email, body)
@@ -273,7 +275,10 @@ fun ProfileInfoCard(userInfo: ModelUserInfo?, kycInfo: KycModel?) {
 
 @Composable
 fun ProfileItem(icon: ImageVector, label: String, value: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
         Icon(icon, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(20.dp))
         Spacer(modifier = Modifier.width(16.dp))
         Column {

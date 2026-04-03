@@ -29,23 +29,34 @@ fun DmtOtpScreen(
     aadhar: String,
     viewModel: DmtViewModel = hiltViewModel()
 ) {
-    var otp by remember { mutableStateOf("") }
+    var otpValue by remember { mutableStateOf("") }
     val validateOtpState by viewModel.validateOtpState.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(validateOtpState) {
-        if (validateOtpState is Resource.Success) {
-            val response = validateOtpState?.data
-            if (response != null) {
-                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
-                // After successful OTP validation, typically go to KYC or Dashboard
-                // In original app it goes to DMTKycActivity
-                navController.navigate("dmt_kyc_screen/${response.data.mobile}/${response.data.otpid}/${response.data.aadhar}")
+        validateOtpState?.let { state ->
+            if (state is Resource.Success) {
+                val response = state.data
+                if (response != null) {
+                    Toast.makeText(context, response.message ?: "OTP Verified", Toast.LENGTH_SHORT).show()
+                    
+                    val targetAadhar = response.data?.aadhar ?: response.aadhar ?: aadhar
+                    val targetOtpId = response.data?.otpid ?: response.otpid ?: otpId
+                    val targetMobile = response.data?.mobile ?: response.mobile ?: mobile
+                    
+                    navController.navigate(
+                        Screen.DmtKyc.createRoute(
+                            aadhar = targetAadhar,
+                            otpId = targetOtpId,
+                            mobile = targetMobile
+                        )
+                    )
+                    viewModel.resetStates()
+                }
+            } else if (state is Resource.Error) {
+                Toast.makeText(context, state.message ?: "Error", Toast.LENGTH_SHORT).show()
                 viewModel.resetStates()
             }
-        } else if (validateOtpState is Resource.Error) {
-            Toast.makeText(context, validateOtpState?.message ?: "Error", Toast.LENGTH_SHORT).show()
-            viewModel.resetStates()
         }
     }
 
@@ -76,8 +87,8 @@ fun DmtOtpScreen(
             )
 
             OutlinedTextField(
-                value = otp,
-                onValueChange = { if (it.length <= 6) otp = it },
+                value = otpValue,
+                onValueChange = { if (it.length <= 6) otpValue = it },
                 label = { Text("OTP") },
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -88,8 +99,8 @@ fun DmtOtpScreen(
 
             Button(
                 onClick = {
-                    if (otp.length >= 4) {
-                        viewModel.validateOtp(otp, otpId, aadhar, mobile, "0.0", "0.0")
+                    if (otpValue.length >= 4) {
+                        viewModel.validateOtp(otpValue, otpId, aadhar, mobile, "0.0", "0.0")
                     } else {
                         Toast.makeText(context, "Enter valid OTP", Toast.LENGTH_SHORT).show()
                     }

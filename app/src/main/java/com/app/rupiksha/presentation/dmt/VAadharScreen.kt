@@ -25,22 +25,40 @@ fun VAadharScreen(
     phone: String,
     viewModel: DmtViewModel = hiltViewModel()
 ) {
-    var aadhar by remember { mutableStateOf("") }
+    var aadharNumberInput by remember { mutableStateOf("") }
     val validateAadharState by viewModel.validateAadharState.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(validateAadharState) {
-        if (validateAadharState is Resource.Success) {
-            val response = validateAadharState?.data
-            if (response != null) {
-                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
-                // Original app navigates to DMTOtpActivity
-                navController.navigate("dmt_otp_screen/${response.data.mobile}/${response.data.otpid}/${response.data.aadhar}")
+        validateAadharState?.let { state ->
+            if (state is Resource.Success) {
+                val response = state.data
+                if (response != null) {
+                    Toast.makeText(
+                        context,
+                        response.message ?: "Aadhar Verified",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Using explicit property access to avoid any ambiguity
+                    val targetMobile = response.data?.mobile ?: response.mobile ?: phone
+                    // Using property names as they appear in the data class
+                    val targetOtpId = response.data?.otpid ?: "" 
+                    val targetAadhar = response.data?.aadhar ?: aadharNumberInput
+
+                    navController.navigate(
+                        Screen.DmtOtp.createRoute(
+                            mobile = targetMobile,
+                            otpId = targetOtpId,
+                            aadhar = targetAadhar
+                        )
+                    )
+                    viewModel.resetStates()
+                }
+            } else if (state is Resource.Error) {
+                Toast.makeText(context, state.message ?: "Error", Toast.LENGTH_SHORT).show()
                 viewModel.resetStates()
             }
-        } else if (validateAadharState is Resource.Error) {
-            Toast.makeText(context, validateAadharState?.message ?: "Error", Toast.LENGTH_SHORT).show()
-            viewModel.resetStates()
         }
     }
 
@@ -72,8 +90,8 @@ fun VAadharScreen(
             )
 
             OutlinedTextField(
-                value = aadhar,
-                onValueChange = { if (it.length <= 12) aadhar = it },
+                value = aadharNumberInput,
+                onValueChange = { if (it.length <= 12) aadharNumberInput = it },
                 label = { Text("Aadhar Number") },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true
@@ -83,10 +101,11 @@ fun VAadharScreen(
 
             Button(
                 onClick = {
-                    if (aadhar.length == 12) {
-                        viewModel.validateAadhar(aadhar, phone)
+                    if (aadharNumberInput.length == 12) {
+                        viewModel.validateAadhar(aadharNumberInput, phone)
                     } else {
-                        Toast.makeText(context, "Enter 12 digit aadhar number", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Enter 12 digit aadhar number", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 },
                 modifier = Modifier

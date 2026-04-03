@@ -12,18 +12,18 @@ class SupportRepositoryImpl @Inject constructor(
 ) : SupportRepository {
 
     override suspend fun getSupportInfo(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getSupport(headers).execute() }
+        return safeApiCall { api.getSupport(headers) }
     }
 
     override suspend fun getSupportTypes(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getSupportType(headers).execute() }
+        return safeApiCall { api.getSupportType(headers) }
     }
 
     override suspend fun createTicket(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.doRaiseComplained(headers, requestBody).execute() }
+        return safeApiCall { api.doRaiseComplained(headers, requestBody) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

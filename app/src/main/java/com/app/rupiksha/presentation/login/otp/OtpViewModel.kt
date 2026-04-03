@@ -34,8 +34,10 @@ class OtpViewModel @Inject constructor(
             val result = otpVerifyUseCase(requestBody)
             if (result is Resource.Success) {
                 result.data?.let { body ->
-                    storageUtil.setAccessToken(body.headerToken)
-                    storageUtil.setApiKey(body.headerKey)
+                    body.headerToken?.let { storageUtil.accessToken = it }
+                    body.headerKey?.let { storageUtil.apiKey = it }
+                    body.dmtKey?.let { storageUtil.dmtKey = it }
+                    body.data?.profile?.let { storageUtil.saveUserInfo(it) }
                 }
             }
             _otpVerifyState.value = result

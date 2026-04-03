@@ -46,17 +46,23 @@ fun OtpScreen(
                 if (body != null) {
                     Toast.makeText(context, body.message, Toast.LENGTH_SHORT).show()
                     val kycStatus = body.data?.accountkycstatus?.kyc ?: ""
-                    when (kycStatus) {
+                    when (kycStatus.uppercase()) {
                         "YES" -> {
                             navController.navigate(Screen.Home.route) {
                                 popUpTo(Screen.Login.route) { inclusive = true }
                             }
                         }
                         "PENDING" -> {
-                            // navController.navigate(Screen.PendingKyc.route) // To be implemented
+                            val email = body.data?.profile?.email ?: ""
+                            val phone = body.data?.profile?.mobile ?: ""
+                            navController.navigate(Screen.PendingKyc.createRoute(email, phone)) {
+                                popUpTo(Screen.Login.route) { inclusive = true }
+                            }
                         }
                         else -> {
-                            // navController.navigate(Screen.KycUser.route) // To be implemented
+                            navController.navigate(Screen.UserKyc.route) {
+                                popUpTo(Screen.Login.route) { inclusive = true }
+                            }
                         }
                     }
                     viewModel.resetState()
@@ -111,7 +117,7 @@ fun OtpScreen(
             } else {
                 TextButton(onClick = { 
                     ticks = 30
-                    // viewModel.resendOtp(logKey) // To be implemented if needed
+                    // viewModel.resendOtp(logKey)
                 }) {
                     Text(text = "Resend OTP", color = MaterialTheme.colorScheme.primary)
                 }

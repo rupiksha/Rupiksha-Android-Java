@@ -80,8 +80,8 @@ class SupportViewModel @Inject constructor(
     }
 
     private fun getHeaders() = mapOf(
-        "headerToken" to (storageUtil.getAccessToken() ?: ""),
-        "headerKey" to storageUtil.getApiKey()
+        "headerToken" to storageUtil.accessToken,
+        "headerKey" to storageUtil.apiKey
     )
 
     fun resetCreateState() {

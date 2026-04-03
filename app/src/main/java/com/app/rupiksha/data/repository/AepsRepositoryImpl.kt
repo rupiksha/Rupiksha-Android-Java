@@ -13,50 +13,72 @@ class AepsRepositoryImpl @Inject constructor(
 ) : AepsRepository {
 
     override suspend fun getBankList(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getBankList().execute() }
+        return safeApiCall { api.getBankList() }
     }
 
     override suspend fun getDeviceList(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getDeiceList().execute() }
+        return safeApiCall { api.getDeiceList() }
     }
 
     override suspend fun balanceEnquiry(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.aepsBalanceEnquries(headers, requestBody).execute() }
+        return safeApiCall { api.aepsBalanceEnquries(headers, requestBody) }
     }
 
     override suspend fun cashWithdrawal(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.aepsCashWithdrawl(headers, requestBody).execute() }
+        return safeApiCall { api.aepsCashWithdrawl(headers, requestBody) }
     }
 
     override suspend fun miniStatement(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.aepsministatement(headers, requestBody).execute() }
+        return safeApiCall { api.aepsministatement(headers, requestBody) }
     }
 
     override suspend fun aadharPay(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return Resource.Error("Multipart mapping needed for Aadhar Pay")
+        return if (requestBody is MultipartBody) {
+            val partMap = mutableMapOf<String, RequestBody>()
+            requestBody.parts.forEach { part ->
+                val name = part.headers?.get("Content-Disposition")?.let { header ->
+                    val match = Regex("name=\"(.*?)\"").find(header)
+                    match?.groupValues?.get(1)
+                }
+                if (name != null) {
+                    partMap[name] = part.body
+                }
+            }
+            safeApiCall { api.aepsaadharPay(headers, partMap) }
+        } else {
+            Resource.Error("Expected MultipartBody for Aadhar Pay")
+        }
     }
 
     override suspend fun getStateList(): Resource<BaseResponse> {
-        return safeApiCall { api.getStateList().execute() }
+        return safeApiCall { api.getStateList() }
     }
 
     override suspend fun submitAepsKyc(headers: Map<String, String>, map: Map<String, RequestBody>, shopImage: MultipartBody.Part?): Resource<BaseResponse> {
-        return safeApiCall { api.getDokyc(headers, HashMap(map), shopImage).execute() }
+        return if (shopImage != null) {
+            safeApiCall { api.getDokyc(headers, HashMap(map), shopImage) }
+        } else {
+            Resource.Error("Shop image is required")
+        }
     }
 
     override suspend fun updateAepsKyc(headers: Map<String, String>, map: Map<String, RequestBody>, shopImage: MultipartBody.Part?): Resource<BaseResponse> {
-        return safeApiCall { api.getUpdateAepsKyc(headers, HashMap(map), shopImage).execute() }
+        return if (shopImage != null) {
+            safeApiCall { api.getUpdateAepsKyc(headers, HashMap(map), shopImage) }
+        } else {
+            Resource.Error("Shop image is required")
+        }
     }
 
     override suspend fun verifyTwoFactor(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.verifyTwoFAFingurePrint(headers, requestBody).execute() }
+        return safeApiCall { api.verifyTwoFAFingurePrint(headers, requestBody) }
     }
 
     override suspend fun verifyApTwoFactor(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.verifyAPTwoFAFingurePrint(headers, requestBody).execute() }
+        return safeApiCall { api.verifyAPTwoFAFingurePrint(headers, requestBody) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

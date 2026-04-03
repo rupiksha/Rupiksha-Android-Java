@@ -12,47 +12,28 @@ class BbpsRepositoryImpl @Inject constructor(
 ) : BbpsRepository {
 
     override suspend fun getBbpsCategories(headers: Map<String, String>): Resource<BaseResponse> {
-        return try {
-            val response = api.getbbpsService(headers).execute()
-            if (response.isSuccessful && response.body() != null) {
-                Resource.Success(response.body()!!)
-            } else {
-                Resource.Error(response.message() ?: "Unknown error")
-            }
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
-        }
+        return safeApiCall { api.getbbpsService(headers) }
     }
 
     override suspend fun getBillerList(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return try {
-            val response = api.getBillList(headers, requestBody).execute()
-            if (response.isSuccessful && response.body() != null) {
-                Resource.Success(response.body()!!)
-            } else {
-                Resource.Error(response.message() ?: "Unknown error")
-            }
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
-        }
+        return safeApiCall { api.getBillList(headers, requestBody) }
     }
 
     override suspend fun fetchBill(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return try {
-            val response = api.getFetchBill(headers, requestBody).execute()
-            if (response.isSuccessful && response.body() != null) {
-                Resource.Success(response.body()!!)
-            } else {
-                Resource.Error(response.message() ?: "Unknown error")
-            }
-        } catch (e: Exception) {
-            Resource.Error(e.message ?: "An error occurred")
-        }
+        return safeApiCall { api.getFetchBill(headers, requestBody) }
     }
 
     override suspend fun payBill(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
+        return safeApiCall { api.getPayBill(headers, requestBody) }
+    }
+
+    override suspend fun getBbpsReports(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
+        return safeApiCall { api.getReport(headers, requestBody) }
+    }
+
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
-            val response = api.getPayBill(headers, requestBody).execute()
+            val response = call()
             if (response.isSuccessful && response.body() != null) {
                 Resource.Success(response.body()!!)
             } else {

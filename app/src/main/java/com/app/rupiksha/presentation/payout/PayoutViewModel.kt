@@ -7,6 +7,7 @@ import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.BaseResponse
 import com.app.rupiksha.models.PayoutAccountModel
 import com.app.rupiksha.storage.StorageUtil
+import com.app.rupiksha.utils.LocationHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,7 +21,8 @@ class PayoutViewModel @Inject constructor(
     private val initiatePayoutTransactionUseCase: InitiatePayoutTransactionUseCase,
     private val doPayoutTransactionUseCase: DoPayoutTransactionUseCase,
     private val deletePayoutAccountUseCase: DeletePayoutAccountUseCase,
-    private val storageUtil: StorageUtil
+    private val storageUtil: StorageUtil,
+    private val locationHelper: LocationHelper
 ) : ViewModel() {
 
     private val _bankListState = MutableStateFlow<Resource<List<PayoutAccountModel>>?>(null)
@@ -47,20 +49,26 @@ class PayoutViewModel @Inject constructor(
 
     fun initiateTransaction(mobile: String, bankId: Int, amount: String, senderName: String, mode: String) {
         val headers = getHeaders()
-        val requestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("mobile", mobile)
-            .addFormDataPart("bid", bankId.toString())
-            .addFormDataPart("amount", amount)
-            .addFormDataPart("mode", mode)
-            .addFormDataPart("sname", senderName)
-            .addFormDataPart("lat", "0.0")
-            .addFormDataPart("log", "0.0")
-            .addFormDataPart("account_type", "1")
-            .build()
-
+        
         viewModelScope.launch {
             _initiateTransactionState.value = Resource.Loading()
+            
+            val location = locationHelper.getCurrentLocation()
+            val lat = location?.latitude?.toString() ?: "0.0"
+            val log = location?.longitude?.toString() ?: "0.0"
+
+            val requestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("mobile", mobile)
+                .addFormDataPart("bid", bankId.toString())
+                .addFormDataPart("amount", amount)
+                .addFormDataPart("mode", mode)
+                .addFormDataPart("sname", senderName)
+                .addFormDataPart("lat", lat)
+                .addFormDataPart("log", log)
+                .addFormDataPart("account_type", "1")
+                .build()
+
             _initiateTransactionState.value = initiatePayoutTransactionUseCase(headers, requestBody)
         }
     }
@@ -95,8 +103,8 @@ class PayoutViewModel @Inject constructor(
     }
 
     private fun getHeaders() = mapOf(
-        "headerToken" to (storageUtil.getAccessToken() ?: ""),
-        "headerKey" to storageUtil.getApiKey()
+        "headerToken" to storageUtil.accessToken,
+        "headerKey" to storageUtil.apiKey
     )
 
     fun resetStates() {

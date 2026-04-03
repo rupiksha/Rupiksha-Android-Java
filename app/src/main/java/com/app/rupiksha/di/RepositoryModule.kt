@@ -83,4 +83,16 @@ abstract class RepositoryModule {
     abstract fun bindUtiRepository(
         utiRepositoryImpl: UtiRepositoryImpl
     ): UtiRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindItrRepository(
+        itrRepositoryImpl: ItrRepositoryImpl
+    ): ItrRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindCmsRepository(
+        cmsRepositoryImpl: CmsRepositoryImpl
+    ): CmsRepository
 }

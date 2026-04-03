@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.AEPSReportDetailModel
+import com.app.rupiksha.ui.components.RupikshaDatePickerDialog
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,6 +38,8 @@ fun ReportDetailsScreen(
     
     var fromDate by remember { mutableStateOf(currentDate) }
     var toDate by remember { mutableStateOf(currentDate) }
+    var showFromDatePicker by remember { mutableStateOf(false) }
+    var showToDatePicker by remember { mutableStateOf(false) }
     
     val listState = rememberLazyListState()
 
@@ -70,11 +73,31 @@ fun ReportDetailsScreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 DateButton(label = "From: $fromDate", modifier = Modifier.weight(1f)) {
-                    // Show Date Picker
+                    showFromDatePicker = true
                 }
                 DateButton(label = "To: $toDate", modifier = Modifier.weight(1f)) {
-                    // Show Date Picker
+                    showToDatePicker = true
                 }
+            }
+
+            if (showFromDatePicker) {
+                RupikshaDatePickerDialog(
+                    onDateSelected = { 
+                        fromDate = it
+                        viewModel.getReports(type, it, toDate)
+                    },
+                    onDismiss = { showFromDatePicker = false }
+                )
+            }
+
+            if (showToDatePicker) {
+                RupikshaDatePickerDialog(
+                    onDateSelected = { 
+                        toDate = it
+                        viewModel.getReports(type, fromDate, it)
+                    },
+                    onDismiss = { showToDatePicker = false }
+                )
             }
 
             when (reportState) {

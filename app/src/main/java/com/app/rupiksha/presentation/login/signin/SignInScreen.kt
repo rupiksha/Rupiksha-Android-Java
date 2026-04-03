@@ -6,7 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -40,10 +40,11 @@ fun SignInScreen(
                 val body = loginState?.data
                 if (body != null) {
                     Toast.makeText(context, body.message, Toast.LENGTH_SHORT).show()
+                    val logKey = body.logKey ?: ""
                     if (body.mode == "otp") {
-                        navController.navigate(Screen.Otp.createRoute(body.logKey))
+                        navController.navigate(Screen.Otp.createRoute(logKey))
                     } else {
-                        navController.navigate(Screen.PinVerify.createRoute(body.logKey))
+                        navController.navigate(Screen.PinVerify.createRoute(logKey))
                     }
                     viewModel.resetStates()
                 }
@@ -62,7 +63,7 @@ fun SignInScreen(
                 title = { Text("Sign In") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
                 }
             )
@@ -124,8 +125,6 @@ fun SignInScreen(
                     Text("LOGIN")
                 }
             }
-            
-            // Add forget password/pin buttons here...
         }
     }
 }

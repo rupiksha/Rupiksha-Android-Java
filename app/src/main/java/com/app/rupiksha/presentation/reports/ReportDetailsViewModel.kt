@@ -35,8 +35,8 @@ class ReportDetailsViewModel @Inject constructor(
         }
 
         val headers = mapOf(
-            "headerToken" to (storageUtil.getAccessToken() ?: ""),
-            "headerKey" to storageUtil.getApiKey()
+            "headerToken" to storageUtil.accessToken,
+            "headerKey" to storageUtil.apiKey
         )
 
         val requestBody = MultipartBody.Builder()

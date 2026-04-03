@@ -55,8 +55,11 @@ fun RechargeScreen(
     val plans by viewModel.plansState.collectAsState()
     val planTitles by viewModel.planTitlesState.collectAsState()
 
+    val isDth = type.equals("dth", ignoreCase = true)
+    val inputLabel = if (isDth) "Customer ID / VC Number" else "Mobile Number"
+
     LaunchedEffect(mobileNumber) {
-        if (mobileNumber.length == 10) {
+        if (!isDth && mobileNumber.length == 10) {
             viewModel.fetchOperator(mobileNumber)
         }
     }
@@ -93,13 +96,17 @@ fun RechargeScreen(
         ) {
             OutlinedTextField(
                 value = mobileNumber,
-                onValueChange = { if (it.length <= 10) mobileNumber = it },
-                label = { Text("Mobile Number") },
+                onValueChange = { 
+                    if (isDth || it.length <= 10) mobileNumber = it 
+                },
+                label = { Text(inputLabel) },
                 modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
+                keyboardOptions = KeyboardOptions(keyboardType = if (isDth) KeyboardType.Text else KeyboardType.Phone),
                 trailingIcon = {
-                    IconButton(onClick = { /* Open Contacts */ }) {
-                        Icon(Icons.Default.ContactPage, contentDescription = "Contacts")
+                    if (!isDth) {
+                        IconButton(onClick = { /* Open Contacts Implementation */ }) {
+                            Icon(Icons.Default.ContactPage, contentDescription = "Contacts")
+                        }
                     }
                 },
                 singleLine = true
@@ -115,6 +122,7 @@ fun RechargeScreen(
                     .fillMaxWidth()
                     .clickable { showOperatorDialog = true },
                 enabled = false,
+                readOnly = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     disabledTextColor = MaterialTheme.colorScheme.onSurface,
                     disabledBorderColor = MaterialTheme.colorScheme.outline,
@@ -143,7 +151,7 @@ fun RechargeScreen(
                 modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 trailingIcon = {
-                    if (plans.isNotEmpty()) {
+                    if (!isDth && plans.isNotEmpty()) {
                         TextButton(onClick = { showPlansDialog = true }) {
                             Text("VIEW PLANS", color = Color.Red)
                         }
@@ -156,7 +164,7 @@ fun RechargeScreen(
 
             Button(
                 onClick = {
-                    if (mobileNumber.length == 10 && selectedOperator != null && amount.isNotEmpty()) {
+                    if (mobileNumber.isNotEmpty() && selectedOperator != null && amount.isNotEmpty()) {
                         viewModel.doRecharge(mobileNumber, selectedOperator!!.id, amount)
                     }
                 },
@@ -257,13 +265,15 @@ fun OperatorSelectionDialog(
                                             .background(Color.White),
                                         contentScale = ContentScale.Fit
                                     )
-                                    Text(
-                                        text = operator.name,
-                                        fontSize = 10.sp,
-                                        textAlign = androidx.compose.ui.text.style.TextAlign.Center,
-                                        modifier = Modifier.padding(top = 4.dp),
-                                        maxLines = 2
-                                    )
+                                    operator.name?.let {
+                                        Text(
+                                            text = it,
+                                            fontSize = 10.sp,
+                                            textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                                            modifier = Modifier.padding(top = 4.dp),
+                                            maxLines = 2
+                                        )
+                                    }
                                 }
                             }
                         }
@@ -308,7 +318,7 @@ fun PlansDialog(
                             Tab(
                                 selected = selectedTabIndex == index,
                                 onClick = { selectedTabIndex = index },
-                                text = { Text(title.opCatName, fontSize = 12.sp) }
+                                text = { title.opCatName?.let { Text(it, fontSize = 12.sp) } }
                             )
                         }
                     }
@@ -408,7 +418,7 @@ fun RechargeReceiptDialog(response: BaseResponse, onDismiss: () -> Unit) {
                 ReceiptRow("Status", rechargeData?.status ?: response.status ?: "N/A")
                 ReceiptRow("Operator", response.operator ?: "N/A")
                 
-                Divider(modifier = Modifier.padding(vertical = 8.dp))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                 
                 if (rechargeData != null) {
                     ReceiptRow(rechargeData.item1 ?: "Amount", "₹ ${rechargeData.amount1}")

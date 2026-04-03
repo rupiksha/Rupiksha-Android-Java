@@ -32,12 +32,38 @@ import com.tapits.ubercms_bc_sdk.utils.Constants
 fun CmsScreen(
     navController: NavController,
     title: String,
-    viewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    viewModel: CmsViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val userInfo by viewModel.userInfo.collectAsState()
+    val userInfo by homeViewModel.userInfo.collectAsState()
+    val cmsState by viewModel.cmsState.collectAsState()
     
     var mobile by remember { mutableStateOf("") }
+
+    LaunchedEffect(cmsState) {
+        cmsState?.let {
+            when (it) {
+                is Resource.Success -> {
+                    val url = it.data?.url
+                    if (!url.isNullOrEmpty()) {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        context.startActivity(intent)
+                    } else {
+                        Toast.makeText(context, it.data?.message ?: "Success", Toast.LENGTH_SHORT).show()
+                    }
+                    viewModel.resetCmsState()
+                }
+                is Resource.Error -> {
+                    Toast.makeText(context, it.message ?: "Error", Toast.LENGTH_SHORT).show()
+                    viewModel.resetCmsState()
+                }
+                is Resource.Loading -> {
+                    // Show loading if needed
+                }
+            }
+        }
+    }
 
     val cmsLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
@@ -97,16 +123,21 @@ fun CmsScreen(
                             }
                             cmsLauncher.launch(intent)
                         } else {
-                            Toast.makeText(context, "Initiating CMS 1...", Toast.LENGTH_SHORT).show()
+                            viewModel.getCmsService(mobile)
                         }
                     } else {
                         Toast.makeText(context, "Enter valid mobile", Toast.LENGTH_SHORT).show()
                     }
                 },
                 modifier = Modifier.fillMaxWidth().height(50.dp),
+                enabled = cmsState !is Resource.Loading,
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Red)
             ) {
-                Text("SUBMIT", fontWeight = FontWeight.Bold)
+                if (cmsState is Resource.Loading) {
+                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+                } else {
+                    Text("SUBMIT", fontWeight = FontWeight.Bold)
+                }
             }
         }
     }

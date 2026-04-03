@@ -126,7 +126,7 @@ fun CommissionItem(item: FaqList) {
             Spacer(modifier = Modifier.height(4.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text(
-                    text = if (item.froma != null) "Range: ${item.froma} - ${item.toa}" else "Package: ${item.get_package()}",
+                    text = if (item.froma != null) "Range: ${item.froma} - ${item.toa}" else "Package: ${item._package}",
                     fontSize = 12.sp,
                     color = Color.Gray
                 )

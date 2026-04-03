@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,14 +37,14 @@ class AddMemberViewModel @Inject constructor(
             val result = getRolesUseCase()
             if (result is Resource.Success) {
                 _rolesState.value = Resource.Success(result.data?.data?.roles ?: emptyList())
-            } else {
+            } else if (result is Resource.Error) {
                 _rolesState.value = Resource.Error(result.message ?: "Failed to fetch roles")
             }
         }
     }
 
     fun addMember(name: String, phone: String, email: String, roleId: Int) {
-        val requestBody = MultipartBody.Builder()
+        val requestBody: RequestBody = MultipartBody.Builder()
             .setType(MultipartBody.FORM)
             .addFormDataPart("name", name)
             .addFormDataPart("mobile", phone)

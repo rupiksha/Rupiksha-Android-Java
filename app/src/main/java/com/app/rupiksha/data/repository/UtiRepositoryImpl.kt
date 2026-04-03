@@ -12,24 +12,24 @@ class UtiRepositoryImpl @Inject constructor(
 ) : UtiRepository {
 
     override suspend fun getUtiStatus(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getUtiStatus(headers).execute() }
+        return safeApiCall { api.getUtiStatus(headers) }
     }
 
     override suspend fun psaRegistration(
         headers: Map<String, String>,
         map: Map<String, RequestBody>
     ): Resource<BaseResponse> {
-        return safeApiCall { api.getPSARegistration(headers, HashMap(map)).execute() }
+        return safeApiCall { api.getPSARegistration(headers, HashMap(map)) }
     }
 
     override suspend fun buyCoupon(
         headers: Map<String, String>,
         requestBody: RequestBody
     ): Resource<BaseResponse> {
-        return safeApiCall { api.doBuyCoupon(headers, requestBody).execute() }
+        return safeApiCall { api.doBuyCoupon(headers, requestBody) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

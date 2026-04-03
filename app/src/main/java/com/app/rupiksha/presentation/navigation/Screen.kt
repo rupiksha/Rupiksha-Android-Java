@@ -26,6 +26,8 @@ sealed class Screen(val route: String) {
     }
 
     object BbpsCategories : Screen("bbps_categories_screen")
+    object BbpsReports : Screen("bbps_reports_screen")
+
     object Aeps : Screen("aeps_screen/{title}/{type}") {
         fun createRoute(title: String, type: String) = "aeps_screen/$title/$type"
     }
@@ -76,6 +78,8 @@ sealed class Screen(val route: String) {
     }
 
     object QrCode : Screen("qr_code_screen")
+    object TaxForm : Screen("tax_form_screen")
+    object PanVerification : Screen("pan_verification_screen")
 
     object Otp : Screen("otp_screen/{logkey}") {
         fun createRoute(logkey: String) = "otp_screen/$logkey"

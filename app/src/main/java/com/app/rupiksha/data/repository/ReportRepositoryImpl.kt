@@ -12,18 +12,18 @@ class ReportRepositoryImpl @Inject constructor(
 ) : ReportRepository {
 
     override suspend fun getAllReportTypes(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getAllReportType(headers).execute() }
+        return safeApiCall { api.getAllReportType(headers) }
     }
 
     override suspend fun getReport(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.getReport(headers, requestBody).execute() }
+        return safeApiCall { api.getReport(headers, requestBody) }
     }
 
     override suspend fun getCommissionPlan(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getCommissionPlan(headers).execute() }
+        return safeApiCall { api.getCommissionPlan(headers) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

@@ -42,7 +42,6 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -269,7 +268,7 @@ fun UserKycScreen(
                         map["pinCode"] = pincode.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                         map["district"] = district.toRequestBody("multipart/form-data".toMediaTypeOrNull())
                         map["state"] = selectedState!!.id.toString().toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                        map["address_proof"] = selectedDocType!!.type.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["address_proof"] = (selectedDocType?.type ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull())
 
                         val panPart = prepareFilePart(context, "panImage", panImageUri)
                         val aadharFrontPart = prepareFilePart(context, "aadharFront", aadharFrontUri)
@@ -325,7 +324,7 @@ fun StateDropdown(
         ) {
             states.forEach { state ->
                 DropdownMenuItem(
-                    text = { Text(state.name) },
+                    text = { Text(state.name ?: "") },
                     onClick = {
                         onStateSelected(state)
                         expanded = false
@@ -366,7 +365,7 @@ fun DocTypeDropdown(
         ) {
             docs.forEach { doc ->
                 DropdownMenuItem(
-                    text = { Text(doc.type) },
+                    text = { Text(doc.type ?: "") },
                     onClick = {
                         onDocSelected(doc)
                         expanded = false

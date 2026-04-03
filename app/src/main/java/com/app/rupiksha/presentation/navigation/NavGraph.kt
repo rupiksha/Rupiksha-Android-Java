@@ -6,15 +6,18 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.app.rupiksha.presentation.add_member.AddMemberScreen
 import com.app.rupiksha.presentation.aeps.AepsKycScreen
 import com.app.rupiksha.presentation.aeps.AepsScreen
 import com.app.rupiksha.presentation.aeps.AepsTwoFactorScreen
 import com.app.rupiksha.presentation.bbps.BbpsCategoriesScreen
+import com.app.rupiksha.presentation.bbps.BbpsReportScreen
 import com.app.rupiksha.presentation.bbps.BbpsScreen
 import com.app.rupiksha.presentation.cms.CmsScreen
 import com.app.rupiksha.presentation.dmt.*
 import com.app.rupiksha.presentation.home.HomeScreen
 import com.app.rupiksha.presentation.intro.IntroScreen
+import com.app.rupiksha.presentation.itr.TaxFormScreen
 import com.app.rupiksha.presentation.login.LoginScreen
 import com.app.rupiksha.presentation.login.otp.OtpScreen
 import com.app.rupiksha.presentation.login.otp.PinVerifyScreen
@@ -23,11 +26,13 @@ import com.app.rupiksha.presentation.login.signup.SignUpScreen
 import com.app.rupiksha.presentation.login.user_kyc.PendingKycScreen
 import com.app.rupiksha.presentation.login.user_kyc.UserKycScreen
 import com.app.rupiksha.presentation.matm.MatmScreen
+import com.app.rupiksha.presentation.pan.PanVerificationScreen
 import com.app.rupiksha.presentation.payout.PayoutScreen
 import com.app.rupiksha.presentation.profile.ProfileScreen
 import com.app.rupiksha.presentation.profile.ChangePasswordScreen
 import com.app.rupiksha.presentation.profile.ChangePinScreen
 import com.app.rupiksha.presentation.qtransfer.QuickTransferScreen
+import com.app.rupiksha.presentation.qrcode.QrCodeScreen
 import com.app.rupiksha.presentation.recharge.RechargeScreen
 import com.app.rupiksha.presentation.reports.CommissionPlanScreen
 import com.app.rupiksha.presentation.reports.ReportDetailsScreen
@@ -87,6 +92,18 @@ fun NavGraph(navController: NavHostController) {
         composable(route = Screen.Profile.route) {
             ProfileScreen(navController = navController)
         }
+        composable(route = Screen.AddMember.route) {
+            AddMemberScreen(navController = navController)
+        }
+        composable(route = Screen.QrCode.route) {
+            QrCodeScreen(navController = navController)
+        }
+        composable(route = Screen.TaxForm.route) {
+            TaxFormScreen(navController = navController)
+        }
+        composable(route = Screen.PanVerification.route) {
+            PanVerificationScreen(navController = navController)
+        }
         composable(route = Screen.ChangePassword.route) {
             ChangePasswordScreen(navController = navController)
         }
@@ -137,6 +154,9 @@ fun NavGraph(navController: NavHostController) {
             val title = backStackEntry.arguments?.getString("title") ?: ""
             val type = backStackEntry.arguments?.getString("type") ?: ""
             BbpsScreen(navController = navController, title = title, type = type)
+        }
+        composable(route = Screen.BbpsReports.route) {
+            BbpsReportScreen(navController = navController)
         }
         composable(
             route = Screen.Aeps.route,
@@ -243,8 +263,8 @@ fun NavGraph(navController: NavHostController) {
             route = Screen.QuickTransfer.route,
             arguments = listOf(navArgument("title") { type = NavType.StringType })
         ) { backStackEntry ->
-            val title = backStackEntry.arguments?.getString("title") ?: ""
-            QuickTransferScreen(navController = navController, title = title)
+            val titleValue = backStackEntry.arguments?.getString("title") ?: ""
+            QuickTransferScreen(navController = navController, screenTitle = titleValue)
         }
         composable(
             route = Screen.ReportDetails.route,

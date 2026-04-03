@@ -6,6 +6,7 @@ import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.BaseResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import retrofit2.Response
 import javax.inject.Inject
 
 class WalletRepositoryImpl @Inject constructor(
@@ -16,22 +17,22 @@ class WalletRepositoryImpl @Inject constructor(
         headers: Map<String, String>,
         requestBody: RequestBody
     ): Resource<BaseResponse> {
-        return safeApiCall { api.getFetchUser(headers, requestBody).execute() }
+        return safeApiCall { api.getFetchUser(headers, requestBody) }
     }
 
     override suspend fun doWalletTransaction(
         headers: Map<String, String>,
         requestBody: RequestBody
     ): Resource<BaseResponse> {
-        return safeApiCall { api.getdowalletTransaction(headers, requestBody).execute() }
+        return safeApiCall { api.getdowalletTransaction(headers, requestBody) }
     }
 
     override suspend fun getWalletBalance(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getWalletBalance(headers).execute() }
+        return safeApiCall { api.getWalletBalance(headers) }
     }
 
     override suspend fun getAddFundBankList(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getfundbanklist(headers).execute() }
+        return safeApiCall { api.getfundbanklist(headers) }
     }
 
     override suspend fun addMoney(
@@ -39,10 +40,10 @@ class WalletRepositoryImpl @Inject constructor(
         map: Map<String, RequestBody>,
         proofImage: MultipartBody.Part?
     ): Resource<BaseResponse> {
-        return safeApiCall { api.getAddMoney(HashMap(headers), HashMap(map), proofImage).execute() }
+        return safeApiCall { api.getAddMoney(HashMap(headers), HashMap(map), proofImage!!) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

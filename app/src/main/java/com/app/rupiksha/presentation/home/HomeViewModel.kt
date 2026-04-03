@@ -28,9 +28,13 @@ class HomeViewModel @Inject constructor(
     private val _logoutState = MutableStateFlow<Resource<BaseResponse>?>(null)
     val logoutState: StateFlow<Resource<BaseResponse>?> = _logoutState
 
+    init {
+        getUserProfile()
+    }
+
     fun getUserProfile() {
-        val accessToken = storageUtil.getAccessToken() ?: ""
-        val apiKey = storageUtil.getApiKey()
+        val accessToken = storageUtil.accessToken
+        val apiKey = storageUtil.apiKey
         val headers = mapOf("headerToken" to accessToken, "headerKey" to apiKey)
 
         viewModelScope.launch {
@@ -47,9 +51,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun logout() {
-        // In the original code, logout was an API call. 
-        // For simplicity, let's clear storage first.
         storageUtil.clearAll()
-        _logoutState.value = Resource.Success(BaseResponse().apply { message = "Logged out successfully" })
+        _logoutState.value = Resource.Success(BaseResponse(message = "Logged out successfully"))
     }
 }

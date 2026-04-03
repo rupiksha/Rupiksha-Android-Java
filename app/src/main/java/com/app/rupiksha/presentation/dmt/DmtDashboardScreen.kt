@@ -39,9 +39,9 @@ fun DmtDashboardScreen(
     dmtKey: String,
     viewModel: DmtViewModel = hiltViewModel()
 ) {
-    val bankListState by viewModel.bankListState.collectAsState()
     val initiateTransactionState by viewModel.initiateTransactionState.collectAsState()
     val doTransactionState by viewModel.doTransactionState.collectAsState()
+    val bankListState by viewModel.bankListState.collectAsState()
     val context = LocalContext.current
 
     var showTransferDialog by remember { mutableStateOf(false) }
@@ -343,4 +343,31 @@ fun DmtReceiptDialog(response: BaseResponse, onDismiss: () -> Unit) {
             }
         }
     )
+}
+
+@Composable
+fun RemitterInfoCard(phone: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.White)
+    ) {
+        Row(
+            modifier = Modifier.padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.CheckCircle,
+                contentDescription = null,
+                tint = Color(0xFF4CAF50),
+                modifier = Modifier.size(40.dp)
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Column {
+                Text(text = "Remitter Mobile", fontSize = 12.sp, color = Color.Gray)
+                Text(text = phone, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+    }
 }

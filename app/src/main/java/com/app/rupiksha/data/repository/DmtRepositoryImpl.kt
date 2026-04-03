@@ -11,57 +11,88 @@ class DmtRepositoryImpl @Inject constructor(
     private val api: ApiInterface
 ) : DmtRepository {
 
-    override suspend fun remitterLogin(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.getremitterLogin(headers, requestBody).execute() }
+    override suspend fun remitterLogin(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.getremitterLogin(headers, requestBody) }
     }
 
-    override suspend fun remitterRegister(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.getremitterRegister(headers, requestBody).execute() }
+    override suspend fun remitterRegister(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.getremitterRegister(headers, requestBody) }
+    }
+
+    override suspend fun getDmtAccountList(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.getremitterLogin(headers, requestBody) }
     }
 
     override suspend fun getDmtBankList(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getDmtBank(headers).execute() }
+        return safeApiCall { api.getDmtBank(headers) }
     }
 
-    override suspend fun addDmtAccount(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.addDmtAccount(headers, requestBody).execute() }
+    override suspend fun addDmtAccount(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.addDmtAccount(headers, requestBody) }
     }
 
-    override suspend fun deleteDmtAccount(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.deleteDmtAccount(headers, requestBody).execute() }
+    override suspend fun deleteDmtAccount(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.deleteDmtAccount(headers, requestBody) }
     }
 
-    override suspend fun initiateDMTTransaction(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.initiateDMTTransaction(headers, requestBody).execute() }
+    override suspend fun initiateDMTTransaction(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.initiateDMTTransaction(headers, requestBody) }
     }
 
-    override suspend fun doDMTTransaction(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.doDMTTransaction(headers, requestBody).execute() }
+    override suspend fun doDMTTransaction(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.doDMTTransaction(headers, requestBody) }
     }
 
-    override suspend fun logoutDmt(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.logoutDmt(headers, requestBody).execute() }
+    override suspend fun logoutDmt(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.logoutDmt(headers, requestBody) }
     }
 
-    override suspend fun validateAadhar(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.getVAadharApi(headers, requestBody).execute() }
+    override suspend fun validateAadhar(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.getVAadharApi(headers, requestBody) }
     }
 
-    override suspend fun validateOtp(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.getValidateOtpApi(headers, requestBody).execute() }
+    override suspend fun validateOtp(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.getValidateOtpApi(headers, requestBody) }
     }
 
-    override suspend fun biometricVerify(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        // Looking at ApiInterface, it seems verifyFingurePrint or similar might be used for DMT KYC
-        // But the presenter calls getBiometricVerify which uses verifyAepsOtp in some places or custom ones.
-        // Actually, let's look at ApiInterface again for DMT biometric verify.
-        // There is no explicit "dmt biometric verify" in ApiInterface. 
-        // DMTKycActivity uses presenter.getBiometricVerify.
-        // Let's check DMTKycPresenter.
-        return safeApiCall { api.verifyFingurePrint(headers, requestBody).execute() }
+    override suspend fun biometricVerify(
+        headers: Map<String, String>,
+        requestBody: RequestBody
+    ): Resource<BaseResponse> {
+        return safeApiCall { api.verifyFingurePrint(headers, requestBody) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

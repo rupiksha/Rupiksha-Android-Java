@@ -119,10 +119,10 @@ fun ContactContent(viewModel: SupportViewModel) {
                         SocialMediaIcon(R.drawable.whatsapp) {
                             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/${support.cnumber}")))
                         }
-                        SocialMediaIcon(R.drawable.facebook) {
+                        SocialMediaIcon(R.drawable.fb) {
                             support.facebook?.let { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it))) }
                         }
-                        SocialMediaIcon(R.drawable.instagram) {
+                        SocialMediaIcon(R.drawable.insta) {
                             support.instagram?.let { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(it))) }
                         }
                     }
@@ -190,17 +190,17 @@ fun RaiseTicketContent(viewModel: SupportViewModel) {
         OutlinedTextField(value = txnId, onValueChange = { txnId = it }, label = { Text("Transaction ID") }, modifier = Modifier.fillMaxWidth())
         OutlinedTextField(value = message, onValueChange = { message = it }, label = { Text("Message") }, modifier = Modifier.fillMaxWidth().height(150.dp), maxLines = 5)
 
-        Button(
-            onClick = {
-                if (selectedType != null && txnId.isNotEmpty() && message.isNotEmpty()) {
-                    viewModel.createTicket(selectedType!!.name, txnId, message)
-                } else {
-                    Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
-                }
-            },
-            modifier = Modifier.fillMaxWidth().height(50.dp),
-            enabled = createTicketState !is Resource.Loading
-        ) {
+            Button(
+                onClick = {
+                    if (selectedType != null && txnId.isNotEmpty() && message.isNotEmpty()) {
+                        viewModel.createTicket(selectedType?.name ?: "", txnId, message)
+                    } else {
+                        Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                modifier = Modifier.fillMaxWidth().height(50.dp),
+                enabled = createTicketState !is Resource.Loading
+            ) {
             if (createTicketState is Resource.Loading) CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
             else Text("SUBMIT TICKET")
         }

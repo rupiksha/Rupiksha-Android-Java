@@ -21,10 +21,14 @@ class BbpsCategoriesViewModel @Inject constructor(
     private val _categoriesState = MutableStateFlow<Resource<List<BbpsServiceModel>>?>(null)
     val categoriesState: StateFlow<Resource<List<BbpsServiceModel>>?> = _categoriesState
 
+    init {
+        getCategories()
+    }
+
     fun getCategories() {
         val headers = mapOf(
-            "headerToken" to (storageUtil.getAccessToken() ?: ""),
-            "headerKey" to storageUtil.getApiKey()
+            "headerToken" to storageUtil.accessToken,
+            "headerKey" to storageUtil.apiKey
         )
         viewModelScope.launch {
             _categoriesState.value = Resource.Loading()

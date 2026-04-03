@@ -11,19 +11,19 @@ class RechargeRepositoryImpl @Inject constructor(
     private val api: ApiInterface
 ) : RechargeRepository {
 
-    override suspend fun getOperators(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getOperator(headers).execute() }
+    override suspend fun getOperators(type: String, headers: Map<String, String>): Resource<BaseResponse> {
+        return safeApiCall { api.getOperator(type, headers) }
     }
 
     override suspend fun fetchOperator(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.fetchoperator(headers, requestBody).execute() }
+        return safeApiCall { api.fetchoperator(headers, requestBody) }
     }
 
     override suspend fun doRecharge(headers: Map<String, String>, requestBody: RequestBody): Resource<BaseResponse> {
-        return safeApiCall { api.doRecharge(headers, requestBody).execute() }
+        return safeApiCall { api.doRecharge(headers, requestBody) }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

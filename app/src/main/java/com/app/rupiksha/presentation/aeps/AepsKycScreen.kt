@@ -4,21 +4,28 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CloudUpload
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,11 +33,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.BankModel
 import com.app.rupiksha.models.StateModel
+import com.app.rupiksha.presentation.navigation.Screen
+import com.app.rupiksha.utils.FileUtil
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -81,8 +93,11 @@ fun AepsKycScreen(
 
     LaunchedEffect(kycState) {
         if (kycState is Resource.Success) {
-            Toast.makeText(context, kycState?.data?.message, Toast.LENGTH_SHORT).show()
-            navController.popBackStack()
+            val body = kycState?.data
+            Toast.makeText(context, body?.message, Toast.LENGTH_SHORT).show()
+            navController.navigate(Screen.AepsTwoFactor.createRoute(title, "Withdrawal")) {
+                popUpTo(Screen.AepsKyc.route) { inclusive = true }
+            }
             viewModel.resetTransactionState()
         } else if (kycState is Resource.Error) {
             Toast.makeText(context, kycState?.message, Toast.LENGTH_SHORT).show()
@@ -260,34 +275,79 @@ fun AepsKycScreen(
                 label = { Text("IFSC Code") },
                 modifier = Modifier.fillMaxWidth()
             )
+            
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            Text(text = "Upload Shop Image", fontWeight = FontWeight.Bold, fontSize = 14.sp, modifier = Modifier.align(Alignment.Start))
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFFF0F0F0))
+                    .border(1.dp, Color.LightGray, RoundedCornerShape(8.dp))
+                    .clickable { imageLauncher.launch("image/*") },
+                contentAlignment = Alignment.Center
+            ) {
+                if (shopImageUrl != null) {
+                    Image(
+                        painter = rememberAsyncImagePainter(shopImageUrl),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(Icons.Default.CloudUpload, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(48.dp))
+                        Text(text = "Tap to upload", color = Color.Gray)
+                    }
+                }
+            }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(32.dp))
 
             Button(
                 onClick = {
-                    val map = mapOf(
-                        "first_name" to firstName.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "last_name" to lastName.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "phone" to mobile.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "email" to email.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "shopname" to shopName.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "address" to address.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "pincode" to pinCode.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "city" to city.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "state" to (selectedState?.id?.toString()
-                            ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "pan" to panNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "aadhar" to aadharNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "bankAccountName" to accountHolderName.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "companyBankAccountNumber" to accountNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "companyBankName" to (selectedBank?.name
-                            ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "bankIfscCode" to ifscCode.toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "lat" to "0.0".toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "log" to "0.0".toRequestBody("multipart/form-data".toMediaTypeOrNull()),
-                        "outlet" to "".toRequestBody("multipart/form-data".toMediaTypeOrNull())
-                    )
-                    viewModel.submitKyc(map, null)
+                    if (firstName.isEmpty() || lastName.isEmpty() || mobile.isEmpty() || email.isEmpty() || 
+                        shopName.isEmpty() || address.isEmpty() || pinCode.isEmpty() || city.isEmpty() || 
+                        selectedState == null || panNumber.isEmpty() || aadharNumber.isEmpty() || 
+                        selectedBank == null || accountHolderName.isEmpty() || accountNumber.isEmpty()) {
+                        Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val map = mutableMapOf<String, RequestBody>()
+                        map["first_name"] = firstName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["last_name"] = lastName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["phone"] = mobile.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["email"] = email.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["shopname"] = shopName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["address"] = address.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["pincode"] = pinCode.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["city"] = city.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["state"] = (selectedState?.id?.toString() ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["pan"] = panNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["aadhar"] = aadharNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["bankAccountName"] = accountHolderName.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["companyBankAccountNumber"] = accountNumber.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["companyBankName"] = (selectedBank?.name ?: "").toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["bankIfscCode"] = ifscCode.toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["lat"] = "0.0".toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["log"] = "0.0".toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        map["outlet"] = "".toRequestBody("multipart/form-data".toMediaTypeOrNull())
+                        
+                        val shopImagePart = if (shopImageUrl != null) {
+                            try {
+                                val file = FileUtil.from(context, shopImageUrl!!)
+                                if (file != null) {
+                                    val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                                    MultipartBody.Part.createFormData("shop_photo", file.name, requestFile)
+                                } else null
+                            } catch (e: Exception) { null }
+                        } else null
+                        
+                        viewModel.submitKyc(map, shopImagePart)
+                    }
                 },
                 modifier = Modifier
                     .fillMaxWidth()

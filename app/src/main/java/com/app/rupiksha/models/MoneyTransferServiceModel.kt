@@ -1,0 +1,18 @@
+package com.app.rupiksha.models
+
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+data class MoneyTransferServiceModel(
+    @SerializedName("name")
+    @Expose
+    val name: String? = null,
+
+    @SerializedName("icon")
+    @Expose
+    val icon: String? = null,
+
+    @SerializedName("type")
+    @Expose
+    val type: String? = null
+)

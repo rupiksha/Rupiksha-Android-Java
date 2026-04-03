@@ -1,6 +1,5 @@
 package com.app.rupiksha.presentation.bbps
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,14 +10,12 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -301,13 +298,13 @@ fun BillerSelectionDialog(
                     }
                     is Resource.Success -> {
                         val filteredList = billerListState.data?.filter { 
-                            it.name.contains(searchQuery, ignoreCase = true) 
+                            it.name?.contains(searchQuery, ignoreCase = true) == true
                         } ?: emptyList()
                         
                         LazyColumn(modifier = Modifier.fillMaxSize()) {
                             items(filteredList) { biller ->
                                 ListItem(
-                                    headlineContent = { Text(biller.name) },
+                                    headlineContent = { Text(biller.name ?: "") },
                                     modifier = Modifier.clickable { onBillerSelected(biller) }
                                 )
                                 HorizontalDivider()
@@ -358,7 +355,7 @@ fun BbpsReceiptDialog(response: BaseResponse, onDismiss: () -> Unit) {
                     HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
                     ReceiptRow("Transaction ID", recent.txnid ?: "")
                     ReceiptRow("Date", recent.date ?: "")
-                    ReceiptRow("Amount", "₹ ${recent.amount ?: "0"}")
+                    ReceiptRow("Amount", "₹ ${recent.amount}")
                 }
             }
         }

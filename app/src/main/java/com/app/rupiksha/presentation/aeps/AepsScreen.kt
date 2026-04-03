@@ -424,11 +424,11 @@ fun BankSelectionDialog(
                 when (bankListState) {
                     is Resource.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     is Resource.Success -> {
-                        val banks = bankListState.data?.filter { it.name.contains(searchQuery, ignoreCase = true) } ?: emptyList()
+                        val banks = bankListState.data?.filter { it.name?.contains(searchQuery, ignoreCase = true) == true } ?: emptyList()
                         LazyColumn {
                             items(banks) { bank ->
                                 ListItem(
-                                    headlineContent = { Text(bank.name) },
+                                    headlineContent = { Text(bank.name ?: "Unknown Bank") },
                                     modifier = Modifier.clickable { onBankSelected(bank) }
                                 )
                                 HorizontalDivider()
@@ -457,7 +457,7 @@ fun DeviceSelectionDialog(
             LazyColumn {
                 items(devices) { device ->
                     ListItem(
-                        headlineContent = { Text(device.name) },
+                        headlineContent = { Text(device.name ?: "Unknown Device") },
                         modifier = Modifier.clickable { onDeviceSelected(device) }
                     )
                     HorizontalDivider()

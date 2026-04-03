@@ -30,6 +30,7 @@ import com.app.rupiksha.domain.util.Resource
 import com.app.rupiksha.models.AddfundBankModel
 import com.app.rupiksha.presentation.reports.DateButton
 import com.app.rupiksha.presentation.reports.ReportDetailItem
+import com.app.rupiksha.ui.components.RupikshaDatePickerDialog
 import com.app.rupiksha.utils.FileUtil
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -51,9 +52,7 @@ fun WalletScreen(
     var fromDate by remember { mutableStateOf(currentDate) }
     var toDate by remember { mutableStateOf(currentDate) }
 
-    val walletReportState by viewModel.walletReportState.collectAsState()
     val walletBalanceState by viewModel.walletBalanceState.collectAsState()
-    val context = LocalContext.current
 
     LaunchedEffect(selectedTab) {
         when (selectedTab) {
@@ -118,6 +117,8 @@ fun WalletHistoryContent(
     onToDateChange: (String) -> Unit
 ) {
     val walletReportState by viewModel.walletReportState.collectAsState()
+    var showFromDatePicker by remember { mutableStateOf(false) }
+    var showToDatePicker by remember { mutableStateOf(false) }
     
     Column(modifier = Modifier.fillMaxSize()) {
         Row(
@@ -127,11 +128,31 @@ fun WalletHistoryContent(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             DateButton(label = "From: $fromDate", modifier = Modifier.weight(1f)) {
-                // In a real app, show DatePickerDialog here
+                showFromDatePicker = true
             }
             DateButton(label = "To: $toDate", modifier = Modifier.weight(1f)) {
-                // In a real app, show DatePickerDialog here
+                showToDatePicker = true
             }
+        }
+
+        if (showFromDatePicker) {
+            RupikshaDatePickerDialog(
+                onDateSelected = { 
+                    onFromDateChange(it)
+                    viewModel.getWalletReport(it, toDate)
+                },
+                onDismiss = { showFromDatePicker = false }
+            )
+        }
+
+        if (showToDatePicker) {
+            RupikshaDatePickerDialog(
+                onDateSelected = { 
+                    onToDateChange(it)
+                    viewModel.getWalletReport(fromDate, it)
+                },
+                onDismiss = { showToDatePicker = false }
+            )
         }
 
         when (walletReportState) {
@@ -261,6 +282,7 @@ fun AddFundContent(viewModel: WalletViewModel) {
     var expanded by remember { mutableStateOf(false) }
     var selectedDate by remember { mutableStateOf(SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var showDatePicker by remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -343,9 +365,23 @@ fun AddFundContent(viewModel: WalletViewModel) {
             onValueChange = {},
             readOnly = true,
             label = { Text("Transaction Date") },
-            modifier = Modifier.fillMaxWidth().clickable { /* Show date picker */ },
-            trailingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) }
+            modifier = Modifier.fillMaxWidth().clickable { showDatePicker = true },
+            trailingIcon = { Icon(Icons.Default.DateRange, contentDescription = null) },
+            enabled = false,
+            colors = OutlinedTextFieldDefaults.colors(
+                disabledTextColor = MaterialTheme.colorScheme.onSurface,
+                disabledBorderColor = MaterialTheme.colorScheme.outline,
+                disabledLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                disabledTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         )
+
+        if (showDatePicker) {
+            RupikshaDatePickerDialog(
+                onDateSelected = { selectedDate = it },
+                onDismiss = { showDatePicker = false }
+            )
+        }
 
         Box(
             modifier = Modifier
@@ -373,19 +409,24 @@ fun AddFundContent(viewModel: WalletViewModel) {
 
         Button(
             onClick = {
-                if (amount.isNotEmpty() && selectedBank != null && utr.isNotEmpty() && imageUri != null) {
+                val currentUri = imageUri
+                if (amount.isNotEmpty() && selectedBank != null && utr.isNotEmpty() && currentUri != null) {
                     try {
-                        val file = FileUtil.from(context, imageUri)
-                        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-                        val body = MultipartBody.Part.createFormData("proof", file.name, requestFile)
-                        
-                        viewModel.addMoney(
-                            amount = amount,
-                            bankId = selectedBank!!.id,
-                            utr = utr,
-                            date = selectedDate,
-                            proofImage = body
-                        )
+                        val file = FileUtil.from(context, currentUri)
+                        if (file != null) {
+                            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+                            val body = MultipartBody.Part.createFormData("proof", file.name, requestFile)
+                            
+                            viewModel.addMoney(
+                                amount = amount,
+                                bankId = selectedBank!!.id,
+                                utr = utr,
+                                date = selectedDate,
+                                proofImage = body
+                            )
+                        } else {
+                            Toast.makeText(context, "Error reading image file", Toast.LENGTH_SHORT).show()
+                        }
                     } catch (e: Exception) {
                         Toast.makeText(context, "Error processing image", Toast.LENGTH_SHORT).show()
                     }

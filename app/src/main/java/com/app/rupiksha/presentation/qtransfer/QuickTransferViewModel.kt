@@ -20,7 +20,8 @@ class QuickTransferViewModel @Inject constructor(
     private val accountVerifyUseCase: AccountVerifyUseCase,
     private val initiateQtTransactionUseCase: InitiateQtTransactionUseCase,
     private val doQtTransactionUseCase: DoQtTransactionUseCase,
-    private val storageUtil: StorageUtil
+    private val storageUtil: StorageUtil,
+    private val locationHelper: com.app.rupiksha.utils.LocationHelper
 ) : ViewModel() {
 
     private val _bankListState = MutableStateFlow<Resource<List<GlobalBankModel>>?>(null)
@@ -75,17 +76,22 @@ class QuickTransferViewModel @Inject constructor(
 
     fun verifyAccount(account: String, ifsc: String, mobile: String) {
         val headers = getHeaders()
-        val requestBody = MultipartBody.Builder()
-            .setType(MultipartBody.FORM)
-            .addFormDataPart("account", account)
-            .addFormDataPart("ifsc", ifsc)
-            .addFormDataPart("mobile", mobile)
-            .addFormDataPart("lat", "0.0")
-            .addFormDataPart("log", "0.0")
-            .build()
 
         viewModelScope.launch {
             _verifyState.value = Resource.Loading()
+            val location = locationHelper.getCurrentLocation()
+            val lat = location?.latitude?.toString() ?: "0.0"
+            val long = location?.longitude?.toString() ?: "0.0"
+
+            val requestBody = MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("account", account)
+                .addFormDataPart("ifsc", ifsc)
+                .addFormDataPart("mobile", mobile)
+                .addFormDataPart("lat", lat)
+                .addFormDataPart("log", long)
+                .build()
+
             _verifyState.value = accountVerifyUseCase(headers, requestBody)
         }
     }
@@ -122,8 +128,8 @@ class QuickTransferViewModel @Inject constructor(
     }
 
     private fun getHeaders() = mapOf(
-        "headerToken" to (storageUtil.getAccessToken() ?: ""),
-        "headerKey" to storageUtil.getApiKey()
+        "headerToken" to storageUtil.accessToken,
+        "headerKey" to storageUtil.apiKey
     )
 
     fun resetStates() {

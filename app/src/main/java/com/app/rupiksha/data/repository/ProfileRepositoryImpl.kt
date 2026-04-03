@@ -13,7 +13,7 @@ class ProfileRepositoryImpl @Inject constructor(
 ) : ProfileRepository {
 
     override suspend fun getUserInfo(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getUserInfo(headers).execute() }
+        return safeApiCall { api.getUserInfo(headers) }
     }
 
     override suspend fun updateProfile(
@@ -21,11 +21,15 @@ class ProfileRepositoryImpl @Inject constructor(
         partMap: Map<String, RequestBody>,
         profileImage: MultipartBody.Part?
     ): Resource<BaseResponse> {
-        return safeApiCall { api.editProfile(headers, HashMap(partMap), profileImage).execute() }
+        return if (profileImage != null) {
+            safeApiCall { api.editProfile(headers, HashMap(partMap), profileImage) }
+        } else {
+            Resource.Error("Profile image is required")
+        }
     }
 
     override suspend fun getAddMoneyBankList(headers: Map<String, String>): Resource<BaseResponse> {
-        return safeApiCall { api.getfundbanklist(headers).execute() }
+        return safeApiCall { api.getfundbanklist(headers) }
     }
 
     override suspend fun addMoney(
@@ -33,10 +37,14 @@ class ProfileRepositoryImpl @Inject constructor(
         map: Map<String, RequestBody>,
         proofImage: MultipartBody.Part?
     ): Resource<BaseResponse> {
-        return safeApiCall { api.getAddMoney(HashMap(headers), HashMap(map), proofImage).execute() }
+        return if (proofImage != null) {
+            safeApiCall { api.getAddMoney(HashMap(headers), HashMap(map), proofImage) }
+        } else {
+            Resource.Error("Proof image is required")
+        }
     }
 
-    private fun <T> safeApiCall(call: () -> retrofit2.Response<T>): Resource<T> {
+    private suspend fun <T> safeApiCall(call: suspend () -> retrofit2.Response<T>): Resource<T> {
         return try {
             val response = call()
             if (response.isSuccessful && response.body() != null) {

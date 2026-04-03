@@ -1,6 +1,10 @@
 package com.app.rupiksha.presentation.payout
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,6 +29,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.app.rupiksha.domain.util.Resource
@@ -55,8 +60,26 @@ fun PayoutScreen(
     var txnKey by remember { mutableStateOf("") }
     var otpPinValue by remember { mutableStateOf("") }
 
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val granted = permissions.entries.all { it.value }
+        if (granted) {
+            // Permission granted, you can now initiate transaction which will get location
+        } else {
+            Toast.makeText(context, "Location permission is required for financial transactions", Toast.LENGTH_LONG).show()
+        }
+    }
+
     LaunchedEffect(Unit) {
         viewModel.getPayoutBankList()
+        val permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
+        if (permissions.any { ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED }) {
+            permissionLauncher.launch(permissions)
+        }
     }
 
     LaunchedEffect(initiateState) {
@@ -146,9 +169,9 @@ fun PayoutScreen(
                     when (bankListState) {
                         is Resource.Success -> {
                             bankListState?.data?.let { banks ->
-                                it.forEach { bank ->
+                                banks.forEach { bank ->
                                     DropdownMenuItem(
-                                        text = { Text("${bank.bankName} - ${bank.account}") },
+                                        text = { Text("${bank.name ?: "N/A"} - ${bank.account ?: "N/A"}") },
                                         onClick = {
                                             selectedBank = bank
                                             senderName = bank.name ?: ""
@@ -303,7 +326,7 @@ fun PayoutAccountItem(account: PayoutAccountModel, onDelete: () -> Unit) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(text = account.name ?: "", fontWeight = FontWeight.Bold)
                 Text(
-                    text = "${account.bankName} - ${account.account}",
+                    text = "${account.account ?: "N/A"} - ${account.ifsc ?: "N/A"}",
                     fontSize = 12.sp,
                     color = Color.Gray
                 )
